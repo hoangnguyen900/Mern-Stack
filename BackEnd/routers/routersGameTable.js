@@ -35,7 +35,7 @@ router.put("/gametable", (req, res) =>
       idGameTable: req.body.idGameTable
     }
   })
-    .then(res.send("success"))
+    .then(res.send("success "+JSON.stringify(req.body)))
     .catch(err => console.log(err))
 );
 router.delete("/gametable/:id", (req, res) =>
