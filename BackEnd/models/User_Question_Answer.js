@@ -1,32 +1,33 @@
 const Sequelize = require("sequelize");
 const db = require("../database");
 
-const UserQuestionAnswer = db.define("userquestionanswer", {
-  idUser: {
+const User_Question_Answer = db.define("user_question_answer", {
+  user_id: {
     type: "INT(11)",
     allowNull: false,
     defaultValue: null,
     primaryKey: true,
     foreignKey: [Object]
   },
-  idGameQuestion: {
+  question_id: {
     type: "INT(11)",
     allowNull: false,
     defaultValue: null,
     primaryKey: true,
     foreignKey: [Object]
   },
-  idGameChoice: {
+  choice_id: {
     type: "INT(11)",
     allowNull: true,
     defaultValue: null,
-    primaryKey: false
+    primaryKey: false,
+    foreignKey: [Object]
   },
-  isRight: {
+  is_right_choice: {
     type: "TINYINT(1)",
     allowNull: true,
     defaultValue: null,
     primaryKey: false
   }
 });
-module.exports = UserQuestionAnswer;
+module.exports = User_Question_Answer;

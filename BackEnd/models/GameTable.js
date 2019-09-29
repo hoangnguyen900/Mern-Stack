@@ -2,67 +2,69 @@ const Sequelize = require("sequelize");
 const db = require("../database");
 
 const GameTable = db.define("gametable", {
-  idGameTable: {
+  id: {
     type: "INT(11)",
     allowNull: false,
     defaultValue: null,
-    primaryKey: true
+    primaryKey: true,
+    foreignKey: [Object]
   },
-  gameCode: {
+  code: {
     type: "INT(6)",
     allowNull: true,
     defaultValue: null,
     primaryKey: false
   },
-  gameTitle: {
+  title: {
     type: "VARCHAR(50)",
     allowNull: true,
     defaultValue: null,
     primaryKey: false
   },
-  gameGradeBegin: {
+  grade_begin: {
     type: "INT(11)",
     allowNull: true,
     defaultValue: null,
     primaryKey: false
   },
-  gameGradeEnd: {
+  grade_end: {
     type: "INT(11)",
     allowNull: true,
     defaultValue: null,
     primaryKey: false
   },
-  gameLevel: {
+  level: {
     type: "INT(11)",
     allowNull: true,
     defaultValue: null,
     primaryKey: false
   },
-  gamePlayed: {
+  played: {
     type: "INT(11)",
     allowNull: true,
     defaultValue: null,
     primaryKey: false
   },
-  idSubject: {
+  subject_id: {
     type: "INT(11)",
     allowNull: true,
     defaultValue: null,
-    primaryKey: false
+    primaryKey: false,
+    foreignKey: [Object]
   },
-  gameImage: {
+  image: {
     type: "LONGBLOB",
     allowNull: true,
     defaultValue: null,
     primaryKey: false
   },
-  isPublic: {
+  is_public: {
     type: "TINYINT(1)",
     allowNull: true,
     defaultValue: null,
     primaryKey: false
   },
-  gameTime: {
+  time: {
     type: "DOUBLE",
     allowNull: true,
     defaultValue: null,

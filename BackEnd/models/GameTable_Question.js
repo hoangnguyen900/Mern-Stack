@@ -1,15 +1,15 @@
 const Sequelize = require("sequelize");
 const db = require("../database");
 
-const GameTableGameQuestion = db.define("gametable_gamequestion", {
-  idGameTable: {
+const GameTable_Question = db.define("gametable_question", {
+  table_id: {
     type: "INT(11)",
     allowNull: false,
     defaultValue: null,
     primaryKey: true,
     foreignKey: [Object]
   },
-  idGameQuestion: {
+  question_id: {
     type: "INT(11)",
     allowNull: false,
     defaultValue: null,
@@ -17,4 +17,4 @@ const GameTableGameQuestion = db.define("gametable_gamequestion", {
     foreignKey: [Object]
   }
 });
-module.exports = GameTableGameQuestion;
+module.exports = GameTable_Question;

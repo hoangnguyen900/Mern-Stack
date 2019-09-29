@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../database");
 
-const User = db.define("user", {
+const Subject = db.define("subject", {
   id: {
     type: "INT(11)",
     allowNull: false,
@@ -9,30 +9,17 @@ const User = db.define("user", {
     primaryKey: true,
     foreignKey: [Object]
   },
-  first_name: {
+  title: {
     type: "VARCHAR(50)",
     allowNull: true,
     defaultValue: null,
     primaryKey: false
   },
-  last_name: {
-    type: "VARCHAR(50)",
+  icon: {
+    type: "LONGBLOB",
     allowNull: true,
     defaultValue: null,
     primaryKey: false
-  },
-  grades: {
-    type: "CHAR(10)",
-    allowNull: true,
-    defaultValue: null,
-    primaryKey: false
-  },
-  subject_id: {
-    type: "INT(11)",
-    allowNull: true,
-    defaultValue: null,
-    primaryKey: false,
-    foreignKey: [Object]
   }
 });
-module.exports = User;
+module.exports = Subject;

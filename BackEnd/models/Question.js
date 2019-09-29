@@ -1,25 +1,20 @@
 const Sequelize = require("sequelize");
 const db = require("../database");
 
-const QuizSubject = db.define("quizsubject", {
-  idSubject: {
+const Question = db.define("question", {
+  id: {
     type: "INT(11)",
     allowNull: false,
     defaultValue: null,
     primaryKey: true,
     foreignKey: [Object]
   },
-  subjectName: {
-    type: "VARCHAR(50)",
-    allowNull: true,
-    defaultValue: null,
-    primaryKey: false
-  },
-  subjectIcon: {
-    type: "LONGBLOB",
+  question: {
+    type: "VARCHAR(100)",
     allowNull: true,
     defaultValue: null,
     primaryKey: false
   }
 });
-module.exports = QuizSubject;
+
+module.exports = Question;
