@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../database");
 
-const GameTable = db.define("gametable", {
+const QuestionTable = db.define("question_table", {
   id: {
     type: "INT(11)",
     allowNull: false,
@@ -71,4 +71,4 @@ const GameTable = db.define("gametable", {
     primaryKey: false
   }
 });
-module.exports = GameTable;
+module.exports = QuestionTable;
