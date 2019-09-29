@@ -1,7 +1,14 @@
 const Sequelize = require("sequelize");
 const db = require("../database");
 
-const QuestionTable_Question = db.define("questiontable_question", {
+const AnswerRecord = db.define("answer_record", {
+  user_id: {
+    type: "INT(11)",
+    allowNull: false,
+    defaultValue: null,
+    primaryKey: true,
+    foreignKey: [Object]
+  },
   question_table_id: {
     type: "INT(11)",
     allowNull: false,
@@ -15,6 +22,13 @@ const QuestionTable_Question = db.define("questiontable_question", {
     defaultValue: null,
     primaryKey: true,
     foreignKey: [Object]
+  },
+  choice_id: {
+    type: "INT(11)",
+    allowNull: false,
+    defaultValue: null,
+    primaryKey: false,
+    foreignKey: [Object]
   }
 });
-module.exports = QuestionTable_Question;
+module.exports = AnswerRecord;
