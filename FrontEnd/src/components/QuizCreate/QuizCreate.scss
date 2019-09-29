@@ -1,0 +1,98 @@
+.page-container {
+    background-color: #303030;
+    padding-top: 20px;
+
+    .init-quiz {
+        height: fit-content;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        .init-quiz-container {
+            width: 480px;
+            height: fit-content;
+            background-color: white;
+            z-index: 100;
+            border-radius: 10px;
+            padding: 24px;
+
+            .init-quiz-create-title {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: stretch;
+
+                img {
+                    height: 80px;
+                    width: 80px;
+                }
+
+                p {
+                    font-weight: normal;
+                    font-size: 20px;
+                    text-align: center;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                }
+            }
+
+            .init-quiz-create-body {
+                margin-top: 20px;
+
+                .init-quiz-name-quiz {
+                    p {
+                        color: #6F94BB;
+                    }
+
+                    input {
+                        height: 40px;
+                        width: 100%;
+                        border: 1px solid #ccc;
+                        border-radius: 4px;
+                    }
+                }
+
+                .init-quiz-choose-subject {
+                    margin-top: 20px;
+
+                    p {
+                        color: #6F94BB;
+                    }
+
+                    .subject-clouds {
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                        padding-top: 20px;
+
+                        .subject {
+                            height: 28px;
+                            width: fit-content;
+                            margin-right: 6px;
+                            margin-bottom: 10px;
+                            padding-left: 12px;
+                            padding-right: 12px;
+                            padding-top: 9px;
+                            background-color: #f2f2f2;
+                            border-radius: 20px;
+
+                            p {
+                                color: black;
+                                font-size: 14px;
+                            }
+                        }
+
+                        .subject:hover {
+                            background-color: #5F5F5F;
+
+                            p {
+                                color: white;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

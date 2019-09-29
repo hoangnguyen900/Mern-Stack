@@ -1,13 +1,13 @@
-import React from "react";
-import "./App.css";
-import GameTable from "./GameTable";
+import React from 'react';
+import Create from './layouts/Quiz/Create/Create';
+import './App.scss';
 class App extends React.Component {
   render() {
-    return (
-      <div>
-        <GameTable />
-      </div>
-    );
+  return (
+    <div className="page-container">
+      <Create/>
+    </div>
+  );
   }
 }
 
