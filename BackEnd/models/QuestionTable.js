@@ -6,6 +6,7 @@ const QuestionTable = db.define("question_table", {
     type: "INT(11)",
     allowNull: false,
     defaultValue: null,
+    autoIncrement: true,
     primaryKey: true,
     foreignKey: [Object]
   },
@@ -23,13 +24,13 @@ const QuestionTable = db.define("question_table", {
   },
   grade_begin: {
     type: "INT(11)",
-    allowNull: false,
+    allowNull: true,
     defaultValue: null,
     primaryKey: false
   },
   grade_end: {
     type: "INT(11)",
-    allowNull: false,
+    allowNull: true,
     defaultValue: null,
     primaryKey: false
   },
@@ -60,12 +61,6 @@ const QuestionTable = db.define("question_table", {
   },
   is_public: {
     type: "TINYINT(1)",
-    allowNull: false,
-    defaultValue: null,
-    primaryKey: false
-  },
-  time: {
-    type: "DOUBLE",
     allowNull: false,
     defaultValue: null,
     primaryKey: false

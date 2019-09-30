@@ -6,25 +6,23 @@ const User = db.define("user", {
     type: "INT(11)",
     allowNull: false,
     defaultValue: null,
+    autoIncrement: true,
     primaryKey: true,
     foreignKey: [Object]
   },
   first_name: {
     type: "VARCHAR(50)",
-    allowNull: true,
-    defaultValue: null,
+    allowNull: false,
     primaryKey: false
   },
   last_name: {
     type: "VARCHAR(50)",
-    allowNull: true,
-    defaultValue: null,
+    allowNull: false,
     primaryKey: false
   },
   grades: {
     type: "CHAR(10)",
     allowNull: true,
-    defaultValue: null,
     primaryKey: false
   },
   subject_id: {
