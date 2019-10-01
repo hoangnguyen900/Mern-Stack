@@ -9,7 +9,7 @@
         justify-content: center;
 
         .init-quiz-container {
-            width: 480px;
+            width: 432px;
             height: fit-content;
             background-color: white;
             z-index: 100;
@@ -23,8 +23,8 @@
                 align-items: stretch;
 
                 img {
-                    height: 80px;
-                    width: 80px;
+                    height: 50px;
+                    width: 50px;
                 }
 
                 p {
@@ -34,6 +34,7 @@
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
+                    color: #666666;
                 }
             }
 
