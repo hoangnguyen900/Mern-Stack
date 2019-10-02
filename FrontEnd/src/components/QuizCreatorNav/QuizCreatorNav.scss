@@ -1,0 +1,40 @@
+.quiz-creator-nav {
+    height: 56px;
+    background-color: #5F5F5F;
+    padding: 0 15%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .logo {
+
+        img {
+            height: 110px;
+            position: relative;
+            top: -25px;
+        }
+    }
+
+    .button-group {
+        padding: 8px 0;
+
+        button {
+            height: 40px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .b-exit {
+            background-color: #595959;
+            color: white;
+        }
+
+        .b-finish {
+            background-color: white;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15),
+                0 4px 0 #fff,
+                0 4px 2px rgba(0, 0, 0, 0.45);
+        }
+    }
+}   
