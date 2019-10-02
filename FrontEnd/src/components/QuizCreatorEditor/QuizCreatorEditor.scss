@@ -72,14 +72,13 @@
         left: 25%;
         right: 25%;
         top: 25%;
-        bottom: 25%;
         background: white;
         border-radius: 5px;
         display: flex;
         flex-direction: column;
         padding: 10px 10px;
         margin: 10px 0;
-        
+
         .popup-header {
             p {
                 font-size: 20px;
@@ -93,7 +92,7 @@
         }
 
         .popup-body {
-            
+
             input {
                 width: 80%;
                 border-radius: 5px;
@@ -103,8 +102,47 @@
                 height: 40px;
                 padding: 0 10px;
             }
-            *{
+
+            * {
                 margin-top: 15px;
+            }
+
+            button {
+                height: 40px;
+                min-width: 150px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                background-color: white;
+            }
+        }
+
+        .popup-footer {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+
+            button {
+                height: 40px;
+                min-width: 150px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+               
+            }
+
+            .b-cancel {
+                background-color: white;
+            }
+
+            .b-save{
+                background-color: #00C985;
+                color: white;
+                font-size: 20px;
+                margin-left:10px; 
+                span{
+                    margin-left: 10px;
+                }
             }
         }
     }

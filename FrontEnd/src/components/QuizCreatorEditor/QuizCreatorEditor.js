@@ -5,7 +5,7 @@ import 'font-awesome/css/font-awesome.min.css';
 //import ToggleBox from '../ToggleBox/ToggleBox';
 import QuizCreatorQuestionInput from '../QuizCreatorQuestionInput/QuizCreatorQuestionInput';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faSave } from '@fortawesome/free-solid-svg-icons';
 class QuizCreatorEditor extends React.Component {
 	constructor() {
 		super();
@@ -54,11 +54,13 @@ class QuestionCreatePopup extends React.Component {
 					</div>
 					<div className="popup-body">
 						<input />
-						<QuizCreatorQuestionInput/>
+						<QuizCreatorQuestionInput />
+						<button>Add another option</button>
 						<hr />
 					</div>
 					<div className="popup-footer">
-						<button onClick={this.props.closePopup}>Close</button>
+						<button className="b-cancel" onClick={this.props.closePopup}>CANCEL</button>
+						<button className="b-save"><FontAwesomeIcon size="1x" icon={faSave} color="white" /><span>SAVE</span></button>
 					</div>
 
 				</div>
