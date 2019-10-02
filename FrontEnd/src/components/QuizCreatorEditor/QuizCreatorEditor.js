@@ -2,9 +2,10 @@ import React from 'react'
 import './QuizCreatorEditor.scss';
 import '../../../node_modules/font-awesome/css/font-awesome.min.css';
 import 'font-awesome/css/font-awesome.min.css';
-import ToggleBox  from '../ToggleBox/ToggleBox';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+//import ToggleBox from '../ToggleBox/ToggleBox';
+import QuizCreatorQuestionInput from '../QuizCreatorQuestionInput/QuizCreatorQuestionInput';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 class QuizCreatorEditor extends React.Component {
 	constructor() {
 		super();
@@ -23,7 +24,8 @@ class QuizCreatorEditor extends React.Component {
 				<div className="question-editor">
 					<div className="button-group">
 
-						<button onClick={this.togglePopup.bind(this)} className="button b-create"><FontAwesomeIcon icon={faPlusCircle} />Create a new question</button>
+						<button onClick={this.togglePopup.bind(this)} className="button b-create">
+							<FontAwesomeIcon icon={faPlusCircle} />Create a new question</button>
 						<p>Or</p>
 						<button className="button b-teleport">Teleport</button>
 					</div>
@@ -52,11 +54,11 @@ class QuestionCreatePopup extends React.Component {
 					</div>
 					<div className="popup-body">
 						<input />
-						<ToggleBox/>
+						<QuizCreatorQuestionInput/>
 						<hr />
 					</div>
 					<div className="popup-footer">
-						<button onClick={this.props.closePopup}>close me</button>
+						<button onClick={this.props.closePopup}>Close</button>
 					</div>
 
 				</div>
