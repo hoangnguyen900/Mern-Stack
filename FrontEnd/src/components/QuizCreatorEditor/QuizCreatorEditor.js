@@ -91,7 +91,7 @@ class QuestionCreatePopup extends React.Component {
               <img
                 src={require("./images/question.png")}
                 alt="question"
-                placeholder="Type your question here.."
+                placeholder={"Type your question here.."}
               />
               {this.props.text}
             </p>
