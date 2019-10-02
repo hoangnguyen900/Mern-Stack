@@ -66,18 +66,22 @@
     bottom: 0;
     margin: auto;
     background-color: rgba(0, 0, 0, 0.5);
+    overflow: scroll;
+    overflow-x: hidden;
 
     .popup_inner {
         position: absolute;
-        left: 25%;
-        right: 25%;
-        top: 25%;
+        left: 20%;
+        top: 10%;
         background: white;
         border-radius: 5px;
         display: flex;
         flex-direction: column;
         padding: 10px 10px;
         margin: 10px 0;
+        width: 50%;
+        min-width: 500px;
+        max-width: 600px;
 
         .popup-header {
             p {
@@ -94,7 +98,6 @@
         .popup-body {
 
             input {
-                width: 80%;
                 border-radius: 5px;
                 border: 1px solid #ccc;
                 border-radius: 4px;
@@ -128,19 +131,20 @@
                 font-size: 16px;
                 border: 1px solid #ccc;
                 border-radius: 5px;
-               
+
             }
 
             .b-cancel {
                 background-color: white;
             }
 
-            .b-save{
+            .b-save {
                 background-color: #00C985;
                 color: white;
                 font-size: 20px;
-                margin-left:10px; 
-                span{
+                margin-left: 10px;
+
+                span {
                     margin-left: 10px;
                 }
             }
