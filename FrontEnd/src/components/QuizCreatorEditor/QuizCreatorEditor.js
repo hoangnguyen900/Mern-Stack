@@ -84,9 +84,9 @@ class QuestionCreatePopup extends React.Component {
             <hr />
           </div>
           <div className="popup-body">
-            <input />
+            <input type="text" style={{width:'80%'}} />
             {element}
-            <button onClick={this.addQuestionOnclick}>
+            <button style={{display:'none'}} onClick={this.addQuestionOnclick}>
               Add another option
             </button>
             <hr />
