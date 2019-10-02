@@ -6,13 +6,13 @@ const Subject = db.define("subject", {
     type: "INT(11)",
     allowNull: false,
     defaultValue: null,
+    autoIncrement: true,
     primaryKey: true,
     foreignKey: [Object]
   },
   title: {
     type: "VARCHAR(50)",
-    allowNull: true,
-    defaultValue: null,
+    allowNull: false,
     primaryKey: false
   },
   icon: {
