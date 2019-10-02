@@ -8,27 +8,44 @@ import {
     faTrashAlt
 } from "@fortawesome/free-solid-svg-icons";
 class QuizCreatorQuestionInput extends React.Component {
+
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            isDisplayDelIcon: true
+        };
     }
+    handleOnclickDelete = () => { };
+    componentDidMount = () => {
+        let display = false;
+        this.props.index > 2 ? (display = true) : (display = false);
+        this.setState({
+            isDisplayDelIcon: display
+        });
+        console.log(this.state);
+    };
     render() {
-        var { index } = this.props;
+        var { isDisplayDelIcon } = this.state;
+
         return (
             <div className="question-input">
                 <FontAwesomeIcon icon={faCheckCircle} size="2x" color="#CAD2DC" />
                 <div className="input-group">
                     <input type="text" />
-                    <span><FontAwesomeIcon icon={faTrashAlt} /></span>
-
+                    <span
+                        onClick={this.handleOnclickDelete}
+                        style={{ display: isDisplayDelIcon ? "flex" : "none" }}
+                    >
+                        <FontAwesomeIcon icon={faTrashAlt} />
+                    </span>
+                    <FontAwesomeIcon icon={faSquareRootAlt} size="2x" color="#CAD2DC" />
+                    <FontAwesomeIcon icon={faImage} size="2x" color="#CAD2DC" />
                 </div>
-                <div></div>
-                <span><FontAwesomeIcon icon={faSquareRootAlt} size="2x" color="#CAD2DC" /></span>
-                <span><FontAwesomeIcon icon={faImage} size="2x" color="#CAD2DC" /></span>
 
             </div>
         );
     }
+
 }
 
 export default QuizCreatorQuestionInput;
