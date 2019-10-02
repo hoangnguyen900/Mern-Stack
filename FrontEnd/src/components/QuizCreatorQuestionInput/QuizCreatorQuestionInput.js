@@ -15,14 +15,17 @@ class QuizCreatorQuestionInput extends React.Component {
       isDisplayDelIcon: true
     };
   }
-  handleOnclickDelete = () => {};
+  handleOnclickDeleteOptions = () => {
+    this.props.handleOnclickDeleteOptions();
+    console.log(this.props);
+  };
   componentDidMount = () => {
     let display = false;
     this.props.index > 2 ? (display = true) : (display = false);
     this.setState({
       isDisplayDelIcon: display
     });
-    console.log(this.state);
+    console.log(this.props);
   };
   render() {
     var { isDisplayDelIcon } = this.state;
@@ -33,7 +36,7 @@ class QuizCreatorQuestionInput extends React.Component {
         <div className="input-group">
           <input type="text" />
           <span
-            onClick={this.handleOnclickDelete}
+            onClick={this.handleOnclickDeleteOptions}
             style={{ display: isDisplayDelIcon ? "block" : "none" }}
           >
             <FontAwesomeIcon icon={faTrashAlt} />

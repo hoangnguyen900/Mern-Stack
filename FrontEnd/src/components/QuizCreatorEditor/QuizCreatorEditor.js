@@ -47,12 +47,11 @@ class QuizCreatorEditor extends React.Component {
     );
   }
 }
-const questionsArr = [1, 2, 3, 4];
 class QuestionCreatePopup extends React.Component {
   constructor() {
     super();
     this.state = {
-      questions: questionsArr,
+      questions: [1, 2, 3, 4],
       isDisplay: "block"
     };
   }
@@ -62,26 +61,41 @@ class QuestionCreatePopup extends React.Component {
         isDisplay: "none"
       });
   }
+  handleOnclickDeleteOptions = () => {
+    let arr = this.state.questions;
+    arr.pop();
+    this.setState({
+      questions: arr
+    });
+  };
+
   addQuestionOnclick = () => {
-    questionsArr.push(questionsArr.length + 1);
+    let arr = this.state.questions;
+    arr.push(arr.length + 1);
 
     this.setState({
-      questions: questionsArr
+      questions: arr
     });
     let display = "";
-    questionsArr.length < 5 ? (display = "block") : (display = "none");
+    arr.length < 5 ? (display = "block") : (display = "none");
     this.setState({
       isDisplay: display
     });
-    console.log(this.state);
-    console.log(questionsArr.length);
   };
+  //   shouldComponentUpdate() {
+  //     return true;
+  //   }
   render() {
     let { isDisplay, questions } = this.state;
-    var element = questions.map(index => {
-      return <QuizCreatorQuestionInput key={index} index={index} />;
+    let element = questions.map(index => {
+      return (
+        <QuizCreatorQuestionInput
+          key={index}
+          index={index}
+          handleOnclickDeleteOptions={this.handleOnclickDeleteOptions}
+        />
+      );
     });
-
     return (
       <div className="popup">
         <div className="popup_inner">
