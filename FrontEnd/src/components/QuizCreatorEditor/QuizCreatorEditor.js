@@ -2,7 +2,8 @@ import React from "react";
 import "./QuizCreatorEditor.scss";
 import "../../../node_modules/font-awesome/css/font-awesome.min.css";
 import "font-awesome/css/font-awesome.min.css";
-import ToggleBox from "../ToggleBox/ToggleBox";
+//import ToggleBox from '../ToggleBox/ToggleBox';
+import QuizCreatorQuestionInput from "../QuizCreatorQuestionInput/QuizCreatorQuestionInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 class QuizCreatorEditor extends React.Component {
@@ -64,11 +65,11 @@ class QuestionCreatePopup extends React.Component {
           </div>
           <div className="popup-body">
             <input />
-            <ToggleBox />
+            <QuizCreatorQuestionInput />
             <hr />
           </div>
           <div className="popup-footer">
-            <button onClick={this.props.closePopup}>close me</button>
+            <button onClick={this.props.closePopup}>Close</button>
           </div>
         </div>
       </div>
