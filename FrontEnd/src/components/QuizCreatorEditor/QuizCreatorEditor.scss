@@ -69,8 +69,7 @@
 
     .popup_inner {
         position: absolute;
-        left: 25%;
-        right: 25%;
+        left: 20%;
         top: 25%;
         background: white;
         border-radius: 5px;
@@ -78,7 +77,8 @@
         flex-direction: column;
         padding: 10px 10px;
         margin: 10px 0;
-
+        width: 600px;
+        min-width: 500px;
         .popup-header {
             p {
                 font-size: 20px;
@@ -94,7 +94,6 @@
         .popup-body {
 
             input {
-                width: 80%;
                 border-radius: 5px;
                 border: 1px solid #ccc;
                 border-radius: 4px;

@@ -63,7 +63,7 @@ class QuestionCreatePopup extends React.Component {
 						<hr />
 					</div>
 					<div className="popup-body">
-						<input />
+						<input style={{width:'80%'}}/>
 						{element}
 						<button>Add another option</button>
 						<hr />
