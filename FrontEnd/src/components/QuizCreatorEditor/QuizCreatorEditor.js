@@ -47,22 +47,32 @@ class QuizCreatorEditor extends React.Component {
     );
   }
 }
-const questions = [1, 2, 3, 4];
+const questionsArr = [1, 2, 3, 4];
 class QuestionCreatePopup extends React.Component {
   constructor() {
     super();
     this.state = {
-      questions
+      questions: questionsArr,
+      isDisplay: "block"
     };
   }
   addQuestionOnclick = () => {
-    questions.push(questions.length + 1);
+    questionsArr.push(questionsArr.length + 1);
+
     this.setState({
-      questions: questions
+      questions: questionsArr
     });
+    let display = "";
+    questionsArr.length < 5 ? (display = "block") : (display = "none");
+    this.setState({
+      isDisplay: display
+    });
+    console.log(this.state);
+    console.log(questionsArr.length);
   };
   render() {
-    var element = this.state.questions.map(index => {
+    let { isDisplay, questions } = this.state;
+    var element = questions.map(index => {
       return <QuizCreatorQuestionInput key={index} index={index} />;
     });
     return (
@@ -83,7 +93,10 @@ class QuestionCreatePopup extends React.Component {
           <div className="popup-body">
             <input />
             {element}
-            <button onClick={this.addQuestionOnclick}>
+            <button
+              style={{ display: isDisplay }}
+              onClick={this.addQuestionOnclick}
+            >
               Add another option
             </button>
             <hr />
