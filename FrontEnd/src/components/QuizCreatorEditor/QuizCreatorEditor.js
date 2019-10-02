@@ -1,11 +1,13 @@
-import React from 'react'
-import './QuizCreatorEditor.scss';
-import '../../../node_modules/font-awesome/css/font-awesome.min.css';
-import 'font-awesome/css/font-awesome.min.css';
+import React from "react";
+import "./QuizCreatorEditor.scss";
+import "../../../node_modules/font-awesome/css/font-awesome.min.css";
+import "font-awesome/css/font-awesome.min.css";
 //import ToggleBox from '../ToggleBox/ToggleBox';
+
 import QuizCreatorQuestionInput from '../QuizCreatorQuestionInput/QuizCreatorQuestionInput';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle, faSave } from '@fortawesome/free-solid-svg-icons';
+
 class QuizCreatorEditor extends React.Component {
 	constructor() {
 		super();
@@ -23,28 +25,36 @@ class QuizCreatorEditor extends React.Component {
 			<div className="editor">
 				<div className="question-editor">
 					<div className="button-group">
-
-						<button onClick={this.togglePopup.bind(this)} className="button b-create">
-							<FontAwesomeIcon icon={faPlusCircle} />Create a new question</button>
+						<button
+							onClick={this.togglePopup.bind(this)}
+							className="button b-create"
+						>
+							<FontAwesomeIcon icon={faPlusCircle} />
+							Create a new question
+            </button>
 						<p>Or</p>
 						<button className="button b-teleport">Teleport</button>
 					</div>
 				</div>
 				<div className="quiz-info"></div>
-				{this.state.showPopup ?
+				{this.state.showPopup ? (
 					<QuestionCreatePopup
-						text='Question'
+						text="Question"
 						closePopup={this.togglePopup.bind(this)}
 					/>
-					: null
-				}
+				) : null}
 			</div>
 		);
 	}
 }
 
 class QuestionCreatePopup extends React.Component {
+
 	render() {
+		const questions = [1, 1, 1, 1];
+		var element = questions.map(index => {
+			return <QuizCreatorQuestionInput key={index} index={index} />;
+		});
 		return (
 			<div className='popup'>
 				<div className='popup_inner'>
@@ -54,7 +64,7 @@ class QuestionCreatePopup extends React.Component {
 					</div>
 					<div className="popup-body">
 						<input />
-						<QuizCreatorQuestionInput />
+						{element}
 						<button>Add another option</button>
 						<hr />
 					</div>
@@ -67,6 +77,7 @@ class QuestionCreatePopup extends React.Component {
 			</div>
 		);
 	}
+
 }
 
-export { QuizCreatorEditor, QuestionCreatePopup } 
+export { QuizCreatorEditor, QuestionCreatePopup };
