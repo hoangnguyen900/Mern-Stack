@@ -4,21 +4,28 @@
 
     .input-group {
         width: 100%;
+        display: flex;
+        flex-direction: row;
+
         input {
-            width: 100%;
+            width: calc(0% + 300px);
             border-radius: 5px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
             height: 35px;
             padding: 0 10px;
+            flex-grow: 1;
         }
 
         span {
             position: relative;
-            left: 94%;
-            top: - 28px;
+            display: flex;
+            flex-direction: column;
             color: #ccc;
+            justify-content: center;
+            width: 20px;
+            margin: 0;
         }
     }
 

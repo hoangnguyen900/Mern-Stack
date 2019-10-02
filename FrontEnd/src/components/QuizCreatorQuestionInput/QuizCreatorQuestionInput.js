@@ -20,9 +20,11 @@ class QuizCreatorQuestionInput extends React.Component {
                 <div className="input-group">
                     <input type="text" />
                     <span><FontAwesomeIcon icon={faTrashAlt} /></span>
+
                 </div>
-                <FontAwesomeIcon icon={faSquareRootAlt} size="2x" color="#CAD2DC" />
-                <FontAwesomeIcon icon={faImage} size="2x" color="#CAD2DC" />
+                <span><FontAwesomeIcon icon={faSquareRootAlt} size="2x" color="#CAD2DC" /></span>
+                <span><FontAwesomeIcon icon={faImage} size="2x" color="#CAD2DC" /></span>
+
             </div>
         );
     }
