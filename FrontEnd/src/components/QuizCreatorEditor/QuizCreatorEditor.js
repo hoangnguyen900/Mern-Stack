@@ -48,6 +48,10 @@ class QuizCreatorEditor extends React.Component {
 
 class QuestionCreatePopup extends React.Component {
   render() {
+    const questions = [1, 1, 1, 1];
+    var element = questions.map(index => {
+      return <QuizCreatorQuestionInput key={index} index={index} />;
+    });
     return (
       <div className="popup">
         <div className="popup_inner">
@@ -65,7 +69,7 @@ class QuestionCreatePopup extends React.Component {
           </div>
           <div className="popup-body">
             <input />
-            <QuizCreatorQuestionInput />
+            {element}
             <hr />
           </div>
           <div className="popup-footer">
