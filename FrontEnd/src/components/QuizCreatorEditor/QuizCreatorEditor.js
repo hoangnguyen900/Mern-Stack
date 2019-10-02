@@ -56,6 +56,12 @@ class QuestionCreatePopup extends React.Component {
       isDisplay: "block"
     };
   }
+  componentDidMount() {
+    if (this.state.questions.length >= 5)
+      this.setState({
+        isDisplay: "none"
+      });
+  }
   addQuestionOnclick = () => {
     questionsArr.push(questionsArr.length + 1);
 
@@ -75,6 +81,7 @@ class QuestionCreatePopup extends React.Component {
     var element = questions.map(index => {
       return <QuizCreatorQuestionInput key={index} index={index} />;
     });
+
     return (
       <div className="popup">
         <div className="popup_inner">
