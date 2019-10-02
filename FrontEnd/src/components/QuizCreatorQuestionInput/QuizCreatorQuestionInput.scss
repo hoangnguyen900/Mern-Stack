@@ -23,12 +23,14 @@
         }
 
         span {
-            position: relative;
-            flex-direction: column;
-            justify-content: center;
+            position: absolute;
             color: #ccc;
-            width: 20px;
             margin: 0;
+            right: 0px;
+            top: 10px;
+            // right: 15%;
+            // top: 30%;
+            // left: 80%;
         }
     }
 

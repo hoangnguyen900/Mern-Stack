@@ -34,14 +34,14 @@ class QuizCreatorQuestionInput extends React.Component {
                     <input type="text" />
                     <span
                         onClick={this.handleOnclickDelete}
-                        style={{ display: isDisplayDelIcon ? "flex" : "none" }}
+                        style={{ display: isDisplayDelIcon ? "block" : "none" }}
                     >
                         <FontAwesomeIcon icon={faTrashAlt} />
                     </span>
-                    <FontAwesomeIcon icon={faSquareRootAlt} size="2x" color="#CAD2DC" />
-                    <FontAwesomeIcon icon={faImage} size="2x" color="#CAD2DC" />
-                </div>
 
+                </div>
+                <FontAwesomeIcon icon={faSquareRootAlt} size="2x" color="#CAD2DC" />
+                <FontAwesomeIcon icon={faImage} size="2x" color="#CAD2DC" />
             </div>
         );
     }
