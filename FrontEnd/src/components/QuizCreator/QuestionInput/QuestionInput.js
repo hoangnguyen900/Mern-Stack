@@ -1,5 +1,5 @@
 import React from "react";
-import "./QuizCreatorQuestionInput.scss";
+import "./QuestionInput.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,

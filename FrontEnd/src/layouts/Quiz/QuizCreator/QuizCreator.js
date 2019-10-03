@@ -1,7 +1,7 @@
 import React from 'react';
-import {QuizCreatorEditor} from '../../../components/QuizCreatorEditor/QuizCreatorEditor';
+import {QuizCreatorEditor} from '../../../components/QuizCreator/Editor/Editor';
 import './QuizCreator.scss';
-import QuizCreatorNav from '../../../components/QuizCreatorNav/QuizCreatorNav';
+import QuizCreatorNav from '../../../components/QuizCreator/Nav/Nav';
 class QuizCreator extends React.Component {
   render() {
     return (

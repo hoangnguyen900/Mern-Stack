@@ -1,10 +1,10 @@
 import React from "react";
-import "./QuizCreatorEditor.scss";
-import "../../../node_modules/font-awesome/css/font-awesome.min.css";
+import "./Editor.scss";
+
 import "font-awesome/css/font-awesome.min.css";
 //import ToggleBox from '../ToggleBox/ToggleBox';
 
-import QuizCreatorQuestionInput from "../QuizCreatorQuestionInput/QuizCreatorQuestionInput";
+import QuizCreatorQuestionInput from "../QuestionInput/QuestionInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle, faSave } from "@fortawesome/free-solid-svg-icons";
 
