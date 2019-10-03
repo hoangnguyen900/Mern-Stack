@@ -1,9 +1,9 @@
 import React from "react";
-import "./Editor.scss";
-
-
+import "./QuizCreatorEditor.scss";
+import "../../../node_modules/font-awesome/css/font-awesome.min.css";
+import "./node_modules/font-awesome/css/font-awesome.min.css";
 //import ToggleBox from '../ToggleBox/ToggleBox';
-import QuizCreatorQuestionDetail from '../QuestionDetail/QuestionDetail';
+
 import QuizCreatorQuestionInput from "../QuestionInput/QuestionInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle, faSave } from "@fortawesome/free-solid-svg-icons";
@@ -35,7 +35,6 @@ class QuizCreatorEditor extends React.Component {
             <p>Or</p>
             <button className="button b-teleport">Teleport</button>
           </div>
-          <QuizCreatorQuestionDetail/>
         </div>
         <div className="quiz-info"></div>
         {this.state.showPopup ? (

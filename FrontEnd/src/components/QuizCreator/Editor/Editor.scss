@@ -49,10 +49,13 @@
     }
 
     .quiz-info {
-        background-color: blue;
         flex-grow: 0;
         min-width: 200px;
         width: 300px;
+        padding: 10px;
+        margin-left: 40px;
+        // border-radius: 8px;
+        // border: 1px solid #E6E6E6;
     }
 }
 
