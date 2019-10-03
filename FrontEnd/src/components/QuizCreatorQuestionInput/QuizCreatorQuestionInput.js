@@ -7,7 +7,6 @@ import {
   faImage,
   faTrashAlt
 } from "@fortawesome/free-solid-svg-icons";
-
 class QuizCreatorQuestionInput extends React.Component {
   constructor(props) {
     super(props);
@@ -15,6 +14,7 @@ class QuizCreatorQuestionInput extends React.Component {
       isDisplayDelIcon: true
     };
   }
+
   handleOnclickDeleteOptions = () => {
     this.props.handleOnclickDeleteOptions();
     console.log(this.props);

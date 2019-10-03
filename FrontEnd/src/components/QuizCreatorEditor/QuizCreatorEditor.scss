@@ -5,7 +5,7 @@
     height: 100%;
     background-color: #F2F2F2;
     justify-content: center;
-
+    flex-wrap: wrap;
     .question-editor {
         width: 600px;
         min-width: 200px;
@@ -71,7 +71,7 @@
 
     .popup_inner {
         position: absolute;
-        left: 20%;
+        left: calc((25%-500px)/2);
         top: 10%;
         background: white;
         border-radius: 5px;
@@ -80,8 +80,8 @@
         padding: 10px 10px;
         margin: 10px 0;
         width: 50%;
-        min-width: 500px;
-        max-width: 600px;
+        min-width: 300px;
+        max-width: 500px;
 
         .popup-header {
             p {

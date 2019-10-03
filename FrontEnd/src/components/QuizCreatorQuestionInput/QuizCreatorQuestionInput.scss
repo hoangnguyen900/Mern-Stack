@@ -10,29 +10,28 @@
 
         display: flex;
         flex-direction: row;
+        justify-content: flex-start;
 
         input {
-            width: calc(0% + 300px);
-
+            width: 100%;
             border-radius: 5px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
             height: 35px;
             padding: 0 10px;
-            flex-grow: 1;
         }
 
         span {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-
+            position: absolute;
             color: #ccc;
-            justify-content: center;
-            width: 20px;
             margin: 0;
-            cursor: pointer;
+
+            right: 0px;
+            top: 10px;
+            // right: 15%;
+            // top: 30%;
+            // left: 80%;
         }
     }
 
