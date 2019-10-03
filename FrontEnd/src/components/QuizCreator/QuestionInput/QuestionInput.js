@@ -1,5 +1,8 @@
 import React from "react";
 import "./QuestionInput.scss";
+import { connect } from "react-redux";
+import * as actions from "./../../../redux/actions/index";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
@@ -12,14 +15,13 @@ class QuizCreatorQuestionInput extends React.Component {
     super(props);
     this.state = {
       isDisplayDelIcon: true,
-      isTrueAnswer: false,
+      isRight: false,
       answer: ""
     };
   }
 
   handleOnclickDeleteOptions = () => {
     this.props.handleOnclickDeleteOptions();
-    console.log(this.props);
   };
   componentDidMount = () => {
     let display = false;
@@ -27,12 +29,17 @@ class QuizCreatorQuestionInput extends React.Component {
     this.setState({
       isDisplayDelIcon: display
     });
-    console.log(this.props);
   };
   handleOnClickIsTrueAns = () => {
-    this.setState({
-      isTrueAnswer: !this.state.isTrueAnswer
-    });
+    let { answer, isRight } = this.state;
+    let { index } = this.props;
+    let a = async () => {
+      await this.setState({
+        isRight: !isRight
+      });
+    };
+
+    a().then(this.props.onChangeAnswer({ index, answer, isRight }));
   };
   handleOnChangeInput = event => {
     let value = event.target.value;
@@ -40,22 +47,26 @@ class QuizCreatorQuestionInput extends React.Component {
     this.setState({
       [name]: value
     });
+    let { answer, isRight } = this.state;
+    let { index } = this.props;
+    this.props.onChangeAnswer({ index, answer, isRight });
   };
   render() {
-    var { isDisplayDelIcon, isTrueAnswer } = this.state;
+    var { isDisplayDelIcon, isRight } = this.state;
 
     return (
       <div className="question-input">
         <FontAwesomeIcon
           icon={faCheckCircle}
           size="2x"
-          color={isTrueAnswer ? "#00C985" : "#CAD2DC"}
+          color={isRight ? "#00C985" : "#CAD2DC"}
           onClick={this.handleOnClickIsTrueAns}
         />
         <div className="input-group">
           <input
             type="text"
             name="answer"
+            placeholder="add answer"
             onChange={this.handleOnChangeInput}
           />
           <span
@@ -71,5 +82,19 @@ class QuizCreatorQuestionInput extends React.Component {
     );
   }
 }
-
-export default QuizCreatorQuestionInput;
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    createAnswer: state => {
+      dispatch(actions.createAnswer(state));
+    }
+  };
+};
+const mapStateToProps = state => {
+  return {
+    quizAnswer: state.quizAnswer
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(QuizCreatorQuestionInput);
