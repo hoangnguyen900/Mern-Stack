@@ -19,8 +19,8 @@ router.get("/question/:id", (req, res) =>
     .catch(err => console.log(err))
 );
 router.post("/question", (req, res) => {
-  Question.create(req.body)
-    .then(res.send("success"))
+  Question.create(req.body.state)
+    .then(res.send(req.body))
     .catch(err => console.log(err));
 });
 router.put("/question", (req, res) =>
