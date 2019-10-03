@@ -60,15 +60,19 @@ class QuestionCreatePopup extends React.Component {
       this.setState({
         isDisplay: "none"
       });
+
+    console.log("check");
   }
   handleOnclickDeleteOptions = () => {
-    let arr = this.state.questions;
-    arr.pop();
     this.setState({
-      questions: arr
+      question: this.state.questions.pop()
     });
+    if (this.state.questions.length < 5) {
+      this.setState({
+        isDisplay: "block"
+      });
+    }
   };
-
   addQuestionOnclick = () => {
     let arr = this.state.questions;
     arr.push(arr.length + 1);
@@ -77,7 +81,7 @@ class QuestionCreatePopup extends React.Component {
       questions: arr
     });
     let display = "";
-    arr.length < 5 ? (display = "block") : (display = "none");
+    this.state.questions.length < 5 ? (display = "block") : (display = "none");
     this.setState({
       isDisplay: display
     });
@@ -85,6 +89,9 @@ class QuestionCreatePopup extends React.Component {
   //   shouldComponentUpdate() {
   //     return true;
   //   }
+  onSubmitHandle = event => {
+    event.preventDefault();
+  };
   render() {
     let { isDisplay, questions } = this.state;
     let element = questions.map(index => {
@@ -96,43 +103,46 @@ class QuestionCreatePopup extends React.Component {
         />
       );
     });
+
     return (
       <div className="popup">
-        <div className="popup_inner">
-          <div className="popup-header">
-            <p>
-              {" "}
-              <img
-                src={require("./images/question.png")}
-                alt="question"
-                placeholder={"Type your question here.."}
-              />
-              {this.props.text}
-            </p>
-            <hr />
-          </div>
-          <div className="popup-body">
-            <input type="text" style={{ width: "80%" }} />
-            {element}
+        <form onSubmit={this.onSubmitHandle}>
+          <div className="popup_inner">
+            <div className="popup-header">
+              <p>
+                {" "}
+                <img
+                  src={require("./images/question.png")}
+                  alt="question"
+                  placeholder={"Type your question here.."}
+                />
+                {this.props.text}
+              </p>
+              <hr />
+            </div>
+            <div className="popup-body">
+              <input type="text" style={{ width: "80%" }} />
+              {element}
 
-            <button
-              style={{ display: isDisplay }}
-              onClick={this.addQuestionOnclick}
-            >
-              Add another option
-            </button>
-            <hr />
+              <button
+                style={{ display: isDisplay }}
+                onClick={this.addQuestionOnclick}
+              >
+                Add another option
+              </button>
+              <hr />
+            </div>
+            <div className="popup-footer">
+              <button className="b-cancel" onClick={this.props.closePopup}>
+                CANCEL
+              </button>
+              <button className="b-save" type="submit">
+                <FontAwesomeIcon size="1x" icon={faSave} color="white" />
+                <span>SAVE</span>
+              </button>
+            </div>
           </div>
-          <div className="popup-footer">
-            <button className="b-cancel" onClick={this.props.closePopup}>
-              CANCEL
-            </button>
-            <button className="b-save">
-              <FontAwesomeIcon size="1x" icon={faSave} color="white" />
-              <span>SAVE</span>
-            </button>
-          </div>
-        </div>
+        </form>
       </div>
     );
   }

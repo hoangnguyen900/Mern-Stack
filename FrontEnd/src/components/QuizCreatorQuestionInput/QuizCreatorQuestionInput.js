@@ -11,7 +11,9 @@ class QuizCreatorQuestionInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDisplayDelIcon: true
+      isDisplayDelIcon: true,
+      isTrueAnswer: false,
+      answer: ""
     };
   }
 
@@ -27,14 +29,35 @@ class QuizCreatorQuestionInput extends React.Component {
     });
     console.log(this.props);
   };
+  handleOnClickIsTrueAns = () => {
+    this.setState({
+      isTrueAnswer: !this.state.isTrueAnswer
+    });
+  };
+  handleOnChangeInput = event => {
+    let value = event.target.value;
+    let name = event.target.name;
+    this.setState({
+      [name]: value
+    });
+  };
   render() {
-    var { isDisplayDelIcon } = this.state;
+    var { isDisplayDelIcon, isTrueAnswer } = this.state;
 
     return (
       <div className="question-input">
-        <FontAwesomeIcon icon={faCheckCircle} size="2x" color="#CAD2DC" />
+        <FontAwesomeIcon
+          icon={faCheckCircle}
+          size="2x"
+          color={isTrueAnswer ? "#00C985" : "#CAD2DC"}
+          onClick={this.handleOnClickIsTrueAns}
+        />
         <div className="input-group">
-          <input type="text" />
+          <input
+            type="text"
+            name="answer"
+            onChange={this.handleOnChangeInput}
+          />
           <span
             onClick={this.handleOnclickDeleteOptions}
             style={{ display: isDisplayDelIcon ? "block" : "none" }}
