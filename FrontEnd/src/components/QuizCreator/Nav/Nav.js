@@ -1,5 +1,5 @@
 import React from 'react';
-import './QuizCreatorNav.scss';
+import './Nav.scss';
 class QuizCreatorNav extends React.Component {
 	render() {
 		return (
