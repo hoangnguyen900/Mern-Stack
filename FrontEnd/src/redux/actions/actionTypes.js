@@ -1,6 +1,10 @@
-export const LOGIN_SUCCESS='LOGIN_SUCCESS';
-export const LOGIN_FAIL='LOGIN_FAIL';
-export const SIGN_UP_SUCCESS='SIGN_UP_SUCCESS';
-export const SIGN_UP_FAIL='SIGN_UP_FAIL';
-export const SHOW_PROFILE='SHOW_PROFILE'
-export const UPDATE_PROFILE='UPDATE_PROFILE'
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAIL = "LOGIN_FAIL";
+//
+export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
+export const SIGN_UP_FAIL = "SIGN_UP_FAIL";
+export const SHOW_PROFILE = "SHOW_PROFILE";
+export const UPDATE_PROFILE = "UPDATE_PROFILE";
+//
+export const CREATE_ANSWER = "CREATE_ANSWER";
+export const CREATE_QUESTION = "CREATE_QUESTION";

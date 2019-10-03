@@ -4,7 +4,7 @@ import * as URLs from "./URL";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export const loginSuccess = (state,token) => {
+export const loginSuccess = (state, token) => {
   return {
     type: types.LOGIN_SUCCESS,
     state,
@@ -27,19 +27,18 @@ export const loginAPI = state => {
     })
       .then(res => {
         console.log(res);
-        localStorage.setItem('token',res.data.token)
-        localStorage.setItem('email',state.email)
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("email", state.email);
 
-        dispatch(loginSuccess(state,res.data.token));
+        dispatch(loginSuccess(state, res.data.token));
         Swal.fire({
-          position: 'top',
-          type: 'success',
+          position: "top",
+          type: "success",
           title: res.data.message,
           showConfirmButton: false,
           timer: 1500,
           heightAuto: false
-
-        })
+        });
       })
       .catch(er => {
         dispatch(loginFail(state));
@@ -75,15 +74,13 @@ export const signUpAPI = state => {
         console.log(res);
         dispatch(signUpSuccess(state));
         Swal.fire({
-          position: 'top',
-          type: 'success',
+          position: "top",
+          type: "success",
           title: res.data.message,
           showConfirmButton: false,
           timer: 1500,
           heightAuto: false
-
-        })
-
+        });
       })
       .catch(er => {
         dispatch(signUpFail(state));
@@ -93,7 +90,6 @@ export const signUpAPI = state => {
           title: "Oops...",
           text: er,
           heightAuto: false
-
         });
       });
   };
@@ -104,9 +100,8 @@ export const showProfile = state => {
     state
   };
 };
-export const showProfileAPI = (token) => {
+export const showProfileAPI = token => {
   return dispatch => {
-    
     axios({
       method: "post",
       url: URLs.SHOW_PROFILE_API_URL,
@@ -127,7 +122,7 @@ export const updateProfile = state => {
     state
   };
 };
-export const updateProfileAPI = (state,token) => {
+export const updateProfileAPI = (state, token) => {
   return dispatch => {
     axios({
       method: "post",
@@ -141,12 +136,12 @@ export const updateProfileAPI = (state,token) => {
         console.log(res);
         dispatch(updateProfile(res.data.data));
         Swal.fire({
-          position: 'top',
-          type: 'success',
+          position: "top",
+          type: "success",
           title: res.data.message,
           showConfirmButton: false,
           timer: 1500
-        })
+        });
       })
       .catch(er => {
         Swal.fire({
@@ -157,7 +152,7 @@ export const updateProfileAPI = (state,token) => {
       });
   };
 };
-export const userLogoutAPI = (token) => {
+export const userLogoutAPI = token => {
   return dispatch => {
     axios({
       method: "post",
@@ -167,9 +162,34 @@ export const userLogoutAPI = (token) => {
       }
     })
       .then(res => {
-        console.log('Logout',res)
+        console.log("Logout", res);
       })
       .catch(er => {});
-     
+  };
+};
+///////////////////////////////////////////////
+export const createAnswer = state => {
+  return {
+    type: types.CREATE_ANSWER,
+    state
+  };
+};
+
+export const createQuestionAPI = state => {
+  return dispatch => {
+    axios({
+      method: "post",
+      url: URLs.QUESTION_API_URL,
+      headers: {
+        "content-type": "application/json"
+      },
+      data: { state }
+    })
+      .then(res => {
+        console.log("res", res);
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
   };
 };
