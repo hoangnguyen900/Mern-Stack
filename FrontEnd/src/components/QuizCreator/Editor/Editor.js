@@ -1,18 +1,11 @@
 import React from "react";
 import "./Editor.scss";
-
-<<<<<<< HEAD
-
-//import ToggleBox from '../ToggleBox/ToggleBox';
-import QuizCreatorQuestionDetail from '../QuestionDetail/QuestionDetail';
-import QuizCreatorQuestionInput from "../QuestionInput/QuestionInput";
-=======
 import "font-awesome/css/font-awesome.min.css";
 //import ToggleBox from '../ToggleBox/ToggleBox';
 import { connect } from "react-redux";
 import * as actions from "./../../../redux/actions/index";
+import QuizCreatorQuestionDetail from '../QuestionDetail/QuestionDetail';
 
->>>>>>> 600bb215107ebcee0d4194446e77047eecabe3c9
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle, faSave } from "@fortawesome/free-solid-svg-icons";
 import CreatePopUp from "./CreatePopUp";
