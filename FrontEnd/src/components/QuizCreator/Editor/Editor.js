@@ -1,18 +1,14 @@
 import React from "react";
 import "./Editor.scss";
 
-<<<<<<< HEAD
-
 //import ToggleBox from '../ToggleBox/ToggleBox';
-import QuizCreatorQuestionDetail from '../QuestionDetail/QuestionDetail';
-import QuizCreatorQuestionInput from "../QuestionInput/QuestionInput";
-=======
+import QuizCreatorQuestionDetail from "../QuestionDetail/QuestionDetail";
+
 import "font-awesome/css/font-awesome.min.css";
 //import ToggleBox from '../ToggleBox/ToggleBox';
 import { connect } from "react-redux";
 import * as actions from "./../../../redux/actions/index";
 
->>>>>>> 600bb215107ebcee0d4194446e77047eecabe3c9
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle, faSave } from "@fortawesome/free-solid-svg-icons";
 import CreatePopUp from "./CreatePopUp";
@@ -43,7 +39,7 @@ export default class QuizCreatorEditor extends React.Component {
             <p>Or</p>
             <button className="button b-teleport">Teleport</button>
           </div>
-          <QuizCreatorQuestionDetail/>
+          <QuizCreatorQuestionDetail />
         </div>
         <div className="quiz-info"></div>
         {this.state.showPopup ? (

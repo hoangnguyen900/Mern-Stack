@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import * as actions from "./../../../redux/actions/index";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle, faSave } from "@fortawesome/free-solid-svg-icons";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
 const listAns = [
   {
     index: 0
@@ -28,9 +28,12 @@ class QuestionCreatePopup extends React.Component {
     this.state = {
       questionsArr: [1, 2, 3, 4],
       isDisplay: "block",
-      id: 0,
-      question: "",
-      time: 30,
+
+      data: {
+        id: 0,
+        question: "",
+        time: 30
+      },
       answers: []
     };
   }
@@ -39,8 +42,6 @@ class QuestionCreatePopup extends React.Component {
       this.setState({
         isDisplay: "none"
       });
-
-    console.log("check");
   }
   handleOnclickDeleteOptions = () => {
     this.setState({
@@ -79,19 +80,20 @@ class QuestionCreatePopup extends React.Component {
     this.setState({
       answers: [...this.state.answers, ...listAns]
     });
-    this.props.createQuestionAPI(this.state);
+    this.props.createQuestionAPI(this.state.data, listAns);
+    this.props.closePopup();
   };
   onChangeAnswer = answer => {
-    let list = async answer => {
-      await (listAns[answer.index - 1] = answer);
-    };
-    list(answer).then(console.log(listAns));
+    listAns[answer.index - 1] = answer;
+    console.log(listAns);
   };
   handleOnChangeInput = event => {
     let value = event.target.value;
     let name = event.target.name;
     this.setState({
-      [name]: value
+      data: {
+        [name]: value
+      }
     });
   };
   render() {
@@ -158,8 +160,8 @@ class QuestionCreatePopup extends React.Component {
 }
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    createQuestionAPI: state => {
-      dispatch(actions.createQuestionAPI(state));
+    createQuestionAPI: (data, answers) => {
+      dispatch(actions.createQuestionAPI(data, answers));
     },
     createAnswer: state => {
       dispatch(actions.createAnswer(state));
