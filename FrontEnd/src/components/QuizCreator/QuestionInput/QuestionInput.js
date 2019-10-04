@@ -15,7 +15,7 @@ class QuizCreatorQuestionInput extends React.Component {
     super(props);
     this.state = {
       isDisplayDelIcon: true,
-      isRight: false,
+      is_right: false,
       answer: ""
     };
   }
@@ -31,15 +31,14 @@ class QuizCreatorQuestionInput extends React.Component {
     });
   };
   handleOnClickIsTrueAns = () => {
-    let { answer, isRight } = this.state;
+    let { answer } = this.state;
     let { index } = this.props;
-    let a = async () => {
-      await this.setState({
-        isRight: !isRight
-      });
-    };
+    let is_right = !this.state.is_right;
+    this.setState({
+      is_right: is_right
+    });
 
-    a().then(this.props.onChangeAnswer({ index, answer, isRight }));
+    this.props.onChangeAnswer({ index, answer, is_right });
   };
   handleOnChangeInput = event => {
     let value = event.target.value;
@@ -47,19 +46,20 @@ class QuizCreatorQuestionInput extends React.Component {
     this.setState({
       [name]: value
     });
-    let { answer, isRight } = this.state;
+    let answer = value;
+    let { is_right } = this.state;
     let { index } = this.props;
-    this.props.onChangeAnswer({ index, answer, isRight });
+    this.props.onChangeAnswer({ index, answer, is_right });
   };
   render() {
-    var { isDisplayDelIcon, isRight } = this.state;
+    var { isDisplayDelIcon, is_right } = this.state;
 
     return (
       <div className="question-input">
         <FontAwesomeIcon
           icon={faCheckCircle}
           size="2x"
-          color={isRight ? "#00C985" : "#CAD2DC"}
+          color={is_right ? "#00C985" : "#CAD2DC"}
           onClick={this.handleOnClickIsTrueAns}
         />
         <div className="input-group">

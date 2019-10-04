@@ -4,178 +4,30 @@ import * as URLs from "./URL";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export const loginSuccess = (state, token) => {
-  return {
-    type: types.LOGIN_SUCCESS,
-    state,
-    token
-  };
-};
-export const loginFail = state => {
-  return {
-    type: types.LOGIN_FAIL,
-    state
-  };
-};
-
-export const loginAPI = state => {
+export const createAnswer = (question_id, answers) => {
   return dispatch => {
+    //add element question_id to JSON Array Object answer
+    let data = answers;
+    for (let i = 0; i < data.length; i++) data[i].question_id = question_id;
+    console.log(data);
     axios({
       method: "post",
-      url: URLs.LOGIN_API_URL,
-      data: state
-    })
-      .then(res => {
-        console.log(res);
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("email", state.email);
-
-        dispatch(loginSuccess(state, res.data.token));
-        Swal.fire({
-          position: "top",
-          type: "success",
-          title: res.data.message,
-          showConfirmButton: false,
-          timer: 1500,
-          heightAuto: false
-        });
-      })
-      .catch(er => {
-        dispatch(loginFail(state));
-        Swal.fire({
-          type: "error",
-          title: "Oops...",
-          text: `Something went wrong! ${er}`,
-          heightAuto: false
-        });
-      });
-  };
-};
-export const signUpSuccess = state => {
-  return {
-    type: types.SIGN_UP_SUCCESS,
-    state
-  };
-};
-export const signUpFail = state => {
-  return {
-    type: types.SIGN_UP_FAIL,
-    state
-  };
-};
-export const signUpAPI = state => {
-  return dispatch => {
-    axios({
-      method: "post",
-      url: URLs.SIGN_UP_API_URL,
-      data: state
-    })
-      .then(res => {
-        console.log(res);
-        dispatch(signUpSuccess(state));
-        Swal.fire({
-          position: "top",
-          type: "success",
-          title: res.data.message,
-          showConfirmButton: false,
-          timer: 1500,
-          heightAuto: false
-        });
-      })
-      .catch(er => {
-        dispatch(signUpFail(state));
-
-        Swal.fire({
-          type: "error",
-          title: "Oops...",
-          text: er,
-          heightAuto: false
-        });
-      });
-  };
-};
-export const showProfile = state => {
-  return {
-    type: types.SHOW_PROFILE,
-    state
-  };
-};
-export const showProfileAPI = token => {
-  return dispatch => {
-    axios({
-      method: "post",
-      url: URLs.SHOW_PROFILE_API_URL,
+      url: URLs.ANSWER_API_URL,
       headers: {
-        "x-user-token": token
-      }
-    })
-      .then(res => {
-        console.log(res);
-        dispatch(showProfile(res.data.data));
-      })
-      .catch(er => {});
-  };
-};
-export const updateProfile = state => {
-  return {
-    type: types.UPDATE_PROFILE,
-    state
-  };
-};
-export const updateProfileAPI = (state, token) => {
-  return dispatch => {
-    axios({
-      method: "post",
-      url: URLs.UPDATE_PROFILE_API_URL,
-      headers: {
-        "x-user-token": token
+        "content-type": "application/json"
       },
-      data: state
+      data: { data }
     })
       .then(res => {
-        console.log(res);
-        dispatch(updateProfile(res.data.data));
-        Swal.fire({
-          position: "top",
-          type: "success",
-          title: res.data.message,
-          showConfirmButton: false,
-          timer: 1500
-        });
+        console.log("res answers", res);
       })
       .catch(er => {
-        Swal.fire({
-          type: "error",
-          title: "Oops...",
-          text: "Something went wrong!!!"
-        });
+        console.log("er", er);
       });
   };
 };
-export const userLogoutAPI = token => {
-  return dispatch => {
-    axios({
-      method: "post",
-      url: URLs.LOGOUT_API_URL,
-      headers: {
-        "x-user-token": token
-      }
-    })
-      .then(res => {
-        console.log("Logout", res);
-      })
-      .catch(er => {});
-  };
-};
-///////////////////////////////////////////////
-export const createAnswer = state => {
-  return {
-    type: types.CREATE_ANSWER,
-    state
-  };
-};
 
-export const createQuestionAPI = state => {
+export const createQuestionAPI = (data, answers) => {
   return dispatch => {
     axios({
       method: "post",
@@ -183,10 +35,12 @@ export const createQuestionAPI = state => {
       headers: {
         "content-type": "application/json"
       },
-      data: { state }
+      data: { data }
     })
       .then(res => {
-        console.log("res", res);
+        console.log("res question", res.data);
+        let question_id = res.data.id;
+        dispatch(createAnswer(question_id, answers));
       })
       .catch(er => {
         console.log("er", er);

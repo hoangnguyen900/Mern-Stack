@@ -3,7 +3,7 @@ let initialState = {
   answers: [
     {
       answer: "",
-      isRight: false
+      is_right: false
     }
   ]
 };

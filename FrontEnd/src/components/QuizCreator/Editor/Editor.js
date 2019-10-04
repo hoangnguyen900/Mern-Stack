@@ -1,5 +1,12 @@
 import React from "react";
 import "./Editor.scss";
+<<<<<<< HEAD
+=======
+
+//import ToggleBox from '../ToggleBox/ToggleBox';
+import QuizCreatorQuestionDetail from "../QuestionDetail/QuestionDetail";
+
+>>>>>>> 180a036e6313c21a74787209ce3b15cb68fc542d
 import "font-awesome/css/font-awesome.min.css";
 //import ToggleBox from '../ToggleBox/ToggleBox';
 import { connect } from "react-redux";
@@ -36,7 +43,7 @@ export default class QuizCreatorEditor extends React.Component {
             <p>Or</p>
             <button className="button b-teleport">Teleport</button>
           </div>
-          <QuizCreatorQuestionDetail/>
+          <QuizCreatorQuestionDetail />
         </div>
         <div className="quiz-info"></div>
         {this.state.showPopup ? (
