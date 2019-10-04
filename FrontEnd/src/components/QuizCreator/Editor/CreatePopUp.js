@@ -80,8 +80,8 @@ class QuestionCreatePopup extends React.Component {
     this.setState({
       answers: [...this.state.answers, ...listAns]
     });
-    this.props.createQuestionAPI(this.state.data, listAns);
-    this.props.closePopup();
+    this.props.createQuestionAndAnswersAPI(this.state.data, listAns);
+    //this.props.closePopup();
   };
   onChangeAnswer = answer => {
     listAns[answer.index - 1] = answer;
@@ -96,6 +96,9 @@ class QuestionCreatePopup extends React.Component {
       }
     });
   };
+  componentWillReceiveProps(nextProps) {
+    console.log("nextprops", nextProps.question);
+  }
   render() {
     let { isDisplay, questionsArr } = this.state;
     let element = questionsArr.map(index => {
@@ -130,6 +133,7 @@ class QuestionCreatePopup extends React.Component {
                 type="text"
                 style={{ width: "80%" }}
                 name="question"
+                value={this.state.data.question}
                 placeholder="add question"
                 onChange={this.handleOnChangeInput}
               />
@@ -160,18 +164,15 @@ class QuestionCreatePopup extends React.Component {
 }
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    createQuestionAPI: (data, answers) => {
-      dispatch(actions.createQuestionAPI(data, answers));
-    },
-    createAnswer: state => {
-      dispatch(actions.createAnswer(state));
+    createQuestionAndAnswersAPI: (data, answers) => {
+      dispatch(actions.createQuestionAndAnswersAPI(data, answers));
     }
   };
 };
 const mapStateToProps = state => {
   return {
-    quizAnswer: state.quizAnswer,
-    quizQuestion: state.quizQuestion
+    answer: state.answer,
+    question: state.question
   };
 };
 export default connect(

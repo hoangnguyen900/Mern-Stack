@@ -1,11 +1,11 @@
 // import login from './login';
 // import profile from './profile';
-import quizAnswer from "./quizAnswer";
-import quizQuestion from "./quizQuestion";
+import answer from "./quizAnswer";
+import question from "./quizQuestion";
 
 import { combineReducers } from "redux";
 const myReducer = combineReducers({
-  quizAnswer,
-  quizQuestion
+  answer,
+  question
 });
 export default myReducer;

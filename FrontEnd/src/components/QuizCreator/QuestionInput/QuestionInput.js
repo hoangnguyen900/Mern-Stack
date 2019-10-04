@@ -83,11 +83,7 @@ class QuizCreatorQuestionInput extends React.Component {
   }
 }
 const mapDispatchToProps = (dispatch, props) => {
-  return {
-    createAnswer: state => {
-      dispatch(actions.createAnswer(state));
-    }
-  };
+  return {};
 };
 const mapStateToProps = state => {
   return {
