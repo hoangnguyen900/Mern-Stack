@@ -1,21 +1,33 @@
 import * as types from "../actions/actionTypes";
-let initialState = {
-  question: [
-    {
-      id: 0,
-      question: "",
-      time: 0
-    }
-  ]
-};
+const initialState = [
+  {
+    id: 0,
+    question: "",
+    time: 0,
+    answers: []
+  }
+];
+const listQ = [];
 let myReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.CREATE_QUESTION_ANSWERS:
-      // question.splice(0,0)
-      console.log("redux", action.question);
-      return { ...action.question };
+      let newState = {};
+      newState = { question: action.question, answers: action.answers };
+      listQ.push(newState);
+      console.log("data+1", listQ);
+
+      // data.push({ question: action.question, answers: action.answers });
+      // console.log("reduxQuestion", state);
+
+      //data[data.length - 1].answers = action.answers;
+      //state[state.length - 1].answers = data.answers;
+      state = listQ;
+
+      console.log("reduxQuestion", state);
+
+      return [...state];
     default:
-      return state;
+      return { ...state };
   }
 };
 export default myReducer;

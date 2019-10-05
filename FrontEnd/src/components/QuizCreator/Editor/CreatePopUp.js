@@ -81,24 +81,23 @@ class QuestionCreatePopup extends React.Component {
       answers: [...this.state.answers, ...listAns]
     });
     this.props.createQuestionAndAnswersAPI(this.state.data, listAns);
-    //this.props.closePopup();
+
+    this.props.closePopup();
   };
   onChangeAnswer = answer => {
     listAns[answer.index - 1] = answer;
-    console.log(listAns);
   };
   handleOnChangeInput = event => {
     let value = event.target.value;
     let name = event.target.name;
     this.setState({
       data: {
-        [name]: value
+        [name]: value,
+        time: 30
       }
     });
   };
-  componentWillReceiveProps(nextProps) {
-    console.log("nextprops", nextProps.question);
-  }
+
   render() {
     let { isDisplay, questionsArr } = this.state;
     let element = questionsArr.map(index => {
@@ -133,7 +132,6 @@ class QuestionCreatePopup extends React.Component {
                 type="text"
                 style={{ width: "80%" }}
                 name="question"
-                value={this.state.data.question}
                 placeholder="add question"
                 onChange={this.handleOnChangeInput}
               />

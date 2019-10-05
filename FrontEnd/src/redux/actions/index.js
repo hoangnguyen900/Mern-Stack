@@ -172,8 +172,10 @@ export const userLogoutAPI = token => {
 export const createAnswerAPI = (question_id, answers, question) => {
   return dispatch => {
     //add element question_id to JSON Array Object answer
+
     let data = answers;
     for (let i = 0; i < data.length; i++) data[i].question_id = question_id;
+
     axios({
       method: "post",
       url: URLs.ANSWER_API_URL,

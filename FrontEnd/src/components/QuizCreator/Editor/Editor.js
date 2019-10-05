@@ -10,13 +10,14 @@ import { connect } from "react-redux";
 import * as actions from "./../../../redux/actions/index";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle, faSave } from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import CreatePopUp from "./CreatePopUp";
-export default class QuizCreatorEditor extends React.Component {
+class QuizCreatorEditor extends React.Component {
   constructor() {
     super();
     this.state = {
-      showPopup: false
+      showPopup: false,
+      data: []
     };
   }
   togglePopup() {
@@ -24,7 +25,22 @@ export default class QuizCreatorEditor extends React.Component {
       showPopup: !this.state.showPopup
     });
   }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    console.log("nextprops", nextProps.question);
+    this.setState({
+      data: nextProps.question
+    });
+  }
   render() {
+    let element = this.state.data.map(data => {
+      return (
+        <QuizCreatorQuestionDetail
+          key={this.state.data.length}
+          data={data}
+          //index={index}
+        />
+      );
+    });
     return (
       <div className="editor">
         <div className="question-editor">
@@ -39,7 +55,7 @@ export default class QuizCreatorEditor extends React.Component {
             <p>Or</p>
             <button className="button b-teleport">Teleport</button>
           </div>
-          <QuizCreatorQuestionDetail />
+          {element}
         </div>
         <div className="quiz-info"></div>
         {this.state.showPopup ? (
@@ -52,3 +68,20 @@ export default class QuizCreatorEditor extends React.Component {
     );
   }
 }
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    createQuestionAndAnswersAPI: (data, answers) => {
+      dispatch(actions.createQuestionAndAnswersAPI(data, answers));
+    }
+  };
+};
+const mapStateToProps = state => {
+  return {
+    answer: state.answer,
+    question: state.question
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(QuizCreatorEditor);

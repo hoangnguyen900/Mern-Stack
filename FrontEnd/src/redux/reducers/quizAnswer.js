@@ -12,6 +12,8 @@ let initialState = {
 let myReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.CREATE_QUESTION_ANSWERS:
+      // console.log("reduxAnswer", action.answers);
+
       return { ...action.state };
     default:
       return state;
