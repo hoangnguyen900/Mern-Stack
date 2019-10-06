@@ -28,7 +28,7 @@ class QuizCreatorQuestionDetail extends React.Component {
           <span>
             <FontAwesomeIcon icon={faBars} color="#DFDFDF" />
           </span>
-          <p>Question {this.props.index}</p>
+          <p>Question {this.props.index + 1}</p>
           <div className="question-button-group">
             <span>
               <FontAwesomeIcon icon={faTrashAlt} />
@@ -53,7 +53,21 @@ class QuizCreatorQuestionDetail extends React.Component {
             <hr />
           </div>
           <div className="question-answers-container">
-            <div className="question-answer">
+            {this.props.data.answers.map(answer => {
+              return (
+                <div className="question-answer" key={answer.index}>
+                  <span>
+                    <FontAwesomeIcon
+                      icon={faCircle}
+                      color={answer.is_right ? "#00C985" : "#F14D76"}
+                    />
+                    <span>{answer.answer}</span>
+                  </span>
+                </div>
+              );
+            })}
+
+            {/* <div className="question-answer">
               <span>
                 <FontAwesomeIcon icon={faCircle} color={"red"} />
                 <span>{this.props.anwser}VietNam</span>
@@ -65,14 +79,7 @@ class QuizCreatorQuestionDetail extends React.Component {
                 <FontAwesomeIcon icon={faCircle} color={"red"} />
                 <span>{this.props.anwser}VietNam</span>
               </span>
-            </div>
-
-            <div className="question-answer">
-              <span>
-                <FontAwesomeIcon icon={faCircle} color={"red"} />
-                <span>{this.props.anwser}VietNam</span>
-              </span>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="question-detail-footer">

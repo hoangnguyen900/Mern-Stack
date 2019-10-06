@@ -8,7 +8,7 @@ import * as actions from "./../../../redux/actions/index";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
-const listAns = [
+const listPrototype = [
   {
     index: 0
   },
@@ -22,6 +22,7 @@ const listAns = [
     index: 0
   }
 ];
+let listAns = [...listPrototype];
 class QuestionCreatePopup extends React.Component {
   constructor() {
     super();
@@ -71,6 +72,8 @@ class QuestionCreatePopup extends React.Component {
 
   onSubmitHandle = event => {
     event.preventDefault();
+    console.log("listArr", listAns);
+    console.log("listPrototype", listPrototype);
     for (var i = 0; i < listAns.length; i++) {
       if (listAns[i].index === 0) {
         listAns.splice(i, 1);
@@ -81,8 +84,8 @@ class QuestionCreatePopup extends React.Component {
       answers: [...this.state.answers, ...listAns]
     });
     this.props.createQuestionAndAnswersAPI(this.state.data, listAns);
-
     this.props.closePopup();
+    listAns = [...listPrototype];
   };
   onChangeAnswer = answer => {
     listAns[answer.index - 1] = answer;
@@ -138,6 +141,7 @@ class QuestionCreatePopup extends React.Component {
               {element}
 
               <button
+                type="button"
                 style={{ display: isDisplay }}
                 onClick={this.addQuestionOnclick}
               >
@@ -146,7 +150,11 @@ class QuestionCreatePopup extends React.Component {
               <hr />
             </div>
             <div className="popup-footer">
-              <button className="b-cancel" onClick={this.props.closePopup}>
+              <button
+                className="b-cancel"
+                type="button"
+                onClick={this.props.closePopup}
+              >
                 CANCEL
               </button>
               <button className="b-save" type="submit">

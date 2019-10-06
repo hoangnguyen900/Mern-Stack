@@ -226,3 +226,23 @@ export const createQuestionAndAnswersAPI = (data, answers) => {
       });
   };
 };
+
+export const showListQuestionAnswer = question_table_id => {
+  return dispatch => {
+    axios({
+      method: "get",
+      url: URLs.QUESTION_TABLE_API_URL + `/${question_table_id}`,
+      headers: {
+        "content-type": "application/json"
+      }
+    })
+      .then(res => {
+        console.log("res question", res.data);
+        //let question_id = res.data.id;
+        //dispatch(createAnswerAPI(question_id, answers, data));
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};

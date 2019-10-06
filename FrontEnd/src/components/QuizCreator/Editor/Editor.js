@@ -17,6 +17,7 @@ class QuizCreatorEditor extends React.Component {
     super();
     this.state = {
       showPopup: false,
+      question_table_id: 1,
       data: []
     };
   }
@@ -26,17 +27,21 @@ class QuizCreatorEditor extends React.Component {
     });
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log("nextprops", nextProps.question);
+    //console.log("nextprops", nextProps.question);
     this.setState({
       data: nextProps.question
     });
   }
+  componentDidMount() {
+    this.props.showListQuestionAnswer(this.state.question_table_id);
+  }
   render() {
-    let element = this.state.data.map(data => {
+    let element = this.state.data.map((data, index) => {
       return (
         <QuizCreatorQuestionDetail
-          key={this.state.data.length}
+          key={index}
           data={data}
+          index={index}
           //index={index}
         />
       );
@@ -70,8 +75,8 @@ class QuizCreatorEditor extends React.Component {
 }
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    createQuestionAndAnswersAPI: (data, answers) => {
-      dispatch(actions.createQuestionAndAnswersAPI(data, answers));
+    showListQuestionAnswer: question_table_id => {
+      dispatch(actions.showListQuestionAnswer(question_table_id));
     }
   };
 };

@@ -10,3 +10,5 @@ export const UPDATE_PROFILE_API_URL =
 //
 export const QUESTION_API_URL = "http://localhost:3000/question";
 export const ANSWER_API_URL = "http://localhost:3000/questionchoices";
+export const QUESTION_TABLE_API_URL =
+  "http://localhost:3000/questiontable-question";

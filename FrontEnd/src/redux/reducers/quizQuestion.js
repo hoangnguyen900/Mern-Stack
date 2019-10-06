@@ -14,7 +14,6 @@ let myReducer = (state = initialState, action) => {
       let newState = {};
       newState = { question: action.question, answers: action.answers };
       listQ.push(newState);
-      console.log("data+1", listQ);
 
       // data.push({ question: action.question, answers: action.answers });
       // console.log("reduxQuestion", state);
