@@ -2,6 +2,8 @@ import * as types from "../actions/actionTypes";
 let initialState = {
   answers: [
     {
+      id: 0,
+      question_id: 0,
       answer: "",
       is_right: false
     }
@@ -9,7 +11,9 @@ let initialState = {
 };
 let myReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.CREATE_ANSWER:
+    case types.CREATE_QUESTION_ANSWERS:
+      // console.log("reduxAnswer", action.answers);
+
       return { ...action.state };
     default:
       return state;

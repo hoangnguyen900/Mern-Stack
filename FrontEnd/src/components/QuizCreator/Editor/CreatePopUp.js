@@ -8,7 +8,7 @@ import * as actions from "./../../../redux/actions/index";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
-const listAns = [
+const listPrototype = [
   {
     index: 0
   },
@@ -22,6 +22,7 @@ const listAns = [
     index: 0
   }
 ];
+let listAns = [...listPrototype];
 class QuestionCreatePopup extends React.Component {
   constructor() {
     super();
@@ -71,6 +72,8 @@ class QuestionCreatePopup extends React.Component {
 
   onSubmitHandle = event => {
     event.preventDefault();
+    console.log("listArr", listAns);
+    console.log("listPrototype", listPrototype);
     for (var i = 0; i < listAns.length; i++) {
       if (listAns[i].index === 0) {
         listAns.splice(i, 1);
@@ -80,22 +83,24 @@ class QuestionCreatePopup extends React.Component {
     this.setState({
       answers: [...this.state.answers, ...listAns]
     });
-    this.props.createQuestionAPI(this.state.data, listAns);
+    this.props.createQuestionAndAnswersAPI(this.state.data, listAns);
     this.props.closePopup();
+    listAns = [...listPrototype];
   };
   onChangeAnswer = answer => {
     listAns[answer.index - 1] = answer;
-    console.log(listAns);
   };
   handleOnChangeInput = event => {
     let value = event.target.value;
     let name = event.target.name;
     this.setState({
       data: {
-        [name]: value
+        [name]: value,
+        time: 30
       }
     });
   };
+
   render() {
     let { isDisplay, questionsArr } = this.state;
     let element = questionsArr.map(index => {
@@ -136,6 +141,7 @@ class QuestionCreatePopup extends React.Component {
               {element}
 
               <button
+                type="button"
                 style={{ display: isDisplay }}
                 onClick={this.addQuestionOnclick}
               >
@@ -144,7 +150,11 @@ class QuestionCreatePopup extends React.Component {
               <hr />
             </div>
             <div className="popup-footer">
-              <button className="b-cancel" onClick={this.props.closePopup}>
+              <button
+                className="b-cancel"
+                type="button"
+                onClick={this.props.closePopup}
+              >
                 CANCEL
               </button>
               <button className="b-save" type="submit">
@@ -160,18 +170,15 @@ class QuestionCreatePopup extends React.Component {
 }
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    createQuestionAPI: (data, answers) => {
-      dispatch(actions.createQuestionAPI(data, answers));
-    },
-    createAnswer: state => {
-      dispatch(actions.createAnswer(state));
+    createQuestionAndAnswersAPI: (data, answers) => {
+      dispatch(actions.createQuestionAndAnswersAPI(data, answers));
     }
   };
 };
 const mapStateToProps = state => {
   return {
-    quizAnswer: state.quizAnswer,
-    quizQuestion: state.quizQuestion
+    answer: state.answer,
+    question: state.question
   };
 };
 export default connect(

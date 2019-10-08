@@ -1,7 +1,7 @@
 import React from "react";
 import "./QuestionInput.scss";
 import { connect } from "react-redux";
-import * as actions from "./../../../redux/actions/index";
+//import * as actions from "./../../../redux/actions/index";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -83,11 +83,7 @@ class QuizCreatorQuestionInput extends React.Component {
   }
 }
 const mapDispatchToProps = (dispatch, props) => {
-  return {
-    createAnswer: state => {
-      dispatch(actions.createAnswer(state));
-    }
-  };
+  return {};
 };
 const mapStateToProps = state => {
   return {
