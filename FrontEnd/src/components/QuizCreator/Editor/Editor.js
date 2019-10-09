@@ -33,7 +33,7 @@ class QuizCreatorEditor extends React.Component {
     });
   }
   componentDidMount() {
-    this.props.showListQuestionAnswer(this.state.question_table_id);
+    //this.props.showListQuestionAnswer(this.state.question_table_id);
   }
   render() {
     let element = this.state.data.map((data, index) => {

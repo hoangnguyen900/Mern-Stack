@@ -1,27 +1,46 @@
 const Sequelize = require("sequelize");
 const db = require("../database");
+const QuestionTable = require("./QuestionTable");
+const QuestionTable_Question = require("./QuestionTable_Question");
+const QuestionChoices = require("./QuestionChoices");
 
-const Question = db.define("question", {
-  id: {
-    type: "INT(11)",
-    allowNull: false,
-    autoIncrement: true,
-    defaultValue: null,
-    primaryKey: true,
-    foreignKey: [Object]
+const Question = db.define(
+  "question",
+  {
+    id: {
+      type: "INT(11)",
+      allowNull: false,
+      autoIncrement: true,
+      defaultValue: null,
+      primaryKey: true,
+      foreignKey: [Object]
+    },
+    question: {
+      type: "VARCHAR(100)",
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false
+    },
+    time: {
+      type: "DOUBLE",
+      allowNull: false,
+      defaultValue: 30,
+      primaryKey: false
+    }
   },
-  question: {
-    type: "VARCHAR(100)",
-    allowNull: false,
-    defaultValue: null,
-    primaryKey: false
-  },
-  time: {
-    type: "DOUBLE",
-    allowNull: false,
-    defaultValue: 30,
-    primaryKey: false
-  }
-});
+  { underscored: true }
+);
+// Question.associate = () => {
+//   Question.belongsToMany(QuestionTable, {
+//     through: QuestionTable_Question,
+//     foreignKey: "question_id",
+//     as: "question_table"
+//   });
+// };
+// Question.hasMany(QuestionTable, {
+//   through: QuestionTable_Question,
+//   foreignKey: "question_id"
+// });
 
+Question.hasMany(QuestionChoices, { foreignKey: "question_id" });
 module.exports = Question;
