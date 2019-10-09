@@ -1,6 +1,5 @@
 import React from "react";
-import "./Editor.scss";
-
+import './Editor.scss';
 //import ToggleBox from '../ToggleBox/ToggleBox';
 import QuizCreatorQuestionDetail from "../QuestionDetail/QuestionDetail";
 
@@ -8,6 +7,7 @@ import "font-awesome/css/font-awesome.min.css";
 //import ToggleBox from '../ToggleBox/ToggleBox';
 import { connect } from "react-redux";
 import * as actions from "./../../../redux/actions/index";
+
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
