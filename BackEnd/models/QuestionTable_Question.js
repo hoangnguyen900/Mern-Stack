@@ -29,7 +29,5 @@ const QuestionTable_Question = db.define(
   },
   { underscored: true }
 );
-QuestionTable_Question.hasMany(Question, {
-  foreignKey: "id"
-});
+
 module.exports = QuestionTable_Question;

@@ -206,20 +206,39 @@ export const createAnswerAPI = (question_id, answers, question) => {
   };
 };
 
-export const createQuestionAndAnswersAPI = (data, answers) => {
+export const createQuestionAndAnswersAPI = (
+  question_table_id,
+  question,
+  answers
+) => {
   return dispatch => {
+    const data = {
+      ...question,
+      question_table_id,
+      question_choices: answers
+    };
     axios({
       method: "post",
       url: URLs.QUESTION_API_URL,
       headers: {
         "content-type": "application/json"
       },
-      data: { data }
+      data: data
     })
       .then(res => {
-        console.log("res question", res.data);
-        let question_id = res.data.id;
-        dispatch(createAnswerAPI(question_id, answers, data));
+        Swal.fire({
+          position: "center",
+          type: "success",
+          title: "Create Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+          heightAuto: false
+        });
+        console.log("res data", res);
+        dispatch({
+          type: types.CREATE_QUESTION_ANSWERS,
+          data
+        });
       })
       .catch(er => {
         console.log("er", er);
@@ -238,8 +257,10 @@ export const showListQuestionAnswer = question_table_id => {
     })
       .then(res => {
         console.log("res question", res.data);
-        //let question_id = res.data.id;
-        //dispatch(createAnswerAPI(question_id, answers, data));
+        dispatch({
+          type: types.SHOW_QUESTION_ANSWERS,
+          data: res.data
+        });
       })
       .catch(er => {
         console.log("er", er);

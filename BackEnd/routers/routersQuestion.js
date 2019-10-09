@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Question = require("../models/Question");
 const QuestionChoices = require("../models/QuestionChoices");
+const QuestionTable_Question = require("../models/QuestionTable_Question");
 
 const Sequelize = require("sequelize");
 //get Question list
@@ -20,17 +21,21 @@ router.get("/question/:id", (req, res) =>
     .catch(err => console.log(err))
 );
 router.post("/question", (req, res) => {
-  Question.create(req.body.data)
+  Question.create(req.body, {
+    include: [
+      {
+        model: QuestionChoices
+      }
+    ]
+  })
+    .then(question => {
+      QuestionTable_Question.create({
+        question_id: question.id,
+        question_table_id: req.body.question_table_id
+      });
+    })
     .then(() => {
-      Question.findAll({
-        where: {
-          question: req.body.data.question
-        }
-      })
-        .then(data => {
-          res.json(data[data.length - 1]);
-        })
-        .catch(err => res.send(err));
+      res.send("Create successfully");
     })
     .catch(err => console.log(err));
 });

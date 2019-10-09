@@ -83,7 +83,12 @@ class QuestionCreatePopup extends React.Component {
     this.setState({
       answers: [...this.state.answers, ...listAns]
     });
-    this.props.createQuestionAndAnswersAPI(this.state.data, listAns);
+    const question_table_id = 1;
+    this.props.createQuestionAndAnswersAPI(
+      question_table_id,
+      this.state.data,
+      listAns
+    );
     this.props.closePopup();
     listAns = [...listPrototype];
   };
@@ -170,8 +175,10 @@ class QuestionCreatePopup extends React.Component {
 }
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    createQuestionAndAnswersAPI: (data, answers) => {
-      dispatch(actions.createQuestionAndAnswersAPI(data, answers));
+    createQuestionAndAnswersAPI: (question_table_id, data, answers) => {
+      dispatch(
+        actions.createQuestionAndAnswersAPI(question_table_id, data, answers)
+      );
     }
   };
 };

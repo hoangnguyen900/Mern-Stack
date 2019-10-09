@@ -82,8 +82,5 @@ const QuestionTable = db.define("question_table", {
 //     as: "question_table"
 //   });
 // };
-QuestionTable.belongsToMany(Question, {
-  through: QuestionTable_Question,
-  foreignKey: "question_table_id"
-});
+
 module.exports = QuestionTable;

@@ -44,7 +44,7 @@ class QuizCreatorQuestionDetail extends React.Component {
         </div>
         <div className="question-detail-body">
           <div className="question-content">
-            <h5> {this.props.data.question.question}</h5>
+            <h5> {this.props.data.question}</h5>
           </div>
           <div className="answers-divider">
             <div className="divider-name">
@@ -53,9 +53,9 @@ class QuizCreatorQuestionDetail extends React.Component {
             <hr />
           </div>
           <div className="question-answers-container">
-            {this.props.data.answers.map(answer => {
+            {this.props.data.question_choices.map(answer => {
               return (
-                <div className="question-answer" key={answer.index}>
+                <div className="question-answer" key={answer.id}>
                   <span>
                     <FontAwesomeIcon
                       icon={faCircle}

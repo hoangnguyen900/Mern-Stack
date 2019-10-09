@@ -42,5 +42,5 @@ const Question = db.define(
 //   foreignKey: "question_id"
 // });
 
-Question.hasMany(QuestionChoices, { foreignKey: "question_id" });
+//Question.hasMany(QuestionChoices, { foreignKey: "question_id" });
 module.exports = Question;
