@@ -42,7 +42,7 @@ class QuizCreatorEditor extends React.Component {
           key={index}
           data={data}
           index={index}
-          //index={index}
+        //index={index}
         />
       );
     });

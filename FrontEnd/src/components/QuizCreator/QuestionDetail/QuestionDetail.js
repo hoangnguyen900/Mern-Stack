@@ -1,5 +1,5 @@
 import React from "react";
-import "./QuestionDetail.scss";
+import './QuestionDetail.scss';
 import { ButtonToolbar, Dropdown, DropdownButton } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

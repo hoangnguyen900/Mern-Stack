@@ -6,6 +6,7 @@
     background-color: #F2F2F2;
     justify-content: center;
     flex-wrap: wrap;
+
     .question-editor {
         width: 600px;
         min-width: 200px;
@@ -128,9 +129,34 @@
             flex-direction: row;
             justify-content: flex-end;
 
+            .question-time-container {
+                display: flex;
+                flex-direction: row;
+                
+                justify-content: flex-start;
+                flex-grow: 1;
+                span {
+                    align-self: center;
+                    margin-left: 10px;
+                }
+
+                .question-time {
+                    display: flex;
+                    flex-direction: row;
+                    align-self: center;
+                    margin-left: 5px;
+                    border-radius: 3px;
+                    border: 1px solid #DBDADB;
+                    button{
+                        border:none;
+                    }
+                }
+            }
+
+
             button {
                 height: 40px;
-                min-width: 150px;
+                min-width: 100px;
                 font-size: 16px;
                 border: 1px solid #ccc;
                 border-radius: 5px;

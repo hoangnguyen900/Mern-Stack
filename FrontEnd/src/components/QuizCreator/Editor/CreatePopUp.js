@@ -5,9 +5,9 @@ import "font-awesome/css/font-awesome.min.css";
 //import ToggleBox from '../ToggleBox/ToggleBox';
 import { connect } from "react-redux";
 import * as actions from "./../../../redux/actions/index";
-
+import { ButtonToolbar, Dropdown, DropdownButton } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faClock } from "@fortawesome/free-solid-svg-icons";
 const listPrototype = [
   {
     index: 0
@@ -150,6 +150,31 @@ class QuestionCreatePopup extends React.Component {
               <hr />
             </div>
             <div className="popup-footer">
+              <div className="question-time-container">
+                <span>
+                  <FontAwesomeIcon icon={faClock} color="gray" />
+                </span>
+                <div className="question-time">
+                  <ButtonToolbar>
+                    {["up"].map(direction => (
+                      <DropdownButton
+                        drop={direction}
+                        variant="light"
+                        title={` 30 seconds `}
+                        id={`dropdown-button-drop-${direction}`}
+                        key={direction}
+                        size="sm"
+                        background-color="white"
+                      >
+                        <Dropdown.Item eventKey="1">30 seconds</Dropdown.Item>
+                        <Dropdown.Item eventKey="2">45 seconds</Dropdown.Item>
+                        <Dropdown.Item eventKey="3">60 seconds</Dropdown.Item>
+                      </DropdownButton>
+                    ))}
+                  </ButtonToolbar>
+                </div>
+              </div>
+
               <button
                 className="b-cancel"
                 type="button"
