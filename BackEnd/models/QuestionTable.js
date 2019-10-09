@@ -1,5 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../database");
+const QuestionTable_Question = require("./QuestionTable_Question");
+const Question = require("./Question");
 
 const QuestionTable = db.define("question_table", {
   id: {
@@ -73,4 +75,12 @@ const QuestionTable = db.define("question_table", {
     foreignKey: [Object]
   }
 });
+// QuestionTable.associate = () => {
+//   QuestionTable.belongsToMany(Question, {
+//     through: QuestionTable_Question,
+//     foreignKey: "question_table",
+//     as: "question_table"
+//   });
+// };
+
 module.exports = QuestionTable;

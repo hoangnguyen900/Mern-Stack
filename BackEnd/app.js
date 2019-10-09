@@ -4,6 +4,7 @@ const bodyparser = require("body-parser");
 const path = require("path");
 const app = express();
 //import routers
+const association = require("./routers/association");
 const routersQuestionTable = require("./routers/routersQuestionTable");
 const routersQuestion = require("./routers/routersQuestion");
 const routersQuestionChoices = require("./routers/routersQuestionChoices");
@@ -18,6 +19,7 @@ db.authenticate()
   .then(() => console.log("Database connected..."))
   .catch(err => console.log("Error: " + err));
 //routers
+app.use(association);
 app.use(routersQuestionTable);
 app.use(routersQuestion);
 app.use(routersQuestionChoices);

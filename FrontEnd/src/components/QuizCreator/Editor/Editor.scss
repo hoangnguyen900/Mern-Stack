@@ -7,6 +7,9 @@
     justify-content: center;
     flex-wrap: wrap;
 
+    overflow-y: auto;
+
+
     .question-editor {
         width: 600px;
         min-width: 200px;

@@ -1,5 +1,5 @@
 import React from "react";
-import './Editor.scss';
+import "./Editor.scss";
 //import ToggleBox from '../ToggleBox/ToggleBox';
 import QuizCreatorQuestionDetail from "../QuestionDetail/QuestionDetail";
 
@@ -7,7 +7,6 @@ import "font-awesome/css/font-awesome.min.css";
 //import ToggleBox from '../ToggleBox/ToggleBox';
 import { connect } from "react-redux";
 import * as actions from "./../../../redux/actions/index";
-
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
@@ -18,7 +17,8 @@ class QuizCreatorEditor extends React.Component {
     this.state = {
       showPopup: false,
       question_table_id: 1,
-      data: []
+      questions: [],
+      table: {}
     };
   }
   togglePopup() {
@@ -27,16 +27,23 @@ class QuizCreatorEditor extends React.Component {
     });
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
-    //console.log("nextprops", nextProps.question);
+    console.log("nextprops", nextProps.questionTable[0]);
+    //if (nextProps.question === {})
+    console.log("hasData", nextProps.question);
+
     this.setState({
-      data: nextProps.question
+      table: nextProps.questionTable[0],
+      questions: nextProps.questionTable[0].questions
+    });
+    this.setState({
+      //questions: nextProps.question
     });
   }
   componentDidMount() {
     this.props.showListQuestionAnswer(this.state.question_table_id);
   }
   render() {
-    let element = this.state.data.map((data, index) => {
+    let element = this.state.questions.map((data, index) => {
       return (
         <QuizCreatorQuestionDetail
           key={index}
@@ -82,7 +89,7 @@ const mapDispatchToProps = (dispatch, props) => {
 };
 const mapStateToProps = state => {
   return {
-    answer: state.answer,
+    questionTable: state.questionTable,
     question: state.question
   };
 };

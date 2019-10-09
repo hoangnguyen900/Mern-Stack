@@ -19,8 +19,8 @@ router.get("/questionchoices/:id", (req, res) =>
     .catch(err => console.log(err))
 );
 router.post("/questionchoices", (req, res) => {
-  QuestionChoices.bulkCreate(req.body)
-    .then(res.send("success"))
+  QuestionChoices.bulkCreate(req.body.data)
+    .then(data => res.json(data))
     .catch(err => console.log(err));
 });
 
