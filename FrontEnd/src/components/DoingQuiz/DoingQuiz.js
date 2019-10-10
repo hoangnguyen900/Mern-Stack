@@ -1,7 +1,7 @@
 import React from 'react';
 import './DoingQuiz.scss';
 import QuestionShow from '../DoingQuiz/QuestionShow/QuestionShow';
-var count = 0;
+
 class DoingQuiz extends React.Component {
     constructor(props) {
         super(props);
@@ -44,47 +44,34 @@ class DoingQuiz extends React.Component {
             isDone: false,
         }
     }
-    // componentDidMount() {
-    //     this.timer = setInterval(() => {
 
-    //         if (count < this.state.QuizList.length - 1 && this.state.isDone === false) {
-    //             count = count + 1;
-    //         }
+    createQuestion() {
+        for (let i = 0; i < this.state.QuizList.length; i++) {
+            setTimeout(() => {
+                if (this.state.count < this.state.QuizList.length - 1 && this.state.isDone === false) {
+                    this.setState({
+                        count: this.state.count + 1,
+                    })
+                }
+                else{
+                    this.setState({
+                        isDone: true,
+                    })
+                }
+            }, this.state.QuizList[this.state.count].questionTime * 1000 + 300);
 
-    //     }, this.state.QuizList[count].questionTime * 1000);
-
-    //     if (count === this.state.QuizList.length - 1) {
-    //         this.setState({
-    //             isDone: true,
-    //         })
-    //     }
-    //     console.log(this.state.isDone)
-    // }
-
-    componentDidMount() {
-        this.timer = setTimeout(() => {
-
-            if (this.state.count < this.state.QuizList.length - 1 && this.state.isDone === false) {
-
-                count = count + 1
-                this.setState({
-                    count: count,
-                })
-            }
-        },
-            this.state.QuizList[this.state.count].questionTime * 1000
-        )
-    }
-
-    
-    componentWillUnmount() {
-        clearInterval(this.timer);
+            if(this.state.isDone === true)
+                return <div>Done</div>
+            return <QuestionShow key={this.state.count} question={this.state.QuizList[this.state.count]} />
+        }
     }
 
     render() {
+
+        let questions = this.createQuestion();
         return (
             <div className="doing-quiz-container">
-                <QuestionShow key={this.state.count} question={this.state.QuizList[this.state.count]} />
+                {questions}
             </div>
         );
     }

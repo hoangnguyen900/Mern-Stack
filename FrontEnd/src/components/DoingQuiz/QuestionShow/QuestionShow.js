@@ -3,7 +3,6 @@ import './QuestionShow.scss';
 import TimeBar from '../Timebar/TimeBar';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-	faAngleLeft,
 	faAngleRight,
 	faCheckCircle
 } from "@fortawesome/free-solid-svg-icons";
@@ -50,10 +49,6 @@ class QuestionShow extends React.Component {
 					</div>
 					<div className="question-detail-footer">
 						<div className="change-question-group">
-							<button>
-								<span><FontAwesomeIcon icon={faAngleLeft} /></span>
-								Previous
-							</button>
 							<button>
 								Next
 							<span><FontAwesomeIcon icon={faAngleRight} /></span>
