@@ -47,6 +47,9 @@ class QuizCreatorEditor extends React.Component {
     let question_id = this.state.table.questions[index].id;
     this.props.deleteQuestionAndAnswersAPI(question_id, index);
   };
+  onClickEditHandler = () => {
+    // console.log(index);
+  };
   render() {
     let element = this.state.table.questions.map((data, index) => {
       return (
@@ -55,6 +58,7 @@ class QuizCreatorEditor extends React.Component {
           data={data}
           index={index}
           onClickDeleteHandler={this.onClickDeleteHandler}
+          onClickEditHandler={this.onClickEditHandler}
         />
       );
     });

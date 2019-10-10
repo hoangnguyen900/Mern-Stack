@@ -4,7 +4,6 @@ const Question = require("../models/Question");
 const QuestionChoices = require("../models/QuestionChoices");
 const QuestionTable_Question = require("../models/QuestionTable_Question");
 
-const Sequelize = require("sequelize");
 //get Question list
 router.get("/question", (req, res) =>
   Question.findAll()
@@ -28,15 +27,14 @@ router.post("/question", (req, res) => {
       }
     ]
   })
-    .then(question => {
+    .then(data => {
+      res.send(data);
       QuestionTable_Question.create({
-        question_id: question.id,
+        question_id: data.id,
         question_table_id: req.body.question_table_id
       });
     })
-    .then(() => {
-      res.send("Create successfully");
-    })
+
     .catch(err => console.log(err));
 });
 router.put("/question", (req, res) =>
@@ -49,12 +47,26 @@ router.put("/question", (req, res) =>
     .catch(err => console.log(err))
 );
 router.delete("/question/:id", (req, res) =>
-  Question.destroy({
+  QuestionChoices.destroy({
     where: {
-      id: req.params.id
+      question_id: req.params.id
     }
   })
-    .then(res.send("success"))
+    .then(() =>
+      QuestionTable_Question.destroy({
+        where: {
+          question_id: req.params.id
+        }
+      })
+    )
+    .then(() =>
+      Question.destroy({
+        where: {
+          id: req.params.id
+        }
+      })
+    )
+    .then(() => res.send("Delete Successfull"))
     .catch(err => console.log(err))
 );
 module.exports = router;

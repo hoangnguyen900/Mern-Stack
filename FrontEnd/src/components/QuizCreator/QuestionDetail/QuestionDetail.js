@@ -35,10 +35,10 @@ class QuizCreatorQuestionDetail extends React.Component {
     let { onClickDeleteHandler, index } = this.props;
     onClickDeleteHandler(index);
   };
-  // onClickEditHandler=()=>{
-  //   let { onClickEditHandler, index } = this.props;
-  //   onClickEditHandler(index);
-  // }
+  onClickEditHandler = () => {
+    //console.log("hello from child");
+    this.props.onClickEditHandler();
+  };
   render() {
     let { time } = this.state;
     return (
@@ -58,11 +58,8 @@ class QuizCreatorQuestionDetail extends React.Component {
             <span>
               <FontAwesomeIcon icon={faCopy} />
             </span>
-            <span>
-              <FontAwesomeIcon
-                icon={faPencilAlt}
-                onClick={this.onClickEditHandler}
-              />
+            <span onClick={this.onClickEditHandler}>
+              <FontAwesomeIcon icon={faPencilAlt} />
               <span>Edit</span>
             </span>
           </div>

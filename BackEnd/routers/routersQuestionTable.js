@@ -17,23 +17,28 @@ const data = {
   question_table_id: 1
 };
 
-router.get("/", (req, res) =>
-  Question.create(data, {
-    include: [
-      {
-        model: QuestionChoices
-      }
-    ]
+router.get("/:id", (req, res) =>
+  QuestionChoices.destroy({
+    where: {
+      question_id: req.params.id
+    }
   })
-    .then(question => {
-      QuestionTable_Question.create({
-        question_id: question.id,
-        question_table_id: data.question_table_id
-      });
-    })
-    .then(list => {
-      res.send("success");
-    })
+    .then(() =>
+      QuestionTable_Question.destroy({
+        where: {
+          question_id: req.params.id
+        }
+      })
+    )
+    .then(() =>
+      Question.destroy({
+        where: {
+          id: req.params.id
+        }
+      })
+    )
+    .then(() => res.send("Delete Successfull"))
+    .catch(err => console.log(err))
 );
 
 //get QuestionTable list

@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `quizzz` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `quizzz`;
 -- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: quizzz
@@ -32,8 +30,11 @@ CREATE TABLE `answer_record` (
   PRIMARY KEY (`user_id`,`question_table_id`,`question_id`),
   KEY `FK_record_choices_idx` (`choice_id`),
   KEY `FK_record_question_idx` (`question_id`),
+  KEY `FK_record_table_idx` (`question_table_id`),
   CONSTRAINT `FK_record_choices` FOREIGN KEY (`choice_id`) REFERENCES `question_choices` (`id`),
-  CONSTRAINT `FK_record_question` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`)
+  CONSTRAINT `FK_record_question` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`),
+  CONSTRAINT `FK_record_table` FOREIGN KEY (`question_table_id`) REFERENCES `question_table` (`id`),
+  CONSTRAINT `FK_record_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -59,7 +60,7 @@ CREATE TABLE `question` (
   `question` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `time` double NOT NULL DEFAULT '30',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=294 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +69,7 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
-INSERT INTO `question` (`id`, `question`, `time`) VALUES (1,'what is dota',20),(2,'aaa',20),(3,'bbb',20),(4,'what is a?',20),(5,'what is n in math?',20),(6,'tesing quiz',30);
+INSERT INTO `question` (`id`, `question`, `time`) VALUES (1,'what is dota',20),(2,'aaa',20),(3,'bbb',20),(4,'what is a?',20),(5,'what is n in math?',20),(6,'tesing quiz',30),(232,'here is the test from react',30),(233,'test',30),(234,'here is the test from react',30),(235,'here is the test from react',30),(236,'here is the test from react',30),(237,'here is the test from react',30),(238,'here is the test from react',30),(239,'here is the test from react',30),(240,'here is the test from react',30),(241,'haha',30),(242,'haha',30),(243,'what is dota',20),(244,'what is dota',20),(245,'what is dota',20),(246,'what is dota',20),(247,'what is dota',20),(248,'what is dota',20),(249,'what is dota',20),(250,'what is dota',20),(251,'what is dota',20),(252,'what is dota',20),(253,'what is dota',20),(254,'what is dota',20),(255,'here is the test from react',30),(256,'here is the test from react1111',30),(257,'test',30),(258,'here is the test from react',30),(259,'redux',30),(260,'test',30),(261,'here is the test from react',30),(262,'redux',30),(263,'here is the test from react',30),(264,'here is the test from react',30),(265,'redux',30),(266,'here is the test from react',30),(267,'test',30),(268,'123',30),(269,'123123',30),(270,'redux',30),(271,'asdasd',30),(272,'aaaaa',30),(273,'123',30),(274,'redux',30),(275,'123123',30),(276,'redux',30),(277,'test',30),(278,'redux',30),(279,'redux',30),(280,'redux',30);
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,12 +83,12 @@ DROP TABLE IF EXISTS `question_choices`;
 CREATE TABLE `question_choices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `question_id` int(11) NOT NULL,
-  `choice` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `is_right_choice` tinyint(1) NOT NULL,
+  `answer` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `is_right` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`,`question_id`),
   KEY `FK_question_choice_question_idx` (`question_id`),
   CONSTRAINT `FK_question_choice_question` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=376 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +97,7 @@ CREATE TABLE `question_choices` (
 
 LOCK TABLES `question_choices` WRITE;
 /*!40000 ALTER TABLE `question_choices` DISABLE KEYS */;
-INSERT INTO `question_choices` (`id`, `question_id`, `choice`, `is_right_choice`) VALUES (1,1,'1',1),(2,1,'0',0),(3,1,'00',0),(4,2,'1',1),(5,2,'0',0),(6,3,'0',0),(7,3,'1',1),(8,4,'0',0),(9,4,'1',1),(10,5,'0',0),(11,5,'1',1);
+INSERT INTO `question_choices` (`id`, `question_id`, `answer`, `is_right`) VALUES (1,1,'1',1),(2,1,'0',0),(3,1,'00',0),(4,2,'1',1),(5,2,'0',0),(6,3,'0',0),(7,3,'1',1),(8,4,'0',0),(9,4,'1',1),(10,5,'0',0),(11,5,'1',1),(298,239,'123',0),(299,239,'123',0),(300,240,'123',0),(301,240,'123',0),(302,243,'aaa',1),(303,244,'aaa',1),(304,245,'aaa',1),(305,246,'aaa',1),(306,247,'aaa',1),(307,248,'aaa',1),(308,249,'aaa',1),(309,250,'aaa',1),(310,251,'aaa',1),(311,252,'aaa',1),(312,253,'aaa',1),(313,254,'aaa',1),(314,255,'123',0),(315,255,'123',1),(316,255,'123',0),(317,256,'123',0),(318,256,'123',0),(319,256,'123',1),(320,257,'123',0),(321,257,'aa',1),(322,258,'123',0),(323,258,'123',1),(324,259,'aaaa',0),(325,259,'aaa',1),(326,260,'aa',1),(327,260,'1',0),(328,261,'haha',0),(329,261,'lol tris',1),(330,262,'testing ',1),(331,262,'aa',1),(332,263,'aa',1),(333,263,'123',0),(334,264,'123',1),(335,264,'123',0),(336,265,'123',1),(337,266,'aa',0),(338,267,'123',1),(339,268,'aaa',1),(340,269,'aaaa',0),(341,270,'aaa',0),(342,270,'aaa',1),(343,271,'aaa',1),(344,271,'aaaa',0),(345,272,'aa',1),(346,273,'1',0),(347,274,'test',0),(348,275,'123',0),(349,276,'aaa',0),(350,277,'123',0),(351,278,'aaa',1),(352,279,'aa',1),(353,279,'aaa',0),(354,280,'aaa',0),(355,280,'1',1),(356,280,'as',0);
 /*!40000 ALTER TABLE `question_choices` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,7 +125,7 @@ CREATE TABLE `question_table` (
   KEY `FK_table_user_idx` (`admin`),
   CONSTRAINT `FK_table_subject` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`),
   CONSTRAINT `FK_table_user` FOREIGN KEY (`admin`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,7 +134,7 @@ CREATE TABLE `question_table` (
 
 LOCK TABLES `question_table` WRITE;
 /*!40000 ALTER TABLE `question_table` DISABLE KEYS */;
-INSERT INTO `question_table` (`id`, `code`, `title`, `grade_begin`, `grade_end`, `level`, `played`, `subject_id`, `image`, `is_public`, `admin`) VALUES (1,NULL,'DOTA',1,4,1,1000,1,NULL,1,1);
+INSERT INTO `question_table` (`id`, `code`, `title`, `grade_begin`, `grade_end`, `level`, `played`, `subject_id`, `image`, `is_public`, `admin`) VALUES (1,NULL,'DOTA',1,4,1,1000,1,NULL,1,1),(2,NULL,'1',NULL,NULL,1,1,1,NULL,1,1);
 /*!40000 ALTER TABLE `question_table` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,7 +162,7 @@ CREATE TABLE `questiontable_question` (
 
 LOCK TABLES `questiontable_question` WRITE;
 /*!40000 ALTER TABLE `questiontable_question` DISABLE KEYS */;
-INSERT INTO `questiontable_question` (`question_table_id`, `question_id`) VALUES (1,1),(1,2),(1,3);
+INSERT INTO `questiontable_question` (`question_table_id`, `question_id`) VALUES (1,1),(1,2),(1,3),(1,280);
 /*!40000 ALTER TABLE `questiontable_question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -263,4 +264,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-30 21:48:38
+-- Dump completed on 2019-10-10 16:12:33
