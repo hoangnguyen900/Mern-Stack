@@ -29,7 +29,7 @@ class QuestionCreatePopup extends React.Component {
     this.state = {
       questionsArr: [1, 2, 3, 4],
       isDisplay: "block",
-
+      title: 30,
       data: {
         id: 0,
         question: "",
@@ -72,8 +72,6 @@ class QuestionCreatePopup extends React.Component {
 
   onSubmitHandle = event => {
     event.preventDefault();
-    console.log("listArr", listAns);
-    console.log("listPrototype", listPrototype);
     for (var i = 0; i < listAns.length; i++) {
       if (listAns[i].index === 0) {
         listAns.splice(i, 1);
@@ -103,6 +101,13 @@ class QuestionCreatePopup extends React.Component {
         [name]: value,
         time: 30
       }
+    });
+  };
+  onSelectHandler = event => {
+    let data = this.state.data;
+    data.time = parseInt(event);
+    this.setState({
+      title: data.time
     });
   };
 
@@ -165,15 +170,17 @@ class QuestionCreatePopup extends React.Component {
                       <DropdownButton
                         drop={direction}
                         variant="light"
-                        title={` 30 seconds `}
+                        title={` ${this.state.title} seconds `}
                         id={`dropdown-button-drop-${direction}`}
                         key={direction}
+                        onSelect={this.onSelectHandler}
                         size="sm"
                         background-color="white"
                       >
-                        <Dropdown.Item eventKey="1">30 seconds</Dropdown.Item>
-                        <Dropdown.Item eventKey="2">45 seconds</Dropdown.Item>
-                        <Dropdown.Item eventKey="3">60 seconds</Dropdown.Item>
+                        <Dropdown.Item eventKey="15">15 seconds</Dropdown.Item>
+                        <Dropdown.Item eventKey="30">30 seconds</Dropdown.Item>
+                        <Dropdown.Item eventKey="45">45 seconds</Dropdown.Item>
+                        <Dropdown.Item eventKey="60">60 seconds</Dropdown.Item>
                       </DropdownButton>
                     ))}
                   </ButtonToolbar>

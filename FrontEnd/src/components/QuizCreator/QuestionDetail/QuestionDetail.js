@@ -1,5 +1,5 @@
 import React from "react";
-import './QuestionDetail.scss';
+import "./QuestionDetail.scss";
 import { ButtonToolbar, Dropdown, DropdownButton } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -18,10 +18,29 @@ import * as actions from "./../../../redux/actions/index";
 class QuizCreatorQuestionDetail extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      id: 0,
+      question: "",
+      time: 0
+    };
   }
-
+  onSelectTimeHandler = event => {
+    let question = this.state;
+    question.time = parseInt(event);
+    this.setState({
+      time: question.time
+    });
+  };
+  onClickDeleteHandler = () => {
+    let { onClickDeleteHandler, index } = this.props;
+    onClickDeleteHandler(index);
+  };
+  // onClickEditHandler=()=>{
+  //   let { onClickEditHandler, index } = this.props;
+  //   onClickEditHandler(index);
+  // }
   render() {
+    let { time } = this.state;
     return (
       <div className="question-detail-container">
         <div className="question-detail-header">
@@ -31,13 +50,19 @@ class QuizCreatorQuestionDetail extends React.Component {
           <p>Question {this.props.index + 1}</p>
           <div className="question-button-group">
             <span>
-              <FontAwesomeIcon icon={faTrashAlt} />
+              <FontAwesomeIcon
+                icon={faTrashAlt}
+                onClick={this.onClickDeleteHandler}
+              />
             </span>
             <span>
               <FontAwesomeIcon icon={faCopy} />
             </span>
             <span>
-              <FontAwesomeIcon icon={faPencilAlt} />
+              <FontAwesomeIcon
+                icon={faPencilAlt}
+                onClick={this.onClickEditHandler}
+              />
               <span>Edit</span>
             </span>
           </div>
@@ -66,20 +91,6 @@ class QuizCreatorQuestionDetail extends React.Component {
                 </div>
               );
             })}
-
-            {/* <div className="question-answer">
-              <span>
-                <FontAwesomeIcon icon={faCircle} color={"red"} />
-                <span>{this.props.anwser}VietNam</span>
-              </span>
-            </div>
-
-            <div className="question-answer">
-              <span>
-                <FontAwesomeIcon icon={faCircle} color={"red"} />
-                <span>{this.props.anwser}VietNam</span>
-              </span>
-            </div> */}
           </div>
         </div>
         <div className="question-detail-footer">
@@ -92,15 +103,19 @@ class QuizCreatorQuestionDetail extends React.Component {
                 <DropdownButton
                   drop={direction}
                   variant="light"
-                  title={` 30 seconds `}
+                  title={` ${
+                    time === 0 ? this.props.data.time : time
+                  } seconds `}
                   id={`dropdown-button-drop-${direction}`}
                   key={direction}
+                  onSelect={this.onSelectTimeHandler}
                   size="sm"
                   background-color="white"
                 >
-                  <Dropdown.Item eventKey="1">30 seconds</Dropdown.Item>
-                  <Dropdown.Item eventKey="2">45 seconds</Dropdown.Item>
-                  <Dropdown.Item eventKey="3">60 seconds</Dropdown.Item>
+                  <Dropdown.Item eventKey="15">15 seconds</Dropdown.Item>
+                  <Dropdown.Item eventKey="30">30 seconds</Dropdown.Item>
+                  <Dropdown.Item eventKey="45">45 seconds</Dropdown.Item>
+                  <Dropdown.Item eventKey="60">60 seconds</Dropdown.Item>
                 </DropdownButton>
               ))}
             </ButtonToolbar>
@@ -119,7 +134,6 @@ const mapDispatchToProps = (dispatch, props) => {
 };
 const mapStateToProps = state => {
   return {
-    answer: state.answer,
     question: state.question
   };
 };

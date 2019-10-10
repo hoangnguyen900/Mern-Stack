@@ -169,43 +169,6 @@ export const userLogoutAPI = token => {
 };
 ///////////////////////////////////////////////
 
-export const createAnswerAPI = (question_id, answers, question) => {
-  return dispatch => {
-    //add element question_id to JSON Array Object answer
-
-    let data = answers;
-    for (let i = 0; i < data.length; i++) data[i].question_id = question_id;
-
-    axios({
-      method: "post",
-      url: URLs.ANSWER_API_URL,
-      headers: {
-        "content-type": "application/json"
-      },
-      data: { data }
-    })
-      .then(res => {
-        Swal.fire({
-          position: "center",
-          type: "success",
-          title: "Create Successfully",
-          showConfirmButton: false,
-          timer: 1500,
-          heightAuto: false
-        });
-        console.log("res answers", res);
-        dispatch({
-          type: types.CREATE_QUESTION_ANSWERS,
-          answers,
-          question
-        });
-      })
-      .catch(er => {
-        console.log("er", er);
-      });
-  };
-};
-
 export const createQuestionAndAnswersAPI = (
   question_table_id,
   question,
@@ -237,7 +200,7 @@ export const createQuestionAndAnswersAPI = (
         console.log("res data", res);
         dispatch({
           type: types.CREATE_QUESTION_ANSWERS,
-          data
+          data: res.data
         });
       })
       .catch(er => {
@@ -246,6 +209,35 @@ export const createQuestionAndAnswersAPI = (
   };
 };
 
+export const deleteQuestionAndAnswersAPI = (id, index) => {
+  return dispatch => {
+    axios({
+      method: "delete",
+      url: URLs.QUESTION_API_URL + `/${id}`,
+      headers: {
+        "content-type": "application/json"
+      }
+    })
+      .then(res => {
+        Swal.fire({
+          position: "center",
+          type: "success",
+          title: "Delete Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+          heightAuto: false
+        });
+        console.log("res delete", res);
+        dispatch({
+          type: types.SHOW_QUESTION_AFTER_DELETE,
+          index
+        });
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};
 export const showListQuestionAnswer = question_table_id => {
   return dispatch => {
     axios({

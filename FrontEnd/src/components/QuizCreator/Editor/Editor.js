@@ -17,8 +17,10 @@ class QuizCreatorEditor extends React.Component {
     this.state = {
       showPopup: false,
       question_table_id: 1,
-      questions: [],
-      table: {}
+      //questions: [],
+      table: {
+        questions: []
+      }
     };
   }
   togglePopup() {
@@ -27,29 +29,32 @@ class QuizCreatorEditor extends React.Component {
     });
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log("nextprops", nextProps.questionTable[0]);
-    //if (nextProps.question === {})
-    console.log("hasData", nextProps.question);
-
-    this.setState({
-      table: nextProps.questionTable[0],
-      questions: nextProps.questionTable[0].questions
-    });
-    this.setState({
-      //questions: nextProps.question
-    });
+    console.log("nextprops", nextProps);
+    if (nextProps.question == null)
+      this.setState({
+        table: nextProps.questionTable[0]
+      });
+    else {
+      let newTable = { ...this.state.table };
+      newTable.questions.push({ ...nextProps.question });
+      console.log("newTable", newTable);
+    }
   }
   componentDidMount() {
     this.props.showListQuestionAnswer(this.state.question_table_id);
   }
+  onClickDeleteHandler = index => {
+    let question_id = this.state.table.questions[index].id;
+    this.props.deleteQuestionAndAnswersAPI(question_id, index);
+  };
   render() {
-    let element = this.state.questions.map((data, index) => {
+    let element = this.state.table.questions.map((data, index) => {
       return (
         <QuizCreatorQuestionDetail
           key={index}
           data={data}
           index={index}
-        //index={index}
+          onClickDeleteHandler={this.onClickDeleteHandler}
         />
       );
     });
@@ -84,6 +89,9 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     showListQuestionAnswer: question_table_id => {
       dispatch(actions.showListQuestionAnswer(question_table_id));
+    },
+    deleteQuestionAndAnswersAPI: (id, index) => {
+      dispatch(actions.deleteQuestionAndAnswersAPI(id, index));
     }
   };
 };
