@@ -7,6 +7,8 @@ import QuizCreateModal from "./layouts/Quiz/QuizCreateModal/QuizCreateModal";
 // import DoQuiz from "./layouts/DoQuiz/DoQuiz";
 import { Router, Route } from "react-router-dom";
 import history from "./history";
+
+import Join from "../src/layouts/Join/Join";
 class App extends React.Component {
   render() {
     return (
@@ -15,10 +17,9 @@ class App extends React.Component {
           <Route exact path="/" component={QuizCreateModal} />
           <Route path="/quiz" component={QuizCreator} />
 
-          {/* <Route path="/join" component={Join} /> */}
+          <Route path="/join" component={Join} />
           <Route path="/admin" component={QuizCreateModal} />
         </Router>
-        {/* <DoQuiz/> */}
       </div>
     );
   }

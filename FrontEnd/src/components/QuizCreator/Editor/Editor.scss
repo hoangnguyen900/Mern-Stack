@@ -6,9 +6,7 @@
     background-color: #F2F2F2;
     justify-content: center;
     flex-wrap: wrap;
-
     overflow-y: auto;
-
 
     .question-editor {
         width: 600px;
@@ -135,9 +133,10 @@
             .question-time-container {
                 display: flex;
                 flex-direction: row;
-                
+
                 justify-content: flex-start;
                 flex-grow: 1;
+
                 span {
                     align-self: center;
                     margin-left: 10px;
@@ -150,8 +149,9 @@
                     margin-left: 5px;
                     border-radius: 3px;
                     border: 1px solid #DBDADB;
-                    button{
-                        border:none;
+
+                    button {
+                        border: none;
                     }
                 }
             }
