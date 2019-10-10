@@ -1,5 +1,5 @@
 import React from 'react';
-import QuizCreate from '../../../../src/components/QuizCreate/QuizCreate';
+import QuizCreate from '../../../../src/components/QuizCreateModal/QuizCreateModal';
 import './Create.scss';
 class Create extends React.Component {
   render() {
