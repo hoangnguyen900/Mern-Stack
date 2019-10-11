@@ -3,7 +3,7 @@ const router = express.Router();
 const Question = require("../models/Question");
 const QuestionChoices = require("../models/QuestionChoices");
 const QuestionTable_Question = require("../models/QuestionTable_Question");
-
+("use strict");
 //get Question list
 router.get("/question", (req, res) =>
   Question.findAll()

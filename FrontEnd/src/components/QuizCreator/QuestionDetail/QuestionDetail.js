@@ -32,8 +32,8 @@ class QuizCreatorQuestionDetail extends React.Component {
     });
   };
   onClickDeleteHandler = () => {
-    let { onClickDeleteHandler, index } = this.props;
-    onClickDeleteHandler(index);
+    let { index } = this.props;
+    this.props.onClickDeleteHandler(index);
   };
   onClickEditHandler = () => {
     //console.log("hello from child");

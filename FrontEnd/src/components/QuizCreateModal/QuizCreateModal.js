@@ -10,15 +10,25 @@ class QuizCreate extends React.Component {
     };
   }
   componentDidMount() {
-    //this.props.showListSubject();
+    this.props.showListSubject();
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
     console.log(nextProps);
+    this.setState({
+      subject: nextProps.subject
+    });
   }
   onSubmitHandler = event => {
     event.preventDefault();
   };
   render() {
+    const element = this.state.subject.map(subj => {
+      return (
+        <div className="subject" key={subj.id}>
+          <p>{subj.title}</p>
+        </div>
+      );
+    });
     return (
       <div className="page-container">
         <div className="init-quiz">
@@ -36,15 +46,7 @@ class QuizCreate extends React.Component {
                 <div className="init-quiz-choose-subject">
                   <p>2. Choose the consistent subject</p>
 
-                  <div className="subject-clouds">
-                    <div className="subject">
-                      <p>consistent subject</p>
-                    </div>
-
-                    {/* <div className="subject">
-                      <p>consistent subject</p>
-                    </div> */}
-                  </div>
+                  <div className="subject-clouds">{element}</div>
                 </div>
                 <div>
                   <button type="submit">Create</button>
@@ -66,7 +68,7 @@ const mapDispatchToProps = (dispatch, props) => {
 };
 const mapStateToProps = state => {
   return {
-    questionTable: state.questionTable,
+    //questionTable: state.questionTable,
     subject: state.subject
   };
 };
