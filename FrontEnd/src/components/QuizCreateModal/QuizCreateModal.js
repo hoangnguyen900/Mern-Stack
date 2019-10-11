@@ -1,11 +1,19 @@
 import React from "react";
+import { connect } from "react-redux";
+import * as actions from "./../../redux/actions/index";
 import "./QuizCreateModal.scss";
 class QuizCreate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: "test"
+      subject: []
     };
+  }
+  componentDidMount() {
+    //this.props.showListSubject();
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
   }
   onSubmitHandler = event => {
     event.preventDefault();
@@ -19,7 +27,6 @@ class QuizCreate extends React.Component {
               <div className="init-quiz-create-title">
                 <img src={require("./images/quiz-icon.png")} alt="quiz-icon" />
                 <p>Create a quiz</p>
-                <p> {this.state.data}</p>
               </div>
               <div className="init-quiz-create-body">
                 <div className="init-quiz-name-quiz">
@@ -33,6 +40,10 @@ class QuizCreate extends React.Component {
                     <div className="subject">
                       <p>consistent subject</p>
                     </div>
+
+                    {/* <div className="subject">
+                      <p>consistent subject</p>
+                    </div> */}
                   </div>
                 </div>
                 <div>
@@ -46,5 +57,20 @@ class QuizCreate extends React.Component {
     );
   }
 }
-
-export default QuizCreate;
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    showListSubject: () => {
+      dispatch(actions.showListSubject());
+    }
+  };
+};
+const mapStateToProps = state => {
+  return {
+    questionTable: state.questionTable,
+    subject: state.subject
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(QuizCreate);

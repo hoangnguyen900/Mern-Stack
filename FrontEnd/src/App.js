@@ -14,8 +14,8 @@ class App extends React.Component {
     return (
       <div className="page-container">
         <Router history={history}>
-          <Route exact path="/" component={QuizCreateModal} />
-          <Route path="/quiz" component={QuizCreator} />
+          <Route exact path="/as" component={QuizCreateModal} />
+          <Route path="/" component={QuizCreator} />
 
           <Route path="/join" component={Join} />
           <Route path="/admin" component={QuizCreateModal} />

@@ -259,3 +259,25 @@ export const showListQuestionAnswer = question_table_id => {
       });
   };
 };
+
+export const showListSubject = () => {
+  return dispatch => {
+    axios({
+      method: "get",
+      url: URLs.SUBJECT_API_URL,
+      headers: {
+        "content-type": "application/json"
+      }
+    })
+      .then(res => {
+        console.log("res subject", res.data);
+        dispatch({
+          type: types.SHOW_SUBJECT,
+          data: res.data
+        });
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};
