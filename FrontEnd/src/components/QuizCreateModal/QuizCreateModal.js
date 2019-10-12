@@ -6,6 +6,11 @@ class QuizCreate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      data: {
+        title: "",
+        subject_id: 0,
+        admin: 0
+      },
       subject: []
     };
   }
@@ -20,6 +25,7 @@ class QuizCreate extends React.Component {
   }
   onSubmitHandler = event => {
     event.preventDefault();
+    //this.props.createQuestionTable(data)
   };
   render() {
     const element = this.state.subject.map(subj => {
@@ -63,6 +69,9 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     showListSubject: () => {
       dispatch(actions.showListSubject());
+    },
+    createQuestionTable: data => {
+      dispatch(actions.createQuestionTable(data));
     }
   };
 };
