@@ -36,7 +36,7 @@ class QuizCreate extends React.Component {
       );
     });
     return (
-      <div className="page-container">
+      <div className="quiz-create-modal-container">
         <div className="init-quiz">
           <form onSubmit={this.onSubmitHandler}>
             <div className="init-quiz-container">

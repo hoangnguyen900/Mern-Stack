@@ -9,6 +9,7 @@ import { Router, Route } from "react-router-dom";
 import history from "./history";
 
 import Join from "../src/layouts/Join/Join";
+import Home from '../src/layouts/Home/Home';
 class App extends React.Component {
   render() {
     return (
@@ -19,6 +20,7 @@ class App extends React.Component {
 
           <Route path="/join" component={Join} />
           <Route path="/admin" component={QuizCreateModal} />
+          <Route path="/home" component={Home} />
         </Router>
       </div>
     );
