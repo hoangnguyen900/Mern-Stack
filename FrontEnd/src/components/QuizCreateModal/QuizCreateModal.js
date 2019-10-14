@@ -2,36 +2,80 @@ import React from "react";
 import { connect } from "react-redux";
 import * as actions from "./../../redux/actions/index";
 import "./QuizCreateModal.scss";
+import history from "../../history";
 class QuizCreate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: 0,
       data: {
         title: "",
         subject_id: 0,
-        admin: 0
+        admin: ""
       },
       subject: []
     };
   }
   componentDidMount() {
     this.props.showListSubject();
+
+    // 2 ways :
+    // get admin and setState
+    // let data = this.state.data;
+    // data.admin = parseInt(this.props.match.params.admin);
+    //or
+    this.setState(prevState => ({
+      data: {
+        // object that we want to update
+        ...prevState.data, // keep all other key-value pairs
+        admin: parseInt(this.props.match.params.admin) // update the value of specific key
+      }
+    }));
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-    this.setState({
-      subject: nextProps.subject
-    });
+    if (typeof nextProps.questionTable.id === "undefined")
+      this.setState({
+        subject: nextProps.subject
+      });
+    else {
+      this.setState({
+        id: nextProps.questionTable.id
+      });
+      history.push(`/quiz/${nextProps.questionTable.id}`);
+    }
   }
   onSubmitHandler = event => {
     event.preventDefault();
-    //this.props.createQuestionTable(data)
+    //console.log(this.state.data);
+    this.props.createQuestionTable(this.state.data);
+  };
+  onChangeHandler = event => {
+    let { name, value } = event.target;
+    let tempt = 0;
+    //set type = Integer
+    event.target.type === "button"
+      ? (tempt = parseInt(value))
+      : (tempt = value);
+    this.setState(prevState => ({
+      data: {
+        // object that we want to update
+        ...prevState.data, // keep all other key-value pairs
+        [name]: tempt // update the value of specific key
+      }
+    }));
   };
   render() {
     const element = this.state.subject.map(subj => {
       return (
         <div className="subject" key={subj.id}>
-          <p>{subj.title}</p>
+          <button
+            type="button"
+            name="subject_id"
+            value={subj.id}
+            onClick={this.onChangeHandler}
+          >
+            {subj.title}
+          </button>
         </div>
       );
     });
@@ -42,18 +86,23 @@ class QuizCreate extends React.Component {
             <div className="init-quiz-container">
               <div className="init-quiz-create-title">
                 <img src={require("./images/quiz-icon.png")} alt="quiz-icon" />
-                <p>Create a quiz</p>
+                <p>Create a quiz </p>
               </div>
               <div className="init-quiz-create-body">
                 <div className="init-quiz-name-quiz">
-                  <p>1. Name the quiz</p>
-                  <input />
+                  <p>1. Name the quiz </p>
+                  <input
+                    type="text"
+                    name="title"
+                    onChange={this.onChangeHandler}
+                  />
                 </div>
                 <div className="init-quiz-choose-subject">
                   <p>2. Choose the consistent subject</p>
 
                   <div className="subject-clouds">{element}</div>
                 </div>
+                <p>sub id: {this.state.data.subject_id}</p>
                 <div>
                   <button type="submit">Create</button>
                 </div>
@@ -77,7 +126,7 @@ const mapDispatchToProps = (dispatch, props) => {
 };
 const mapStateToProps = state => {
   return {
-    //questionTable: state.questionTable,
+    questionTable: state.questionTable,
     subject: state.subject
   };
 };

@@ -5,7 +5,7 @@ class Create extends React.Component {
   render() {
     return (
       <div className="page-container">
-        <QuizCreateModal />
+        <QuizCreateModal match={this.props.match} />
       </div>
     );
   }

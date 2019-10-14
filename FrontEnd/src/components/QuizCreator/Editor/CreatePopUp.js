@@ -81,7 +81,7 @@ class QuestionCreatePopup extends React.Component {
     this.setState({
       answers: [...this.state.answers, ...listAns]
     });
-    const question_table_id = 1;
+    let question_table_id = this.props.match.params.question_table_id;
     this.props.createQuestionAndAnswersAPI(
       question_table_id,
       this.state.data,

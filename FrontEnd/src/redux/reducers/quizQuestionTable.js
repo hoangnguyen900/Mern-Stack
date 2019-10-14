@@ -14,7 +14,7 @@ let myReducer = (state = initialState, action) => {
       state[0].questions.splice(action.index, 1);
       return { ...state };
     case types.CREATE_QUESTION_TABLE:
-      return { ...state };
+      return { ...action.data };
     case types.UPDATE_QUESTION_TABLE:
       return { ...state };
 

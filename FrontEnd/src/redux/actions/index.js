@@ -288,7 +288,8 @@ export const createQuestionTable = data => {
       url: URLs.QUESTION_TABLE_API_URL,
       headers: {
         "content-type": "application/json"
-      }
+      },
+      data: data
     })
       .then(res => {
         console.log("res create table", res.data);

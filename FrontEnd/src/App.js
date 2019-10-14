@@ -5,22 +5,29 @@ import QuizCreator from "./layouts/Quiz/QuizCreator/QuizCreator";
 import QuizCreateModal from "./layouts/Quiz/QuizCreateModal/QuizCreateModal";
 
 // import DoQuiz from "./layouts/DoQuiz/DoQuiz";
-import { Router, Route } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import history from "./history";
 
 import Join from "../src/layouts/Join/Join";
-import Home from '../src/layouts/Home/Home';
+import Home from "../src/layouts/Home/Home";
 class App extends React.Component {
   render() {
     return (
       <div className="page-container">
         <Router history={history}>
-          {/* <Route exact path="/" component={QuizCreateModal} /> */}
-          <Route path="/quiz/:id" component={QuizCreator} />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route
+              path="/quiz/:question_table_id"
+              render={({ match }) => <QuizCreator match={match} />}
+            />
 
-          <Route path="/join" component={Join} />
-          <Route path="/admin" component={QuizCreateModal} />
-          <Route path="/home" component={Home} />
+            <Route path="/join" component={Join} />
+            <Route
+              path="/admin/:admin"
+              render={({ match }) => <QuizCreateModal match={match} />}
+            />
+          </Switch>
         </Router>
       </div>
     );

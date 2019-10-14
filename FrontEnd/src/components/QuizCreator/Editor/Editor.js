@@ -29,7 +29,6 @@ class QuizCreatorEditor extends React.Component {
     });
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log("nextprops", nextProps);
     if (nextProps.question == null)
       this.setState({
         table: nextProps.questionTable[0]
@@ -37,11 +36,14 @@ class QuizCreatorEditor extends React.Component {
     else {
       let newTable = { ...this.state.table };
       newTable.questions.push({ ...nextProps.question });
-      console.log("newTable", newTable);
     }
   }
   componentDidMount() {
-    this.props.showListQuestionAnswer(this.state.question_table_id);
+    let { question_table_id } = this.props.match.params;
+    this.setState({
+      question_table_id: question_table_id
+    });
+    this.props.showListQuestionAnswer(question_table_id);
   }
   onClickDeleteHandler = index => {
     let question_id = this.state.table.questions[index].id;
@@ -83,6 +85,7 @@ class QuizCreatorEditor extends React.Component {
           <CreatePopUp
             text="Question"
             closePopup={this.togglePopup.bind(this)}
+            match={this.props.match}
           />
         ) : null}
       </div>

@@ -7,7 +7,7 @@ class QuizCreator extends React.Component {
     return (
       <div className="page-container">
         <QuizCreatorNav />
-        <QuizCreateEditor />
+        <QuizCreateEditor match={this.props.match} />
       </div>
     );
   }
