@@ -49,7 +49,7 @@ class QuestionShow extends React.Component {
 					</div>
 					<div className="question-detail-footer">
 						<div className="change-question-group">
-							<button>
+							<button> 
 								Next
 							<span><FontAwesomeIcon icon={faAngleRight} /></span>
 							</button>
