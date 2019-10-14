@@ -5,7 +5,7 @@ const Question = require("../models/Question");
 const QuestionTable_Question = require("../models/QuestionTable_Question");
 const User = require("../models/User");
 const QuestionChoices = require("../models/QuestionChoices");
-
+const Subject = require("../models/Subject");
 const data = {
   question: "what is dota",
   time: 20,
@@ -17,7 +17,7 @@ const data = {
   question_table_id: 1
 };
 
-router.get("/:id", (req, res) =>
+router.get("/aa", (req, res) =>
   QuestionChoices.destroy({
     where: {
       question_id: req.params.id
@@ -60,7 +60,7 @@ router.get("/questiontable/:id", (req, res) => {
     ]
     //attributes: ["question_id"]
   }).then(data => {
-    res.json(data);
+    res.send(data);
   });
 });
 router.post("/questiontable", (req, res) => {
@@ -87,6 +87,12 @@ router.delete("/questiontable/:id", (req, res) =>
     }
   })
     .then(res.send("success"))
+    .catch(err => console.log(err))
+);
+//////////////get list subject
+router.get("/subject", (req, res) =>
+  Subject.findAll()
+    .then(data => res.send(data))
     .catch(err => console.log(err))
 );
 module.exports = router;

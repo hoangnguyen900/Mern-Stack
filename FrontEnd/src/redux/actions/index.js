@@ -259,3 +259,67 @@ export const showListQuestionAnswer = question_table_id => {
       });
   };
 };
+
+export const showListSubject = () => {
+  return dispatch => {
+    axios({
+      method: "get",
+      url: URLs.SUBJECT_API_URL,
+      headers: {
+        "content-type": "application/json"
+      }
+    })
+      .then(res => {
+        console.log("res subject", res.data);
+        dispatch({
+          type: types.SHOW_SUBJECT,
+          data: res.data
+        });
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};
+export const createQuestionTable = data => {
+  return dispatch => {
+    axios({
+      method: "post",
+      url: URLs.QUESTION_TABLE_API_URL,
+      headers: {
+        "content-type": "application/json"
+      }
+    })
+      .then(res => {
+        console.log("res create table", res.data);
+        dispatch({
+          type: types.CREATE_QUESTION_TABLE,
+          data: res.data
+        });
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};
+export const updateQuestionTable = data => {
+  return dispatch => {
+    axios({
+      method: "put",
+      url: URLs.QUESTION_TABLE_API_URL,
+      headers: {
+        "content-type": "application/json"
+      }
+    })
+      .then(res => {
+        console.log("res update table", res.data);
+        dispatch({
+          type: types.UPDATE_QUESTION_TABLE,
+          data: res.data
+        });
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};

@@ -12,3 +12,4 @@ const domain = "http://localhost:3000";
 export const QUESTION_API_URL = `${domain}/question`;
 export const ANSWER_API_URL = `${domain}/questionchoices`;
 export const QUESTION_TABLE_API_URL = `${domain}/questiontable`;
+export const SUBJECT_API_URL = `${domain}/subject`;

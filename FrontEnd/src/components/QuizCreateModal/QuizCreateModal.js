@@ -1,16 +1,40 @@
 import React from "react";
+import { connect } from "react-redux";
+import * as actions from "./../../redux/actions/index";
 import "./QuizCreateModal.scss";
 class QuizCreate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: "test"
+      data: {
+        title: "",
+        subject_id: 0,
+        admin: 0
+      },
+      subject: []
     };
+  }
+  componentDidMount() {
+    this.props.showListSubject();
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    this.setState({
+      subject: nextProps.subject
+    });
   }
   onSubmitHandler = event => {
     event.preventDefault();
+    //this.props.createQuestionTable(data)
   };
   render() {
+    const element = this.state.subject.map(subj => {
+      return (
+        <div className="subject" key={subj.id}>
+          <p>{subj.title}</p>
+        </div>
+      );
+    });
     return (
       <div className="page-container">
         <div className="init-quiz">
@@ -19,7 +43,6 @@ class QuizCreate extends React.Component {
               <div className="init-quiz-create-title">
                 <img src={require("./images/quiz-icon.png")} alt="quiz-icon" />
                 <p>Create a quiz</p>
-                <p> {this.state.data}</p>
               </div>
               <div className="init-quiz-create-body">
                 <div className="init-quiz-name-quiz">
@@ -29,11 +52,7 @@ class QuizCreate extends React.Component {
                 <div className="init-quiz-choose-subject">
                   <p>2. Choose the consistent subject</p>
 
-                  <div className="subject-clouds">
-                    <div className="subject">
-                      <p>consistent subject</p>
-                    </div>
-                  </div>
+                  <div className="subject-clouds">{element}</div>
                 </div>
                 <div>
                   <button type="submit">Create</button>
@@ -46,5 +65,23 @@ class QuizCreate extends React.Component {
     );
   }
 }
-
-export default QuizCreate;
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    showListSubject: () => {
+      dispatch(actions.showListSubject());
+    },
+    createQuestionTable: data => {
+      dispatch(actions.createQuestionTable(data));
+    }
+  };
+};
+const mapStateToProps = state => {
+  return {
+    //questionTable: state.questionTable,
+    subject: state.subject
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(QuizCreate);
