@@ -5,12 +5,12 @@ const QuestionChoices = require("../models/QuestionChoices");
 const QuestionTable_Question = require("../models/QuestionTable_Question");
 ("use strict");
 //get Question list
-router.get("/question", (req, res) =>
+router.get("/api/question", (req, res) =>
   Question.findAll()
     .then(data => res.send(data))
     .catch(err => console.log(err))
 );
-router.get("/question/:id", (req, res) =>
+router.get("/api/question/:id", (req, res) =>
   Question.findAll({
     where: {
       id: req.params.id
@@ -19,7 +19,7 @@ router.get("/question/:id", (req, res) =>
     .then(data => res.send(data))
     .catch(err => console.log(err))
 );
-router.post("/question", (req, res) => {
+router.post("/api/question", (req, res) => {
   Question.create(req.body, {
     include: [
       {
@@ -37,7 +37,7 @@ router.post("/question", (req, res) => {
 
     .catch(err => console.log(err));
 });
-router.put("/question", (req, res) =>
+router.put("/api/question", (req, res) =>
   Question.update(req.body, {
     where: {
       id: req.body.id
@@ -46,7 +46,7 @@ router.put("/question", (req, res) =>
     .then(res.send("success " + JSON.stringify(req.body)))
     .catch(err => console.log(err))
 );
-router.delete("/question/:id", (req, res) =>
+router.delete("/api/question/:id", (req, res) =>
   QuestionChoices.destroy({
     where: {
       question_id: req.params.id
