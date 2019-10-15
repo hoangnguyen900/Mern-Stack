@@ -8,7 +8,7 @@ const association = require("./routers/association");
 const routersQuestionTable = require("./routers/routersQuestionTable");
 const routersQuestion = require("./routers/routersQuestion");
 const routersQuestionChoices = require("./routers/routersQuestionChoices");
-
+const routersUser = require("./routers/routersUser");
 const db = require("./database");
 
 app.use(bodyparser.urlencoded({ extended: true }));
@@ -23,6 +23,7 @@ app.use(association);
 app.use(routersQuestionTable);
 app.use(routersQuestion);
 app.use(routersQuestionChoices);
+app.use(routersUser);
 
 const PORT = process.env.PORT || 3005;
 

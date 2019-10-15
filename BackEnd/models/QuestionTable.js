@@ -38,13 +38,13 @@ const QuestionTable = db.define("question_table", {
   },
   level: {
     type: "INT(11)",
-    allowNull: false,
+    allowNull: true,
     defaultValue: null,
     primaryKey: false
   },
   played: {
     type: "INT(11)",
-    allowNull: false,
+    allowNull: true,
     defaultValue: null,
     primaryKey: false
   },
@@ -63,7 +63,7 @@ const QuestionTable = db.define("question_table", {
   },
   is_public: {
     type: "TINYINT(1)",
-    allowNull: false,
+    allowNull: true,
     defaultValue: null,
     primaryKey: false
   },

@@ -42,12 +42,12 @@ router.get("/aa", (req, res) =>
 );
 
 //get QuestionTable list
-router.get("/questiontable", (req, res) =>
+router.get("/api/questiontable", (req, res) =>
   QuestionTable.findAll()
     .then(data => res.send(data))
     .catch(err => console.log(err))
 );
-router.get("/questiontable/:id", (req, res) => {
+router.get("/api/questiontable/:id", (req, res) => {
   QuestionTable.findAll({
     where: {
       id: req.params.id
@@ -58,20 +58,16 @@ router.get("/questiontable/:id", (req, res) => {
         include: QuestionChoices
       }
     ]
-    //attributes: ["question_id"]
   }).then(data => {
     res.send(data);
   });
 });
-router.post("/questiontable", (req, res) => {
-  let index = QuestionTable.max("id").then(data => {
-    req.body.id = data + 1;
-    QuestionTable.create(req.body)
-      .then(res.send("success"))
-      .catch(err => console.log(err));
-  });
+router.post("/api/questiontable", (req, res) => {
+  QuestionTable.create(req.body)
+    .then(data => res.send(data))
+    .catch(err => console.log(err));
 });
-router.put("/questiontable", (req, res) =>
+router.put("/api/questiontable", (req, res) =>
   QuestionTable.update(req.body, {
     where: {
       id: req.body.id
@@ -80,7 +76,7 @@ router.put("/questiontable", (req, res) =>
     .then(res.send("success " + JSON.stringify(req.body)))
     .catch(err => console.log(err))
 );
-router.delete("/questiontable/:id", (req, res) =>
+router.delete("/api/questiontable/:id", (req, res) =>
   QuestionTable.destroy({
     where: {
       id: req.params.id
@@ -90,7 +86,7 @@ router.delete("/questiontable/:id", (req, res) =>
     .catch(err => console.log(err))
 );
 //////////////get list subject
-router.get("/subject", (req, res) =>
+router.get("/api/subject", (req, res) =>
   Subject.findAll()
     .then(data => res.send(data))
     .catch(err => console.log(err))
