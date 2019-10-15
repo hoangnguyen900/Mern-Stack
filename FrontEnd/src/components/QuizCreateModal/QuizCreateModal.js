@@ -13,9 +13,10 @@ class QuizCreate extends React.Component {
         subject_id: 0,
         admin: ""
       },
-      subject: []
+      subject: [],
     };
   }
+
   componentDidMount() {
     this.props.showListSubject();
 
@@ -32,6 +33,8 @@ class QuizCreate extends React.Component {
       }
     }));
   }
+
+
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (typeof nextProps.questionTable.id === "undefined")
       this.setState({
@@ -52,13 +55,17 @@ class QuizCreate extends React.Component {
     //console.log(this.state.data);
     this.props.createQuestionTable(this.state.data);
   };
+
+
   onChangeHandler = event => {
     let { name, value } = event.target;
     let tempt = 0;
     //set type = Integer
-    event.target.type === "button"
-      ? (tempt = parseInt(value))
-      : (tempt = value);
+    if (event.target.type === "button"){
+      (tempt = parseInt(value))
+      
+    }else
+      (tempt = value);
     this.setState(prevState => ({
       data: {
         // object that we want to update
@@ -67,10 +74,11 @@ class QuizCreate extends React.Component {
       }
     }));
   };
+
   render() {
     const element = this.state.subject.map(subj => {
       return (
-        <div className="subject" key={subj.id}>
+        <div className="subject" key={subj.id} >
           <button
             type="button"
             name="subject_id"
@@ -88,7 +96,7 @@ class QuizCreate extends React.Component {
           <form onSubmit={this.onSubmitHandler}>
             <div className="init-quiz-container">
               <div className="init-quiz-create-title">
-                <img src={require("./images/quiz-icon.png")} alt="quiz-icon" />
+                <img src={require("./images/CreateQuiz.png")} alt="quiz-icon" />
                 <p>Create a quiz </p>
               </div>
               <div className="init-quiz-create-body">

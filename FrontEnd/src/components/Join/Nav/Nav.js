@@ -27,9 +27,9 @@ class JoinNav extends React.Component {
         </div>
 
         <div className="tab-field">
-
+          
         </div>
-        
+
         <div className="button-group">
           <button className="b-sign-up">
             <FontAwesomeIcon icon={faPlusCircle} />
