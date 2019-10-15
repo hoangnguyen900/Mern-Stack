@@ -1,7 +1,7 @@
 .quiz-create-modal-container {
     background-color: #303030;
     padding-top: 20px;
-
+    height: 100%;
     .init-quiz {
         height: fit-content;
         display: flex;
@@ -93,6 +93,17 @@
                         }
                     }
                 }
+            }
+            .init-quiz-create-footer{
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                button {
+                    height: 40px;
+                    margin: 0 10px;
+                    border: none;
+                    border-radius: 5px;
+                }        
             }
         }
     }

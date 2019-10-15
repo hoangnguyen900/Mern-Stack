@@ -1,10 +1,68 @@
-.join-nav-container{
+.join-nav-container {
+    height: 60px;
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    width: 100%;
-    height: 70px;
-    button{
-        
+    justify-content: flex-start;
+    background-color: #5F5F5F;
+    align-items: center;
+    .logo {
+        img {
+            height: 110px;
+            position: relative;
+            left: -20px;
+        }
+    }
+
+    .input-field{
+
+        input{
+            position: relative;
+            width: 300px;
+            min-width: 100px;
+            left: -40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            text-indent: 15px;
+            color: gray;
+            height: 35px;
+        }
+        span{
+            position: relative;
+            left: -73px;
+        }
+    }
+
+    .tab-field{
+        flex-grow: 1;
+    }
+
+    .button-group {
+        padding: 8px 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+
+        button {
+            height: 40px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .b-sign-up {
+            font-family: sans-serif;
+            color: white;
+            font-weight: bold;
+            background-color: #70AD47;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15), 0 4px 0 #70AD47, 0 4px 6px rgba(0, 0, 0, 0.45);
+        }
+
+        button:hover {
+            position: relative;
+            box-shadow: none !important;
+            top: 3px;
+        }
     }
 }

@@ -7,6 +7,7 @@ class QuizCreatorNav extends React.Component {
 				<div className="logo">
 					<img src={require("./images/logo.png")} alt="quiz-icon" />
 				</div>
+
 				<div className="button-group">
 					<button className="b-exit button">EXIT</button>
 					<button className="b-finish button">FINISH</button>

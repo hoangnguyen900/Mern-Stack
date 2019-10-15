@@ -38,10 +38,13 @@ class QuizCreate extends React.Component {
         subject: nextProps.subject
       });
     else {
+      console.log(this.props.questionTable);
       this.setState({
         id: nextProps.questionTable.id
       });
       history.push(`/quiz/${nextProps.questionTable.id}`);
+      // history.push(`/quiz/1`);
+
     }
   }
   onSubmitHandler = event => {
@@ -103,9 +106,10 @@ class QuizCreate extends React.Component {
                   <div className="subject-clouds">{element}</div>
                 </div>
                 <p>sub id: {this.state.data.subject_id}</p>
-                <div>
-                  <button type="submit">Create</button>
-                </div>
+
+              </div>
+              <div className="init-quiz-create-footer">
+                <button type="submit">Create</button>
               </div>
             </div>
           </form>
