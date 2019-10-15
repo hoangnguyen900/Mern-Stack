@@ -10,27 +10,13 @@ class QuizCreate extends React.Component {
       id: 0,
       data: {
         title: "",
-        subject_id: 0,
-        admin: ""
+        subject_id: 0
       },
       subject: []
     };
   }
   componentDidMount() {
     this.props.showListSubject();
-
-    // 2 ways :
-    // get admin and setState
-    // let data = this.state.data;
-    // data.admin = parseInt(this.props.match.params.admin);
-    //or
-    this.setState(prevState => ({
-      data: {
-        // object that we want to update
-        ...prevState.data, // keep all other key-value pairs
-        admin: parseInt(this.props.match.params.admin) // update the value of specific key
-      }
-    }));
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (typeof nextProps.questionTable.id === "undefined")
@@ -44,7 +30,6 @@ class QuizCreate extends React.Component {
       });
       history.push(`/quiz/${nextProps.questionTable.id}`);
       // history.push(`/quiz/1`);
-
     }
   }
   onSubmitHandler = event => {
@@ -106,7 +91,6 @@ class QuizCreate extends React.Component {
                   <div className="subject-clouds">{element}</div>
                 </div>
                 <p>sub id: {this.state.data.subject_id}</p>
-
               </div>
               <div className="init-quiz-create-footer">
                 <button type="submit">Create</button>
