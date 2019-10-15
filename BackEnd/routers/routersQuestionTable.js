@@ -6,6 +6,8 @@ const QuestionTable_Question = require("../models/QuestionTable_Question");
 const User = require("../models/User");
 const QuestionChoices = require("../models/QuestionChoices");
 const Subject = require("../models/Subject");
+const jwt = require("jsonwebtoken");
+
 const data = {
   question: "what is dota",
   time: 20,
@@ -62,11 +64,27 @@ router.get("/api/questiontable/:id", (req, res) => {
     res.send(data);
   });
 });
-router.post("/api/questiontable", (req, res) => {
-  QuestionTable.create(req.body)
-    .then(data => res.send(data))
-    .catch(err => console.log(err));
+
+router.post("/api/questiontable", verifyToken, (req, res) => {
+  jwt.verify(req.token, "hoangtri", (err, authData) => {
+    if (err) res.sendStatus(403);
+    else {
+      req.body.admin = authData.user_id.id;
+      QuestionTable.create(req.body)
+        .then(data => res.send(data))
+        .catch(err => console.log(err));
+    }
+  });
 });
+function verifyToken(req, res, next) {
+  const header = req.headers["user-token"];
+  if (typeof header !== "undefined") {
+    req.token = header;
+    next();
+  } else {
+    res.sendStatus(403);
+  }
+}
 router.put("/api/questiontable", (req, res) =>
   QuestionTable.update(req.body, {
     where: {

@@ -31,6 +31,16 @@ const User = db.define("user", {
     defaultValue: null,
     primaryKey: false,
     foreignKey: [Object]
+  },
+  email: {
+    type: "VARCHAR(50)",
+    allowNull: true,
+    primaryKey: false
+  },
+  password: {
+    type: "VARCHAR(50)",
+    allowNull: true,
+    primaryKey: false
   }
 });
 module.exports = User;
