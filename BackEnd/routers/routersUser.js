@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const QuestionChoices = require("../models/QuestionChoices");
-const QuestionTable_Question = require("../models/QuestionTable_Question");
+const AnswerRecord = require("../models/AnswerRecord");
 const jwt = require("jsonwebtoken");
 
 router.post("/api/get-user", (req, res) =>
@@ -23,6 +23,29 @@ router.post("/api/get-user", (req, res) =>
   })
 );
 
+router.post("/api/user_answer", verifyToken, (req, res) => {
+  jwt.verify(req.token, "hoangtri", (err, authData) => {
+    if (err) res.sendStatus(403);
+    else {
+      for (let i = 0; i < req.body.length; i++)
+        req.body[i].user_id = authData.user_id.id;
+      AnswerRecord.bulkCreate(req.body)
+        .then(data => {
+          AnswerRecord.findAll({
+            include: {
+              model: QuestionChoices,
+              attributes: ["is_right"]
+            },
+            where: {
+              user_id: data[0].user_id,
+              question_table_id: data[0].question_table_id
+            }
+          }).then(data => res.send(data));
+        })
+        .catch(err => console.log(err));
+    }
+  });
+});
 router.get("/api/user/:id", (req, res) =>
   User.findAll({
     where: {

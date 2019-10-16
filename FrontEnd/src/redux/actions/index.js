@@ -196,3 +196,27 @@ export const updateQuestionTable = data => {
       });
   };
 };
+export const addAnswerRecord = data => {
+  return dispatch => {
+    let token = localStorage.getItem("token");
+    axios({
+      method: "post",
+      url: URLs.ANSWER_RECORD_API_URL,
+      headers: {
+        "content-type": "application/json",
+        "user-token": token
+      },
+      data: data
+    })
+      .then(res => {
+        console.log("res create record", res.data);
+        dispatch({
+          type: types.CREATE_ANSWER_RECORD,
+          data: res.data
+        });
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};

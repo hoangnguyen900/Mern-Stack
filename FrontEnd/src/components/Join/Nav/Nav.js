@@ -27,13 +27,7 @@ class JoinNav extends React.Component {
           </span>
         </div>
 
-<<<<<<< HEAD
-        <div className="tab-field">
-          
-        </div>
-=======
         <div className="tab-field"></div>
->>>>>>> c4aed2584c0681a9cc63ef5dcce1b9dca16e17e2
 
         <div className="button-group">
           <button className="b-sign-up">

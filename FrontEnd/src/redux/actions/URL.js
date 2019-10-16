@@ -12,3 +12,4 @@ export const QUESTION_API_URL = `${domain}/api/question`;
 export const ANSWER_API_URL = `${domain}/api/questionchoices`;
 export const QUESTION_TABLE_API_URL = `${domain}/api/questiontable`;
 export const SUBJECT_API_URL = `${domain}/api/subject`;
+export const ANSWER_RECORD_API_URL = `${domain}/api/user_answer`;
