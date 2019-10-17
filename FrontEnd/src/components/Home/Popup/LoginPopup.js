@@ -42,10 +42,10 @@ class LoginPopup extends React.Component {
         <div className="popup_inner">
           <form onSubmit={this.onSubmitHandler} className="form-info">
             <div className="popup-header">
-              <h1>LOGIN</h1>
+              <p>LOGIN</p>
             </div>
             <div className="popup-body">
-              <div className="formField">
+              <div className="form-field">
                 <label htmlFor="email">Email</label>
                 <input
                   type="email"
@@ -57,7 +57,7 @@ class LoginPopup extends React.Component {
                   onChange={this.onChangeHandler}
                 />
               </div>
-              <div className="formField">
+              <div className="form-field">
                 <label htmlFor="password">Password</label>
                 <input
                   type="password"
@@ -71,24 +71,29 @@ class LoginPopup extends React.Component {
               </div>
             </div>
             <div className="popup-footer">
-              <div className="formField">
-                <button type="submit" className="btn-login">
-                  <div
-                    className={isLoading ? "fa fa-spinner fa-spin" : ""}
-                  ></div>
-                  LOGIN
+              <div className="form-field">
+                <div className="button-group">
+                  <button type="submit" className="btn-login">
+                    <div
+                      className={isLoading ? "fa fa-spinner fa-spin" : ""}
+                    ></div>
+                    LOGIN
                 </button>
-                <Link to="/signup" className="link">
-                  Create an account
-                </Link>
+
+
+                  <button
+                    className="b-close"
+                    type="button"
+                    onClick={this.props.togglePopup}
+                  >
+                    Close
+                </button>
+                </div>
+
               </div>
-              <button
-                className="b-close"
-                type="button"
-                onClick={this.props.togglePopup}
-              >
-                Close
-              </button>
+              <Link to="/signup" className="link">
+                Create an account
+                </Link>
             </div>
           </form>
         </div>

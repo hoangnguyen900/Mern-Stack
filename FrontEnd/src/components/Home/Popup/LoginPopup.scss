@@ -13,8 +13,8 @@
 
     .popup_inner {
         position: absolute;
-        left: calc((25%-500px)/2);
-        top: 10%;
+        left: 50%;
+        top: 30%;
         background: white;
         border-radius: 5px;
         display: flex;
@@ -24,11 +24,17 @@
         width: 50%;
         min-width: 300px;
         max-width: 500px;
+        transform: translate(-50%, -50%);
 
         .popup-header {
+            padding: 10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+
             p {
                 font-size: 20px;
-                vertical-align: middle;
+
 
                 img {
                     height: 30px;
@@ -39,18 +45,24 @@
 
         .popup-body {
 
-            input {
-                border-radius: 5px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                box-sizing: border-box;
-                height: 40px;
-                padding: 0 10px;
+            .form-field {
+                display: flex;
+                flex-direction: column;
+                padding: 5px;
+
+                label {}
+
+                input {
+                    border-radius: 5px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    box-sizing: border-box;
+                    height: 40px;
+                    padding: 0 10px;
+                    margin-top: 0;
+                }
             }
 
-            * {
-                margin-top: 15px;
-            }
 
             button {
                 height: 40px;
@@ -64,35 +76,20 @@
 
         .popup-footer {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             justify-content: flex-end;
+            padding: 10px 0;
 
-            .question-time-container {
+
+            .button-group {
                 display: flex;
                 flex-direction: row;
-
-                justify-content: flex-start;
-                flex-grow: 1;
-
-                span {
-                    align-self: center;
-                    margin-left: 10px;
-                }
-
-                .question-time {
-                    display: flex;
-                    flex-direction: row;
-                    align-self: center;
-                    margin-left: 5px;
-                    border-radius: 3px;
-                    border: 1px solid #DBDADB;
-
-                    button {
-                        border: none;
-                    }
-                }
+                justify-content: flex-end;
             }
 
+            a{
+                margin-left: 10px;
+            }
 
             button {
                 height: 40px;
@@ -100,11 +97,12 @@
                 font-size: 16px;
                 border: 1px solid #ccc;
                 border-radius: 5px;
-
+                box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15), 0 4px 0 #ccc, 0 4px 6px rgba(0, 0, 0, 0.45);
             }
 
             .b-close {
                 background-color: white;
+                box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15), 0 4px 0 white, 0 4px 6px rgba(0, 0, 0, 0.45);
             }
 
             .b-save {
@@ -112,7 +110,7 @@
                 color: white;
                 font-size: 20px;
                 margin-left: 10px;
-
+                
                 span {
                     margin-left: 10px;
                 }
