@@ -11,6 +11,7 @@ import history from "./history";
 import Join from "../src/layouts/Join/Join";
 import Home from "../src/layouts/Home/Home";
 
+
 class App extends React.Component {
   render() {
     return (
@@ -33,6 +34,11 @@ class App extends React.Component {
               path="/join/game/:question_table_id"
               render={({ match }) => <DoQuiz match={match} />}
             />
+
+            {/* <Route
+              path="/signup"
+              component = {SignUp}
+            /> */}
           </Switch>
         </Router>
       </div>

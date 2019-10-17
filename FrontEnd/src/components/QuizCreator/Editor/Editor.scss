@@ -126,9 +126,9 @@
         }
 
         .popup-footer {
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
+            display: flex!important;
+            flex-direction: row!important;
+            justify-content: flex-end!important;
 
             .question-time-container {
                 display: flex;
@@ -163,9 +163,13 @@
                 font-size: 16px;
                 border: 1px solid #ccc;
                 border-radius: 5px;
-
+                box-shadow: none!important;
             }
 
+            button:hover{
+                position: relative;
+                top: 0;
+            }
             .b-cancel {
                 background-color: white;
             }
