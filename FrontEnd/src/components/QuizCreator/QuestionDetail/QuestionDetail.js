@@ -49,19 +49,19 @@ class QuizCreatorQuestionDetail extends React.Component {
           </span>
           <p>Question {this.props.index + 1}</p>
           <div className="question-button-group">
-            <span>
+            <button>
               <FontAwesomeIcon
                 icon={faTrashAlt}
                 onClick={this.onClickDeleteHandler}
               />
-            </span>
-            <span>
+            </button>
+            <button>
               <FontAwesomeIcon icon={faCopy} />
-            </span>
-            <span onClick={this.onClickEditHandler}>
-              <FontAwesomeIcon icon={faPencilAlt} />
-              <span>Edit</span>
-            </span>
+            </button>
+            <button onClick={this.onClickEditHandler}>
+              <span><FontAwesomeIcon icon={faPencilAlt} /></span>
+              Edit
+            </button>
           </div>
         </div>
         <div className="question-detail-body">
@@ -102,7 +102,7 @@ class QuizCreatorQuestionDetail extends React.Component {
                   variant="light"
                   title={` ${
                     time === 0 ? this.props.data.time : time
-                  } seconds `}
+                    } seconds `}
                   id={`dropdown-button-drop-${direction}`}
                   key={direction}
                   onSelect={this.onSelectTimeHandler}
