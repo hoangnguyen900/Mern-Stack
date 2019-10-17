@@ -9,10 +9,10 @@ class DoingQuiz extends React.Component {
             QuizList: [
                 {
                     questionId: 1,
-                    questionTime: 2,
+                    questionTime: 3,
                     questionContent: "Laugh What ?",
                     questionChoices: [
-                        "Haha", "Hehe", "HoHo", "Hihi"
+                        {choice:"Haha", isTrue: 1},  {choice:"Hehe", isTrue:0},  {choice:"Hoh0", isTrue: 0},  {choice:"Hihi", isTrue: 0}
                     ]
                 },
                 {
@@ -20,7 +20,7 @@ class DoingQuiz extends React.Component {
                     questionTime: 1,
                     questionContent: "Laugh Who ?",
                     questionChoices: [
-                        "Haha", "Hehe", "HoHo", "Hihi"
+                        {choice:"Haha", isTrue: 1},  {choice:"Hehe", isTrue:0},  {choice:"Hoh0", isTrue: 0},  {choice:"Hihi", isTrue: 0}
                     ]
                 },
                 {
@@ -28,7 +28,7 @@ class DoingQuiz extends React.Component {
                     questionTime: 2,
                     questionContent: "Laugh Who ?",
                     questionChoices: [
-                        "Haha", "Hehe", "HoHo", "Hihi"
+                        {choice:"Haha", isTrue: 1},  {choice:"Hehe", isTrue:0},  {choice:"Hoh0", isTrue: 0},  {choice:"Hihi", isTrue: 0}
                     ]
                 },
                 {
@@ -36,7 +36,7 @@ class DoingQuiz extends React.Component {
                     questionTime: 2,
                     questionContent: "Laugh Who ?",
                     questionChoices: [
-                        "Haha", "Hehe", "HoHo", "Hihi"
+                        {choice:"Haha", isTrue: 1},  {choice:"Hehe", isTrue:0},  {choice:"Hoh0", isTrue: 0},  {choice:"Hihi", isTrue: 0}
                     ]
                 },
             ],

@@ -11,16 +11,17 @@ class QuestionShow extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+
 		}
 	}
 	render() {
-		const { questionId, questionTime, questionContent, questionChoices } = this.props.question
-		//console.log(questionChoices);
-		const element=questionChoices.map((answer, index) => {
+		const { questionId, questionTime, questionContent, questionChoices, choice, isTrue } = this.props.question
+		console.log(questionChoices);
+		const element = questionChoices.map((answer, index) => {
 			return (<div className="question-answer" key={index}>
 				<span>
 					<FontAwesomeIcon icon={faCheckCircle} color={"red"} />
-					<span>{answer}</span>
+					<span>{answer.choice}</span>
 				</span>
 			</div>)
 		})

@@ -10,6 +10,7 @@ import history from "./history";
 
 import Join from "../src/layouts/Join/Join";
 import Home from "../src/layouts/Home/Home";
+import DoQuiz from './layouts/DoQuiz/DoQuiz';
 class App extends React.Component {
   render() {
     return (
@@ -22,11 +23,12 @@ class App extends React.Component {
               render={({ match }) => <QuizCreator match={match} />}
             />
 
-            <Route path="/join" component={Join} />
+            <Route exact path="/join" component={Join} />
             <Route
               path="/admin/:admin"
               render={({ match }) => <QuizCreateModal match={match} />}
             />
+            <Route path="/join/game/:question_table_id" render={({ match }) => <DoQuiz match={match} />} />
           </Switch>
         </Router>
       </div>
