@@ -12,14 +12,13 @@ class QuizCreate extends React.Component {
         title: "",
         subject_id: 0
       },
-      subject: [],
+      subject: []
     };
   }
 
   componentDidMount() {
     this.props.showListSubject();
   }
-
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (typeof nextProps.questionTable.id === "undefined")
@@ -41,16 +40,13 @@ class QuizCreate extends React.Component {
     this.props.createQuestionTable(this.state.data);
   };
 
-
   onChangeHandler = event => {
     let { name, value } = event.target;
     let tempt = 0;
     //set type = Integer
-    if (event.target.type === "button"){
-      (tempt = parseInt(value))
-      
-    }else
-      (tempt = value);
+    if (event.target.type === "button") {
+      tempt = parseInt(value);
+    } else tempt = value;
     this.setState(prevState => ({
       data: {
         // object that we want to update
@@ -63,7 +59,7 @@ class QuizCreate extends React.Component {
   render() {
     const element = this.state.subject.map(subj => {
       return (
-        <div className="subject" key={subj.id} >
+        <div className="subject" key={subj.id}>
           <button
             type="button"
             name="subject_id"
