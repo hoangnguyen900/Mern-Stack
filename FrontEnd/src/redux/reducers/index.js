@@ -4,12 +4,14 @@ import questionTable from "./QuestionTable";
 import question from "./Question";
 import subject from "./Subject";
 import login from "./Login";
+import user from "./User";
 
 import { combineReducers } from "redux";
 const myReducer = combineReducers({
   question,
   questionTable,
   subject,
-  login
+  login,
+  user
 });
 export default myReducer;

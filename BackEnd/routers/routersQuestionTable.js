@@ -6,6 +6,8 @@ const QuestionTable_Question = require("../models/QuestionTable_Question");
 const User = require("../models/User");
 const QuestionChoices = require("../models/QuestionChoices");
 const Subject = require("../models/Subject");
+const AnswerRecord = require("../models/AnswerRecord");
+
 const jwt = require("jsonwebtoken");
 
 const data = {
@@ -19,29 +21,9 @@ const data = {
   question_table_id: 1
 };
 
-router.get("/aa", (req, res) =>
-  QuestionChoices.destroy({
-    where: {
-      question_id: req.params.id
-    }
-  })
-    .then(() =>
-      QuestionTable_Question.destroy({
-        where: {
-          question_id: req.params.id
-        }
-      })
-    )
-    .then(() =>
-      Question.destroy({
-        where: {
-          id: req.params.id
-        }
-      })
-    )
-    .then(() => res.send("Delete Successfull"))
-    .catch(err => console.log(err))
-);
+router.post("/api/user_answer1", (req, res) => {
+  res.send(req.body[0]);
+});
 
 //get QuestionTable list
 router.get("/api/questiontable", (req, res) =>
