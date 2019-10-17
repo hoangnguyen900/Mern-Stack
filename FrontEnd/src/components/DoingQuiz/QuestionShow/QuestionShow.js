@@ -4,6 +4,7 @@ import TimeBar from "../Timebar/TimeBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight, faCircle } from "@fortawesome/free-solid-svg-icons";
 class QuestionShow extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -35,6 +36,7 @@ class QuestionShow extends React.Component {
   };
   componentDidMount() {
     let { question } = this.props;
+
 
     this.setState({
       id: question.id,

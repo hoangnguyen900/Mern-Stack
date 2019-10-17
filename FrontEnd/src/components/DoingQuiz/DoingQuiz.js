@@ -7,6 +7,7 @@ import history from "../../history";
 var showQuestion;
 var mark = 0;
 class DoingQuiz extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -16,6 +17,7 @@ class DoingQuiz extends React.Component {
           question: "",
           question_choices: [],
           time: 0
+
         }
       ],
       data: [],

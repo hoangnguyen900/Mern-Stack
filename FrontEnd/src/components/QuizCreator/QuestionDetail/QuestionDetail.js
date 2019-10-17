@@ -45,7 +45,7 @@ class QuizCreatorQuestionDetail extends React.Component {
       <div className="question-detail-container">
         <div className="question-detail-header">
           <span>
-            <FontAwesomeIcon icon={faBars} color="#DFDFDF" />
+            <FontAwesomeIcon icon={faBars} color="#DFDFDF" size="lg" />
           </span>
           <p>Question {this.props.index + 1}</p>
           <div className="question-button-group">

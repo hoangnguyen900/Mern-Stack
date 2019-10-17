@@ -28,6 +28,7 @@ class App extends React.Component {
               path="/admin/:admin"
               render={({ match }) => <QuizCreateModal match={match} />}
             />
+
             <Route
               path="/join/game/:question_table_id"
               render={({ match }) => <DoQuiz match={match} />}

@@ -9,7 +9,7 @@
     display: flex;
     flex-direction: column;
     box-shadow: 0 0 2px rgba(0,0,0,0.1), 0 2px 2px rgba(0,0,0,0.15);
-
+    margin: 10px 0;
     
 
     .question-detail-header {
@@ -19,6 +19,11 @@
         display: flex;
         flex-direction: row;
         padding-left: 10px;
+
+        span{
+            align-self: center;
+            padding-right: 10px;
+        }
 
         p {
             align-self: center;
@@ -31,15 +36,14 @@
             flex-direction: row-reverse;
             padding: 0 !important;
             align-items: flex-start;
-            padding-right: 5px;
 
             span {
-                margin: 5px !important;
                 background-color: white;
-
+                
                 span {
                     border: none !important;
-                    margin-left: 5px;
+                    
+
                 }
             }
         }
