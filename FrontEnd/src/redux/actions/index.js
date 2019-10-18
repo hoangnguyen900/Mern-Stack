@@ -79,6 +79,42 @@ export const createQuestionAndAnswersAPI = (
   };
 };
 
+export const updateQuestionAndAnswersAPI = (question, answers) => {
+  return dispatch => {
+    const data = {
+      ...question,
+
+      question_choices: answers
+    };
+    axios({
+      method: "post",
+      url: URLs.UPDATE_QUESTION_API_URL,
+      headers: {
+        "content-type": "application/json"
+      },
+      data: data
+    })
+      .then(res => {
+        Swal.fire({
+          position: "center",
+          type: "success",
+          title: "Update Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+          heightAuto: false
+        });
+        console.log("res Update success", res);
+        dispatch({
+          type: types.UPDATE_QUESTION_ANSWERS,
+          data: res.data
+        });
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};
+
 export const deleteQuestionAndAnswersAPI = (id, index) => {
   return dispatch => {
     axios({

@@ -88,7 +88,7 @@ class DoingQuiz extends React.Component {
       }
       if (isDone === true) {
         this.props.addAnswerRecord(data);
-        console.log("total mark", mark.toFixed(2));
+        console.log("total mark", mark.toFixed(1));
         history.push(`/quiz/${this.props.match.params.question_table_id}`);
       } else
         return (
