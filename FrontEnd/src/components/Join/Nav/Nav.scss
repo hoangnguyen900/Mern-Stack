@@ -4,38 +4,90 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    background-color: #5F5F5F;
+    background-color: #ffffff;
     align-items: center;
+    box-shadow: 0px 3px 2px 0px rgba(212, 205, 212, 1);
+
     .logo {
         img {
-            height: 110px;
+            height: 120px;
             position: relative;
             left: -20px;
+            top: 10px;
         }
     }
 
-    .input-field{
+    .input-field {
+        height: 35px;
+        ;
 
-        input{
+        input {
             position: relative;
             width: 300px;
             min-width: 100px;
-            left: -40px;
-            border: none;
+            border: 1px solid #EBEBEC;
             border-radius: 25px;
             font-size: 16px;
             text-indent: 15px;
             color: gray;
             height: 35px;
+            left: -40px;
         }
-        span{
+
+        .search-icon {
             position: relative;
-            left: -73px;
+            left: 228px;
+            top: -28px;
+            width: 25px;
         }
     }
 
-    .tab-field{
+    .tab-field {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
         flex-grow: 1;
+
+        .tab-link {
+            padding: 0 10px;
+            display: flex;
+            flex-direction: column;
+
+            a {
+                color: #8F9098;
+                font-weight: bold;
+                height: 60px;
+                padding-right: 20px;
+                padding-left: 10px;
+                padding-top: 16%;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                font-size: 105%;
+
+                span {
+                    padding: 0 5px;
+                }
+            }
+
+            .active-link {
+                color: #FD7E14;
+                border-bottom: 3px solid #FD7E14;
+                font-size: 18px;
+            }
+
+        }
+
+
+
+        .activity-link {
+            height: 60px;
+            margin: 0 10px;
+
+            .active-link {
+                color: red;
+            }
+        }
     }
 
     .button-group {
@@ -55,8 +107,8 @@
             font-family: sans-serif;
             color: white;
             font-weight: bold;
-            background-color: #70AD47;
-            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15), 0 4px 0 #70AD47, 0 4px 6px rgba(0, 0, 0, 0.45);
+            background-color: #FD7E14;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15), 0 4px 0 #FD7E14, 0 4px 6px rgba(0, 0, 0, 0.45);
         }
 
         button:hover {
