@@ -15,7 +15,9 @@ class QuizCreatorEditor extends React.Component {
   constructor() {
     super();
     this.state = {
-      showPopup: false,
+      showPopupCreate: false,
+      showPopupEdit: false,
+      dataEdit: {},
       question_table_id: 1,
       //questions: [],
       table: {
@@ -23,11 +25,19 @@ class QuizCreatorEditor extends React.Component {
       }
     };
   }
-  togglePopup() {
-    this.setState({
-      showPopup: !this.state.showPopup
-    });
-  }
+  togglePopup = () => {
+    let { showPopupCreate, showPopupEdit } = this.state;
+
+    if (showPopupEdit === true) {
+      this.setState({
+        showPopupEdit: !showPopupEdit,
+        dataEdit: {}
+      });
+    } else
+      this.setState({
+        showPopupCreate: !showPopupCreate
+      });
+  };
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.question == null)
       this.setState({
@@ -49,8 +59,14 @@ class QuizCreatorEditor extends React.Component {
     let question_id = this.state.table.questions[index].id;
     this.props.deleteQuestionAndAnswersAPI(question_id, index);
   };
-  onClickEditHandler = () => {
-    // console.log(index);
+  onClickEditHandler = (index, data) => {
+    this.setState({
+      showPopupEdit: true,
+      dataEdit: {
+        index: index,
+        ...data
+      }
+    });
   };
   render() {
     let element = this.state.table.questions.map((data, index) => {
@@ -68,10 +84,7 @@ class QuizCreatorEditor extends React.Component {
       <div className="editor">
         <div className="question-editor">
           <div className="button-group">
-            <button
-              onClick={this.togglePopup.bind(this)}
-              className="button b-create"
-            >
+            <button onClick={this.togglePopup} className="button b-create">
               <FontAwesomeIcon icon={faPlusCircle} />
               Create a new question
             </button>
@@ -81,11 +94,19 @@ class QuizCreatorEditor extends React.Component {
           {element}
         </div>
         <div className="quiz-info"></div>
-        {this.state.showPopup ? (
+        {this.state.showPopupCreate ? (
           <CreatePopUp
-            text="Question"
-            closePopup={this.togglePopup.bind(this)}
+            index={this.state.table.questions.length + 1}
+            closePopup={this.togglePopup}
             match={this.props.match}
+          />
+        ) : null}
+        {this.state.showPopupEdit ? (
+          <CreatePopUp
+            index={this.state.dataEdit.index}
+            closePopup={this.togglePopup}
+            match={this.props.match}
+            data={this.state.dataEdit}
           />
         ) : null}
       </div>

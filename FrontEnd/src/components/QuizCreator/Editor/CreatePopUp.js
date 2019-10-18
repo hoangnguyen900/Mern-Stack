@@ -29,7 +29,7 @@ class QuestionCreatePopup extends React.Component {
     this.state = {
       questionsArr: [1, 2, 3, 4],
       isDisplay: "block",
-      title: 30,
+      timeTitle: 30,
       data: {
         id: 0,
         question: "",
@@ -39,6 +39,10 @@ class QuestionCreatePopup extends React.Component {
     };
   }
   componentDidMount() {
+    let { data } = this.props;
+    this.setState({
+      timeTitle: typeof data !== "undefined" ? data.time : 30
+    });
     if (this.state.questionsArr.length >= 5)
       this.setState({
         isDisplay: "none"
@@ -81,17 +85,26 @@ class QuestionCreatePopup extends React.Component {
     this.setState({
       answers: [...this.state.answers, ...listAns]
     });
-    let question_table_id = this.props.match.params.question_table_id;
-    this.props.createQuestionAndAnswersAPI(
-      question_table_id,
-      this.state.data,
-      listAns
-    );
+    console.log(this.props.data);
+    console.log(listAns);
+
+    if (typeof this.props.data === "undefined") {
+      let question_table_id = this.props.match.params.question_table_id;
+      this.props.createQuestionAndAnswersAPI(
+        question_table_id,
+        this.state.data,
+        listAns
+      );
+    } else {
+      this.props.updateQuestionAndAnswersAPI(this.state.data, listAns);
+    }
+
     this.props.closePopup();
     listAns = [...listPrototype];
   };
   onChangeAnswer = answer => {
     listAns[answer.index - 1] = answer;
+    console.log(listAns);
   };
   handleOnChangeInput = event => {
     let value = event.target.value;
@@ -107,19 +120,25 @@ class QuestionCreatePopup extends React.Component {
     let data = this.state.data;
     data.time = parseInt(event);
     this.setState({
-      title: data.time
+      timeTitle: data.time
     });
   };
 
   render() {
     let { isDisplay, questionsArr } = this.state;
-    let element = questionsArr.map(index => {
+    let { index, data } = this.props;
+    let list =
+      typeof this.props.data === "undefined"
+        ? questionsArr
+        : data.question_choices;
+    let element = list.map((data, index) => {
       return (
         <QuizCreatorQuestionInput
           key={index}
-          index={index}
+          index={index + 1}
           handleOnclickDeleteOptions={this.handleOnclickDeleteOptions}
           onChangeAnswer={this.onChangeAnswer}
+          data={data}
         />
       );
     });
@@ -130,13 +149,12 @@ class QuestionCreatePopup extends React.Component {
           <div className="popup_inner">
             <div className="popup-header">
               <p>
-                {" "}
                 <img
                   src={require("./images/question.png")}
                   alt="question"
                   placeholder={"Type your question here.."}
                 />
-                {this.props.text}
+                Question {index}
               </p>
               <hr />
             </div>
@@ -146,6 +164,7 @@ class QuestionCreatePopup extends React.Component {
                 style={{ width: "80%" }}
                 name="question"
                 placeholder="add question"
+                value={typeof data !== "undefined" ? data.question : undefined}
                 onChange={this.handleOnChangeInput}
               />
               {element}
@@ -170,7 +189,7 @@ class QuestionCreatePopup extends React.Component {
                       <DropdownButton
                         drop={direction}
                         variant="light"
-                        title={` ${this.state.title} seconds `}
+                        title={` ${this.state.timeTitle} seconds `}
                         id={`dropdown-button-drop-${direction}`}
                         key={direction}
                         onSelect={this.onSelectHandler}
@@ -211,6 +230,9 @@ const mapDispatchToProps = (dispatch, props) => {
       dispatch(
         actions.createQuestionAndAnswersAPI(question_table_id, data, answers)
       );
+    },
+    updateQuestionAndAnswersAPI: (data, answers) => {
+      dispatch(actions.updateQuestionAndAnswersAPI(data, answers));
     }
   };
 };

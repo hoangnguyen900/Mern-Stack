@@ -16,7 +16,8 @@ class QuizCreatorQuestionInput extends React.Component {
     this.state = {
       isDisplayDelIcon: true,
       is_right: false,
-      answer: ""
+      answer: "",
+      question_id: 0
     };
   }
 
@@ -25,9 +26,13 @@ class QuizCreatorQuestionInput extends React.Component {
   };
   componentDidMount = () => {
     let display = false;
+    let { data } = this.props;
     this.props.index > 2 ? (display = true) : (display = false);
     this.setState({
-      isDisplayDelIcon: display
+      isDisplayDelIcon: display,
+      is_right: typeof data.id !== "undefined" ? data.is_right : false,
+      answer: typeof data.id !== "undefined" ? data.answer : "",
+      question_id: data.question_id
     });
   };
   handleOnClickIsTrueAns = () => {
@@ -37,8 +42,8 @@ class QuizCreatorQuestionInput extends React.Component {
     this.setState({
       is_right: is_right
     });
-
-    this.props.onChangeAnswer({ index, answer, is_right });
+    console.log(is_right);
+    //this.props.onChangeAnswer({ index, answer, is_right });
   };
   handleOnChangeInput = event => {
     let value = event.target.value;
@@ -46,13 +51,16 @@ class QuizCreatorQuestionInput extends React.Component {
     this.setState({
       [name]: value
     });
-    let answer = value;
-    let { is_right } = this.state;
-    let { index } = this.props;
-    this.props.onChangeAnswer({ index, answer, is_right });
+    //let answer = value;
+    //let { is_right } = this.state;
+    //let { index } = this.props;
+    //this.props.onChangeAnswer({ index, answer, is_right });
   };
   render() {
-    var { isDisplayDelIcon, is_right } = this.state;
+    var { isDisplayDelIcon, is_right, answer } = this.state;
+    let { index } = this.props;
+
+    this.props.onChangeAnswer({ index, answer, is_right });
 
     return (
       <div className="question-input">
@@ -66,6 +74,7 @@ class QuizCreatorQuestionInput extends React.Component {
           <input
             type="text"
             name="answer"
+            value={this.state.answer}
             placeholder="add answer"
             onChange={this.handleOnChangeInput}
           />
