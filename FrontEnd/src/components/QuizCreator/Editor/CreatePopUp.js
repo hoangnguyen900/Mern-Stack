@@ -40,9 +40,15 @@ class QuestionCreatePopup extends React.Component {
   }
   componentDidMount() {
     let { data } = this.props;
-    this.setState({
-      timeTitle: typeof data !== "undefined" ? data.time : 30
-    });
+    console.log(data);
+    if (typeof data !== "undefined")
+      this.setState({
+        timeTitle: data.time,
+        data: {
+          id: data.id,
+          question: data.question
+        }
+      });
     if (this.state.questionsArr.length >= 5)
       this.setState({
         isDisplay: "none"
@@ -164,7 +170,7 @@ class QuestionCreatePopup extends React.Component {
                 style={{ width: "80%" }}
                 name="question"
                 placeholder="add question"
-                value={typeof data !== "undefined" ? data.question : undefined}
+                value={this.state.data.question}
                 onChange={this.handleOnChangeInput}
               />
               {element}

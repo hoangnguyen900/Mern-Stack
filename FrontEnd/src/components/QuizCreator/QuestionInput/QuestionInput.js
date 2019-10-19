@@ -29,21 +29,20 @@ class QuizCreatorQuestionInput extends React.Component {
     let { data } = this.props;
     this.props.index > 2 ? (display = true) : (display = false);
     this.setState({
-      isDisplayDelIcon: display,
-      is_right: typeof data.id !== "undefined" ? data.is_right : false,
-      answer: typeof data.id !== "undefined" ? data.answer : "",
-      question_id: data.question_id
+      isDisplayDelIcon: display
     });
+    if (typeof data.id !== "undefined")
+      this.setState({
+        is_right: data.is_right,
+        answer: data.answer,
+        question_id: data.question_id
+      });
   };
   handleOnClickIsTrueAns = () => {
-    let { answer } = this.state;
-    let { index } = this.props;
     let is_right = !this.state.is_right;
     this.setState({
       is_right: is_right
     });
-    console.log(is_right);
-    //this.props.onChangeAnswer({ index, answer, is_right });
   };
   handleOnChangeInput = event => {
     let value = event.target.value;
@@ -51,16 +50,12 @@ class QuizCreatorQuestionInput extends React.Component {
     this.setState({
       [name]: value
     });
-    //let answer = value;
-    //let { is_right } = this.state;
-    //let { index } = this.props;
-    //this.props.onChangeAnswer({ index, answer, is_right });
   };
   render() {
-    var { isDisplayDelIcon, is_right, answer } = this.state;
+    var { isDisplayDelIcon, is_right, answer, question_id } = this.state;
     let { index } = this.props;
 
-    this.props.onChangeAnswer({ index, answer, is_right });
+    this.props.onChangeAnswer({ index, answer, is_right, question_id });
 
     return (
       <div className="question-input">
