@@ -9,9 +9,11 @@
         height: 200px;
         display: flex;
         flex-direction: row;
+        justify-content: flex-start;
         background: #f9f9f9;
         padding: 0 15%;
         margin-top: 30px;
+        flex-wrap: wrap;
 
         .code-field {
             border-radius: 15px;
@@ -20,7 +22,7 @@
             width: 70%;
             margin-right: 30px;
             box-shadow: 0px 1px 2px 2px rgba(212, 205, 212, 1);
-
+            padding: 0 5px;
             .input-code {
                 position: relative;
                 left: 50%;
@@ -30,7 +32,7 @@
                 border-radius: 10px;
                 padding: 4px 4px;
                 padding-bottom: 5px;
-                width: fit-content;
+                width:fit-content;
                 display: flex;
                 flex-direction: row;
                 height: 60px;
@@ -42,6 +44,7 @@
                     text-indent: 10px;
                     font-size: 18px;
                     width: 300px;
+                    min-width: 100px;
                 }
 
                 button {
@@ -62,6 +65,7 @@
             background: white;
             flex-grow: 1;
             box-shadow: 0px 1px 2px 2px rgba(212, 205, 212, 1);
+            flex-wrap: wrap;
         }
     }
 }
