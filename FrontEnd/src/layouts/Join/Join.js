@@ -15,7 +15,7 @@ class JoinLayout extends React.Component {
       <BrowserRouter>
         <div className="join-layout-container">
           <JoinNav />
-
+          <br></br>
           <Switch>
             <Route exact path="/join">
               <Join />

@@ -59,6 +59,7 @@ class JoinNav extends React.Component {
             <FontAwesomeIcon icon={faPlusCircle} /> Create new Quiz
           </button>
         </div>
+        <br/>
       </div>
     );
   }
