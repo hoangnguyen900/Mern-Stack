@@ -40,41 +40,72 @@ class QuestionCreatePopup extends React.Component {
   }
   componentDidMount() {
     let { data } = this.props;
-    console.log(data);
-    if (typeof data !== "undefined")
+    if (typeof data !== "undefined") {
+      console.log(data);
+
       this.setState({
         timeTitle: data.time,
+
+        answers: data.question_choices,
         data: {
+          ...data,
           id: data.id,
           question: data.question
         }
       });
+    }
     if (this.state.questionsArr.length >= 5)
       this.setState({
         isDisplay: "none"
       });
   }
-  handleOnclickDeleteOptions = () => {
-    this.setState({
-      question: this.state.questionsArr.pop()
-    });
-    if (this.state.questionsArr.length < 5) {
+  handleOnclickDeleteOptions = index => {
+    let { data } = this.props;
+    if (typeof data === "undefined") {
       this.setState({
-        isDisplay: "block"
+        question: this.state.questionsArr.pop()
       });
+      if (this.state.questionsArr.length < 5) {
+        this.setState({
+          isDisplay: "block"
+        });
+      }
+    } else {
+      listAns.splice(index - 1, 1);
+      console.log("delete", listAns);
+      this.setState({
+        answers: listAns
+      });
+      if (listAns.length < 5) {
+        this.setState({
+          isDisplay: "block"
+        });
+      }
     }
   };
   addQuestionOnclick = () => {
-    let arr = this.state.questionsArr;
-    arr.push(arr.length + 1);
-
-    this.setState({
-      questionsArr: arr
-    });
+    let { questionsArr, answers } = this.state;
+    let { data } = this.props;
     let display = "";
-    this.state.questionsArr.length < 5
-      ? (display = "block")
-      : (display = "none");
+
+    if (typeof data !== "undefined") {
+      console.log(answers);
+      let arr = answers;
+      arr.push({ index: 0 });
+      this.setState({
+        answers: arr
+      });
+      answers.length < 5 ? (display = "block") : (display = "none");
+    } else {
+      let arr = questionsArr;
+      arr.push(arr.length + 1);
+      console.log(arr);
+      this.setState({
+        questionsArr: arr
+      });
+      questionsArr.length < 5 ? (display = "block") : (display = "none");
+    }
+
     this.setState({
       isDisplay: display
     });
@@ -88,12 +119,6 @@ class QuestionCreatePopup extends React.Component {
         i--;
       }
     }
-    this.setState({
-      answers: [...this.state.answers, ...listAns]
-    });
-    console.log(this.props.data);
-    console.log(listAns);
-
     if (typeof this.props.data === "undefined") {
       let question_table_id = this.props.match.params.question_table_id;
       this.props.createQuestionAndAnswersAPI(
@@ -102,23 +127,31 @@ class QuestionCreatePopup extends React.Component {
         listAns
       );
     } else {
-      this.props.updateQuestionAndAnswersAPI(this.state.data, listAns);
+      let index = this.props.index;
+      this.props.updateQuestionAndAnswersAPI(
+        this.state.data,
+        listAns,
+        index - 1
+      );
+      this.setState({
+        answers: []
+      });
     }
 
     this.props.closePopup();
+
     listAns = [...listPrototype];
   };
   onChangeAnswer = answer => {
     listAns[answer.index - 1] = answer;
-    console.log(listAns);
   };
   handleOnChangeInput = event => {
     let value = event.target.value;
     let name = event.target.name;
     this.setState({
       data: {
-        [name]: value,
-        time: 30
+        ...this.state.data,
+        [name]: value
       }
     });
   };
@@ -131,12 +164,9 @@ class QuestionCreatePopup extends React.Component {
   };
 
   render() {
-    let { isDisplay, questionsArr } = this.state;
-    let { index, data } = this.props;
-    let list =
-      typeof this.props.data === "undefined"
-        ? questionsArr
-        : data.question_choices;
+    let { isDisplay, questionsArr, answers } = this.state;
+    let { index } = this.props;
+    let list = typeof this.props.data === "undefined" ? questionsArr : answers;
     let element = list.map((data, index) => {
       return (
         <QuizCreatorQuestionInput
@@ -237,8 +267,8 @@ const mapDispatchToProps = (dispatch, props) => {
         actions.createQuestionAndAnswersAPI(question_table_id, data, answers)
       );
     },
-    updateQuestionAndAnswersAPI: (data, answers) => {
-      dispatch(actions.updateQuestionAndAnswersAPI(data, answers));
+    updateQuestionAndAnswersAPI: (data, answers, index) => {
+      dispatch(actions.updateQuestionAndAnswersAPI(data, answers, index));
     }
   };
 };

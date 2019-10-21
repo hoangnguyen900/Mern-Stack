@@ -79,13 +79,46 @@ export const createQuestionAndAnswersAPI = (
   };
 };
 
-export const updateQuestionAndAnswersAPI = (question, answers) => {
+export const updateQuestionAndAnswersAPI = (question, answers, index) => {
   return dispatch => {
     const data = {
       ...question,
 
       question_choices: answers
     };
+    console.log("redux", data);
+    axios({
+      method: "post",
+      url: URLs.UPDATE_QUESTION_ANSWER_API_URL,
+      headers: {
+        "content-type": "application/json"
+      },
+      data: data
+    })
+      .then(res => {
+        Swal.fire({
+          position: "center",
+          type: "success",
+          title: "Update Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+          heightAuto: false
+        });
+        console.log("res Update success", res);
+        dispatch({
+          type: types.UPDATE_QUESTION_TABLE,
+          question,
+          question_choices: res.data,
+          index
+        });
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};
+export const updateQuestion = (data, index) => {
+  return dispatch => {
     axios({
       method: "post",
       url: URLs.UPDATE_QUESTION_API_URL,
@@ -105,8 +138,9 @@ export const updateQuestionAndAnswersAPI = (question, answers) => {
         });
         console.log("res Update success", res);
         dispatch({
-          type: types.UPDATE_QUESTION_ANSWERS,
-          data: res.data
+          type: types.UPDATE_TIME,
+          data,
+          index
         });
       })
       .catch(er => {
@@ -114,7 +148,6 @@ export const updateQuestionAndAnswersAPI = (question, answers) => {
       });
   };
 };
-
 export const deleteQuestionAndAnswersAPI = (id, index) => {
   return dispatch => {
     axios({

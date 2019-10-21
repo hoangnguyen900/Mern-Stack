@@ -1,7 +1,11 @@
 import * as types from "../actions/actionTypes";
 const initialState = [
   {
-    questions: []
+    questions: [
+      {
+        question_choices: []
+      }
+    ]
   }
 ];
 let myReducer = (state = initialState, action) => {
@@ -16,8 +20,19 @@ let myReducer = (state = initialState, action) => {
     case types.CREATE_QUESTION_TABLE:
       return { ...action.data };
     case types.UPDATE_QUESTION_TABLE:
+      state[0].questions[action.index] = {
+        ...state[0].questions[action.index],
+        question: action.question.question,
+        time: action.question.time,
+        question_choices: [...action.question_choices]
+      };
       return { ...state };
-
+    case types.UPDATE_TIME:
+      state[0].questions[action.index] = {
+        ...state[0].questions[action.index],
+        time: action.data.time
+      };
+      return { ...state };
     default:
       return { ...state };
   }

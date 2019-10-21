@@ -17,12 +17,13 @@ class QuizCreatorQuestionInput extends React.Component {
       isDisplayDelIcon: true,
       is_right: false,
       answer: "",
-      question_id: 0
+      question_id: 0,
+      index: 0
     };
   }
 
   handleOnclickDeleteOptions = () => {
-    this.props.handleOnclickDeleteOptions();
+    this.props.handleOnclickDeleteOptions(this.props.index);
   };
   componentDidMount = () => {
     let display = false;
@@ -43,6 +44,10 @@ class QuizCreatorQuestionInput extends React.Component {
     this.setState({
       is_right: is_right
     });
+    let { index } = this.props;
+    let { answer, question_id } = this.state;
+
+    this.props.onChangeAnswer({ index, answer, is_right, question_id });
   };
   handleOnChangeInput = event => {
     let value = event.target.value;
@@ -50,12 +55,16 @@ class QuizCreatorQuestionInput extends React.Component {
     this.setState({
       [name]: value
     });
+    let { index } = this.props;
+    let { is_right, question_id } = this.state;
+    let answer = value;
+    this.props.onChangeAnswer({ index, answer, is_right, question_id });
   };
   render() {
     var { isDisplayDelIcon, is_right, answer, question_id } = this.state;
-    let { index } = this.props;
-
-    this.props.onChangeAnswer({ index, answer, is_right, question_id });
+    let { index, data } = this.props;
+    if (typeof data.id !== "undefined")
+      this.props.onChangeAnswer({ index, answer, is_right, question_id });
 
     return (
       <div className="question-input">

@@ -30,6 +30,13 @@ class QuizCreatorQuestionDetail extends React.Component {
     this.setState({
       time: question.time
     });
+    let { data } = this.props;
+    let questionData = {
+      id: data.id,
+      question: data.question,
+      time: question.time
+    };
+    this.props.updateQuestion(questionData, this.props.index);
   };
   onClickDeleteHandler = () => {
     let { index } = this.props;
@@ -40,6 +47,7 @@ class QuizCreatorQuestionDetail extends React.Component {
     this.props.onClickEditHandler(index + 1, data);
   };
   render() {
+    console.log(this.props);
     let { time } = this.state;
     return (
       <div className="question-detail-container">
@@ -126,14 +134,15 @@ class QuizCreatorQuestionDetail extends React.Component {
 }
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    createQuestionAndAnswersAPI: (data, answers) => {
-      dispatch(actions.createQuestionAndAnswersAPI(data, answers));
+    updateQuestion: (data, index) => {
+      dispatch(actions.updateQuestion(data, index));
     }
   };
 };
 const mapStateToProps = state => {
   return {
-    question: state.question
+    question: state.question,
+    questionTable: state.questionTable
   };
 };
 export default connect(
