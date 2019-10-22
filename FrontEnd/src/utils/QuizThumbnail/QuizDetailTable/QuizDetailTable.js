@@ -65,21 +65,7 @@ class QuizDetailTable extends React.Component {
               Difficult level: <span>{data.level}</span>
             </div>
             <h5>Sample questions</h5>
-            <div className="sample-questions-container">
-              {arr}
-              {/* <div className="sample-question">
-                <div className="sample-content">
-                  1. What are you
-                  doing?????????????????????????????????????????????????????
-                </div>
-                <div className="sample-image">
-                  <img
-                    src={require("../images/sample.jpg")}
-                    alt="sampleImage"
-                  />
-                </div>
-              </div> */}
-            </div>
+            <div className="sample-questions-container">{arr}</div>
           </div>
           <div className="popup-footer">
             <button>Play</button>

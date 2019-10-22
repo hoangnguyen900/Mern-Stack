@@ -15,19 +15,21 @@ class QuizThumbnail extends React.Component {
         title: "",
         image: "",
         played: 0,
-        questions: [],
-        
+
+
+        questions: []
       },
-      isShowPopup: false,
+      isShowPopup: false
+
     };
   }
   componentDidMount() {
     let { data } = this.props;
+
     this.setState({
       data: data
     });
   }
-
   togglePopup = () =>{
       this.setState({
           isShowPopup: !this.state.isShowPopup
@@ -60,6 +62,7 @@ class QuizThumbnail extends React.Component {
           <div className="pr-ing">
             <div className="pr-bar">3 questions left</div>
           </div>
+
         </div>
 
 
