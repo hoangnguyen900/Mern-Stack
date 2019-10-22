@@ -1,10 +1,9 @@
-
 import React from "react";
 import "./QuizThumbnail.scss";
 
 import { connect } from "react-redux";
 import * as actions from "./../../redux/actions/index";
-import QuizDetailTable from './QuizDetailTable/QuizDetailTable';
+import QuizDetailTable from "./QuizDetailTable/QuizDetailTable";
 class QuizThumbnail extends React.Component {
   constructor(props) {
     super(props);
@@ -16,11 +15,9 @@ class QuizThumbnail extends React.Component {
         image: "",
         played: 0,
 
-
         questions: []
       },
       isShowPopup: false
-
     };
   }
   componentDidMount() {
@@ -30,18 +27,17 @@ class QuizThumbnail extends React.Component {
       data: data
     });
   }
-  togglePopup = () =>{
-      this.setState({
-          isShowPopup: !this.state.isShowPopup
-      })
-  }
+  togglePopup = () => {
+    this.setState({
+      isShowPopup: !this.state.isShowPopup
+    });
+  };
   render() {
     let { data } = this.state;
 
-
     //console.log("props", this.props.data);
     return (
-      <div className="quiz-thumbnail-container">
+      <div className="quiz-thumbnail-container" onClick={this.togglePopup}>
         <img src={require("./images/thumbnail.jpg")} alt="thumbnail" />
         <div className="quiz-flat-info">
           <div className="question-number">{data.questions.length} Qs</div>
@@ -62,23 +58,22 @@ class QuizThumbnail extends React.Component {
           <div className="pr-ing">
             <div className="pr-bar">3 questions left</div>
           </div>
-
         </div>
-
-
-                {this.state.isShowPopup ? (
-                    <QuizDetailTable togglePopup={this.togglePopup} />
-                ) : null}
-     
         <div className="accuracy">
           <div className="pr-ing">
             <div className="pr-bar">45% accuracy</div>
           </div>
         </div>
+        {this.state.isShowPopup ? (
+          <QuizDetailTable
+            togglePopup={this.togglePopup}
+            data={data}
+            userName={this.props.userName}
+          />
+        ) : null}
       </div>
     );
   }
-
 }
 const mapDispatchToProps = (dispatch, props) => {
   return {

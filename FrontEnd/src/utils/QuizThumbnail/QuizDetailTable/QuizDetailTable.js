@@ -23,9 +23,7 @@ class QuizDetailTable extends React.Component {
             <div className="sample-content">
               {i + 1}. {data.questions[i].question}
             </div>
-            <div className="sample-image">
-              <img src={require("../images/sample.jpg")} alt="sampleImage" />
-            </div>
+            <div className="sample-image"></div>
           </div>
         );
 
