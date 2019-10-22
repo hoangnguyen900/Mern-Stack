@@ -32,7 +32,6 @@ class QuizThumbnail extends React.Component {
   };
   render() {
     let { data } = this.state;
-
     //console.log("props", this.props.data);
     return (
       <div className="quiz-thumbnail-container" onClick={this.togglePopup}>
@@ -58,15 +57,18 @@ class QuizThumbnail extends React.Component {
           </div>
         </div>
 
-        {this.state.isShowPopup ? (
-          <QuizDetailTable togglePopup={this.togglePopup} />
-        ) : null}
-
         <div className="accuracy">
           <div className="pr-ing">
             <div className="pr-bar">45% accuracy</div>
           </div>
         </div>
+        {this.state.isShowPopup ? (
+          <QuizDetailTable
+            togglePopup={this.togglePopup}
+            data={data}
+            userName={this.props.userName}
+          />
+        ) : null}
       </div>
     );
   }
