@@ -1,14 +1,23 @@
 import React from 'react';
 import './QuizThumbnail.scss';
-
+import QuizDetailTable from './QuizDetailTable/QuizDetailTable';
 class QuizThumbnail extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            showPopup: false,
+        }
+
     }
+
+    togglePopup = () => {
+        this.setState({
+            showPopup: !this.state.showPopup
+        });
+    };
     render() {
         return (
-            <div className="quiz-thumbnail-container">
+            <div className="quiz-thumbnail-container" onlick={this.togglePopup}>
                 <img src={require("./images/thumbnail.jpg")} alt="thumbnail" />
                 <div className="quiz-flat-info">
                     <div className="question-number">
@@ -41,6 +50,9 @@ class QuizThumbnail extends React.Component {
                     </div>
                 </div>
 
+                {this.state.showPopup ? (
+                    <QuizDetailTable togglePopup={this.togglePopup} />
+                ) : null}
             </div>
         );
     }
