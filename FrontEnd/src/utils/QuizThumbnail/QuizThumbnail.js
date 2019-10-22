@@ -42,6 +42,7 @@ class QuizThumbnail extends React.Component {
                         <div className="question-number">{data.questions.length} Qs</div>
                         <div className="play-number">
                             {data.played !== 0 ? data.played : "0"} plays
+
           </div>
                     </div>
                     <div className="quiz-name">
@@ -59,20 +60,22 @@ class QuizThumbnail extends React.Component {
                         </div>
                     </div>
 
-                   
-                    <div className="accuracy">
-                        <div className="pr-ing">
-                            <div className="pr-bar">45% accuracy</div>
-                        </div>
-                    </div>
-                </div>
-                {this.state.isShowPopup ? (
-                        <QuizDetailTable togglePopup={this.togglePopup} />
-                    ) : null}
 
-            </div>
-        );
-    }
+        <div className="accuracy">
+          <div className="pr-ing">
+            <div className="pr-bar">45% accuracy</div>
+          </div>
+        </div>
+        {this.state.isShowPopup ? (
+          <QuizDetailTable
+            togglePopup={this.togglePopup}
+            data={data}
+            userName={this.props.userName}
+          />
+        ) : null}
+      </div>
+    );
+  }
 }
 const mapDispatchToProps = (dispatch, props) => {
     return {
