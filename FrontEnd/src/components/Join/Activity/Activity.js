@@ -51,8 +51,6 @@ class Activity extends React.Component {
         <div className="activity-quizzes-container">
           <Route exact path="/join/activity" component={CreatedQuizzes} />
           <Route path="/join/activity/completed" component={CompletedQuizzes} />
-
-          {/* <CreatedQuizzes /> */}
         </div>
       </div>
     );

@@ -1,7 +1,6 @@
-
 import React from "react";
 import "./QuizThumbnail.scss";
-
+import QuizDetailTable from "./QuizDetailTable/QuizDetailTable";
 import { connect } from "react-redux";
 import * as actions from "./../../redux/actions/index";
 
@@ -28,7 +27,6 @@ class QuizThumbnail extends React.Component {
   render() {
     let { data } = this.state;
 
-
     //console.log("props", this.props.data);
     return (
       <div className="quiz-thumbnail-container">
@@ -54,11 +52,10 @@ class QuizThumbnail extends React.Component {
           </div>
         </div>
 
+        {this.state.showPopup ? (
+          <QuizDetailTable togglePopup={this.togglePopup} />
+        ) : null}
 
-                {this.state.showPopup ? (
-                    <QuizDetailTable togglePopup={this.togglePopup} />
-                ) : null}
-     
         <div className="accuracy">
           <div className="pr-ing">
             <div className="pr-bar">45% accuracy</div>
@@ -67,7 +64,6 @@ class QuizThumbnail extends React.Component {
       </div>
     );
   }
-
 }
 const mapDispatchToProps = (dispatch, props) => {
   return {
