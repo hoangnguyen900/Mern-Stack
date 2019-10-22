@@ -28,9 +28,9 @@ class QuizDetailTable extends React.Component {
         );
 
     return (
-      <div className="popup">
-        <div className="popup_inner">
-          <div className="popup-header">
+      <div className="popup-quiz-detail-table">
+        <div className="popup_inner-quiz-detail-table">
+          <div className="popup-header-quiz-detail-table">
             <img src={require("../images/thumbnail.jpg")} alt="thumbnail" />
             <button onClick={this.props.togglePopup}>
               <FontAwesomeIcon
@@ -39,9 +39,9 @@ class QuizDetailTable extends React.Component {
                 color={"#60615F"}
               />
             </button>
-            <div className="quiz-flat-info">
-              <div className="question-number">{data.questions.length} Qs</div>
-              <div className="play-number">
+            <div className="quiz-flat-info-quiz-detail-table">
+              <div className="question-number-quiz-detail-table">{data.questions.length} Qs</div>
+              <div className="play-number-quiz-detail-table">
                 {data.played !== 0 ? data.played : "0"} plays
               </div>
             </div>
@@ -58,14 +58,14 @@ class QuizDetailTable extends React.Component {
             </div>
             <hr />
           </div>
-          <div className="popup-body">
+          <div className="popup-body-quiz-detail-table">
             <div className="difficult-level">
               Difficult level: <span>{data.level}</span>
             </div>
             <h5>Sample questions</h5>
             <div className="sample-questions-container">{arr}</div>
           </div>
-          <div className="popup-footer">
+          <div className="popup-footer-quiz-detail-table">
             <button>Play</button>
           </div>
         </div>
