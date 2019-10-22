@@ -33,6 +33,7 @@ class QuizThumbnail extends React.Component {
     render() {
         let { data } = this.state;
 
+<<<<<<< HEAD
         //console.log("props", this.props.data);
         return (
             <div>
@@ -60,10 +61,45 @@ class QuizThumbnail extends React.Component {
                         </div>
                     </div>
 
+=======
+  togglePopup = () => {
+    this.setState({
+      isShowPopup: !this.state.isShowPopup
+    });
+  };
+  render() {
+    let { data } = this.state;
+    //console.log("props", this.props.data);
+    return (
+      <div>
+        <div className="quiz-thumbnail-container" onClick={this.togglePopup}>
+          <img src={require("./images/thumbnail.jpg")} alt="thumbnail" />
+          <div className="quiz-flat-info">
+            <div className="question-number">{data.questions.length} Qs</div>
+            <div className="play-number">
+              {data.played !== 0 ? data.played : "0"} plays
+            </div>
+          </div>
+          <div className="quiz-name">
+            <span>{data.title}</span>
+          </div>
+          <div className="author-name">
+            <span>
+              <span>By:</span> {this.props.userName}
+            </span>
+          </div>
 
-        <div className="accuracy">
-          <div className="pr-ing">
-            <div className="pr-bar">45% accuracy</div>
+          <div className="progression">
+            <div className="pr-ing">
+              <div className="pr-bar">3 questions left</div>
+            </div>
+          </div>
+>>>>>>> 0960c408264d8e0f0790b89a818ac4096612e918
+
+          <div className="accuracy">
+            <div className="pr-ing">
+              <div className="pr-bar">45% accuracy</div>
+            </div>
           </div>
         </div>
         {this.state.isShowPopup ? (
