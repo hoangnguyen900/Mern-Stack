@@ -289,3 +289,33 @@ export const addAnswerRecord = data => {
       });
   };
 };
+
+//////////////// Activity
+export const getListQuestionTable = () => {
+  return dispatch => {
+    let token = localStorage.getItem("token");
+    axios({
+      method: "post",
+      url: URLs.USER_QUESTION_TABLE_API_URL,
+      headers: {
+        "content-type": "application/json",
+        "user-token": token
+      }
+    })
+      .then(res => {
+        console.log("API show QUESTION TABLE", res.data);
+        dispatch({
+          type: types.SHOW_QUESTION_TABLE,
+          data: res.data
+        });
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};
+export const showListQuestionTable = () => {
+  return {
+    type: types.SHOW_QUESTION_TABLE
+  };
+};

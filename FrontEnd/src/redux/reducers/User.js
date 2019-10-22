@@ -7,7 +7,12 @@ let myReducer = (state = initialState, action) => {
       return {
         ...action.data
       };
+    case types.SHOW_QUESTION_TABLE:
+      if (typeof action.data !== "undefined") state = { ...action.data };
 
+      return {
+        ...state
+      };
     default:
       return state;
   }

@@ -1,10 +1,16 @@
 import React from "react";
 import "./Join.scss";
+import { connect } from "react-redux";
+import * as actions from "../../redux/actions/index";
 
 class Join extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+  componentDidMount() {
+    //get data API from backend
+    this.props.getListQuestionTable();
   }
   render() {
     return (
@@ -22,5 +28,20 @@ class Join extends React.Component {
     );
   }
 }
-
-export default Join;
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    getListQuestionTable: () => {
+      dispatch(actions.getListQuestionTable());
+    }
+  };
+};
+const mapStateToProps = state => {
+  return {
+    questionTable: state.questionTable,
+    user: state.user
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Join);
