@@ -6,10 +6,36 @@ const QuestionTable_Question = require("../models/QuestionTable_Question");
 ("use strict");
 //get Question list
 router.get("/api/question", (req, res) =>
-  Question.findAll()
+  Question.findAll({
+    include: QuestionChoices
+  })
     .then(data => res.send(data))
     .catch(err => console.log(err))
 );
+
+router.post("/api/question_answer_update", (req, res) => {
+  Question.upsert(req.body)
+    .then(() => {
+      QuestionChoices.destroy({
+        where: {
+          question_id: req.body.id
+        }
+      });
+      for (let i = 0; i < req.body.question_choices.length; i++)
+        req.body.question_choices[i].question_id = req.body.id;
+      QuestionChoices.bulkCreate(req.body.question_choices).then(data =>
+        res.send(data)
+      );
+    })
+
+    .catch(err => console.log(err));
+});
+router.post("/api/question_update", (req, res) => {
+  Question.upsert(req.body)
+    .then(res.sendStatus(200))
+
+    .catch(err => console.log(err));
+});
 router.get("/api/question/:id", (req, res) =>
   Question.findAll({
     where: {

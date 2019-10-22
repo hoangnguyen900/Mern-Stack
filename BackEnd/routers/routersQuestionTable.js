@@ -21,10 +21,6 @@ const data = {
   question_table_id: 1
 };
 
-router.post("/api/user_answer1", (req, res) => {
-  res.send(req.body[0]);
-});
-
 //get QuestionTable list
 router.get("/api/questiontable", (req, res) =>
   QuestionTable.findAll()

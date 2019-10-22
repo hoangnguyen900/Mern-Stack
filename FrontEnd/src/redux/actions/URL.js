@@ -9,6 +9,7 @@ export const UPDATE_PROFILE_API_URL =
   "https://terralogic-training.firebaseapp.com/api/set_profile";
 //
 export const QUESTION_API_URL = `${domain}/api/question`;
+export const UPDATE_QUESTION_ANSWER_API_URL = `${domain}/api/question_answer_update`;
 export const UPDATE_QUESTION_API_URL = `${domain}/api/question_update`;
 
 export const ANSWER_API_URL = `${domain}/api/questionchoices`;
