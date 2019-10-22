@@ -34,32 +34,34 @@ class QuizThumbnail extends React.Component {
     let { data } = this.state;
     //console.log("props", this.props.data);
     return (
-      <div className="quiz-thumbnail-container" onClick={this.togglePopup}>
-        <img src={require("./images/thumbnail.jpg")} alt="thumbnail" />
-        <div className="quiz-flat-info">
-          <div className="question-number">{data.questions.length} Qs</div>
-          <div className="play-number">
-            {data.played !== 0 ? data.played : "0"} plays
+      <div>
+        <div className="quiz-thumbnail-container" onClick={this.togglePopup}>
+          <img src={require("./images/thumbnail.jpg")} alt="thumbnail" />
+          <div className="quiz-flat-info">
+            <div className="question-number">{data.questions.length} Qs</div>
+            <div className="play-number">
+              {data.played !== 0 ? data.played : "0"} plays
+            </div>
           </div>
-        </div>
-        <div className="quiz-name">
-          <span>{data.title}</span>
-        </div>
-        <div className="author-name">
-          <span>
-            <span>By:</span> {this.props.userName}
-          </span>
-        </div>
-
-        <div className="progression">
-          <div className="pr-ing">
-            <div className="pr-bar">3 questions left</div>
+          <div className="quiz-name">
+            <span>{data.title}</span>
           </div>
-        </div>
+          <div className="author-name">
+            <span>
+              <span>By:</span> {this.props.userName}
+            </span>
+          </div>
 
-        <div className="accuracy">
-          <div className="pr-ing">
-            <div className="pr-bar">45% accuracy</div>
+          <div className="progression">
+            <div className="pr-ing">
+              <div className="pr-bar">3 questions left</div>
+            </div>
+          </div>
+
+          <div className="accuracy">
+            <div className="pr-ing">
+              <div className="pr-bar">45% accuracy</div>
+            </div>
           </div>
         </div>
         {this.state.isShowPopup ? (
