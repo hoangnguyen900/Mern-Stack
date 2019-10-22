@@ -34,7 +34,7 @@ class JoinNav extends React.Component {
 
         <div className="tab-field">
           <div className="tab-link">
-            <NavLink to="/join" activeClassName="active-link">
+            <NavLink exact to="/join" activeClassName="active-link">
               <span>
                 <FontAwesomeIcon icon={faHome} />
               </span>

@@ -17,7 +17,7 @@ class QuizThumbnail extends React.Component {
     };
     render() {
         return (
-            <div className="quiz-thumbnail-container" onlick={this.togglePopup}>
+            <div className="quiz-thumbnail-container" onClick={this.togglePopup}>
                 <img src={require("./images/thumbnail.jpg")} alt="thumbnail" />
                 <div className="quiz-flat-info">
                     <div className="question-number">
