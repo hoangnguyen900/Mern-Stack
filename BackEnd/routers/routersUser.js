@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const QuestionChoices = require("../models/QuestionChoices");
+const QuestionTable = require("../models/QuestionTable");
+const Question = require("../models/Question");
+
 const AnswerRecord = require("../models/AnswerRecord");
 const jwt = require("jsonwebtoken");
 
@@ -46,14 +49,25 @@ router.post("/api/user_answer", verifyToken, (req, res) => {
     }
   });
 });
-router.get("/api/user/:id", (req, res) =>
-  User.findAll({
-    where: {
-      id: req.params.id
+router.post("/api/get_user_question_table", verifyToken, (req, res) =>
+  jwt.verify(req.token, "hoangtri", (err, authData) => {
+    if (err) res.sendStatus(403);
+    else {
+      User.findAll({
+        where: {
+          id: authData.user_id.id
+        },
+        include: [
+          {
+            model: QuestionTable,
+            include: Question
+          }
+        ]
+      })
+        .then(data => res.send(data))
+        .catch(err => console.log(err));
     }
   })
-    .then(data => res.send(data))
-    .catch(err => console.log(err))
 );
 router.post("/api/user", (req, res) => {
   User.create(req.body)

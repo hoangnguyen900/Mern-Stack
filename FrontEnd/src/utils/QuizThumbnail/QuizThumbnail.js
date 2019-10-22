@@ -1,61 +1,88 @@
-import React from 'react';
-import './QuizThumbnail.scss';
-import QuizDetailTable from './QuizDetailTable/QuizDetailTable';
+
+import React from "react";
+import "./QuizThumbnail.scss";
+
+import { connect } from "react-redux";
+import * as actions from "./../../redux/actions/index";
+
 class QuizThumbnail extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            showPopup: false,
-        }
-
-    }
-
-    togglePopup = () => {
-        this.setState({
-            showPopup: !this.state.showPopup
-        });
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: {
+        id: 0,
+        code: 0,
+        title: "",
+        image: "",
+        played: 0,
+        questions: []
+      }
     };
-    render() {
-        return (
-            <div className="quiz-thumbnail-container" onClick={this.togglePopup}>
-                <img src={require("./images/thumbnail.jpg")} alt="thumbnail" />
-                <div className="quiz-flat-info">
-                    <div className="question-number">
-                        10 Qs
-                    </div>
-                    <div className="play-number">
-                        8 plays
-                    </div>
-                </div>
-                <div className="quiz-name">
-                    <span>Basic Quiz</span>
-                </div>
-                <div class="author-name">
-                    <span><span>By:</span> Tri</span>
-                </div>
+  }
+  componentDidMount() {
+    let { data } = this.props;
+    this.setState({
+      data: data
+    });
+  }
+  render() {
+    let { data } = this.state;
 
-                <div className="progression">
-                    <div className="pr-ing">
-                        <div className="pr-bar">
-                            3 questions left
-                        </div>
-                    </div>
-                </div>
 
-                <div className="accuracy">
-                    <div className="pr-ing">
-                        <div className="pr-bar">
-                            45% accuracy
-                        </div>
-                    </div>
-                </div>
+    //console.log("props", this.props.data);
+    return (
+      <div className="quiz-thumbnail-container">
+        <img src={require("./images/thumbnail.jpg")} alt="thumbnail" />
+        <div className="quiz-flat-info">
+          <div className="question-number">{data.questions.length} Qs</div>
+          <div className="play-number">
+            {data.played !== 0 ? data.played : "0"} plays
+          </div>
+        </div>
+        <div className="quiz-name">
+          <span>{data.title}</span>
+        </div>
+        <div className="author-name">
+          <span>
+            <span>By:</span> {this.props.userName}
+          </span>
+        </div>
+
+        <div className="progression">
+          <div className="pr-ing">
+            <div className="pr-bar">3 questions left</div>
+          </div>
+        </div>
+
 
                 {this.state.showPopup ? (
                     <QuizDetailTable togglePopup={this.togglePopup} />
                 ) : null}
-            </div>
-        );
-    }
-}
+     
+        <div className="accuracy">
+          <div className="pr-ing">
+            <div className="pr-bar">45% accuracy</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-export default QuizThumbnail;
+}
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    showListQuestionAnswer: question_table_id => {
+      dispatch(actions.showListQuestionAnswer(question_table_id));
+    }
+  };
+};
+const mapStateToProps = state => {
+  return {
+    questionTable: state.questionTable,
+    user: state.user
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(QuizThumbnail);
