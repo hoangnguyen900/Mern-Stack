@@ -4,7 +4,7 @@ import "./QuizThumbnail.scss";
 
 import { connect } from "react-redux";
 import * as actions from "./../../redux/actions/index";
-
+import QuizDetailTable from './QuizDetailTable/QuizDetailTable';
 class QuizThumbnail extends React.Component {
   constructor(props) {
     super(props);
@@ -15,8 +15,10 @@ class QuizThumbnail extends React.Component {
         title: "",
         image: "",
         played: 0,
-        questions: []
-      }
+        questions: [],
+        
+      },
+      isShowPopup: false,
     };
   }
   componentDidMount() {
@@ -24,6 +26,12 @@ class QuizThumbnail extends React.Component {
     this.setState({
       data: data
     });
+  }
+
+  togglePopup = () =>{
+      this.setState({
+          isShowPopup: !this.state.isShowPopup
+      })
   }
   render() {
     let { data } = this.state;
@@ -55,7 +63,7 @@ class QuizThumbnail extends React.Component {
         </div>
 
 
-                {this.state.showPopup ? (
+                {this.state.isShowPopup ? (
                     <QuizDetailTable togglePopup={this.togglePopup} />
                 ) : null}
      
