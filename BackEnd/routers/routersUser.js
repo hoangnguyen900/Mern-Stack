@@ -69,6 +69,7 @@ router.post("/api/get_user_question_table", verifyToken, (req, res) =>
     }
   })
 );
+
 router.post("/api/user", (req, res) => {
   User.create(req.body)
     .then(data => {

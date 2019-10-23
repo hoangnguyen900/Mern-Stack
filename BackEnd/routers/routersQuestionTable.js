@@ -54,6 +54,18 @@ router.post("/api/questiontable", verifyToken, (req, res) => {
     }
   });
 });
+router.post("/api/get_question_table_code", (req, res) => {
+  QuestionTable.findOne({
+    where: {
+      code: req.body.code
+    },
+    include: [Question, User]
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => console.log(err));
+});
 function verifyToken(req, res, next) {
   const header = req.headers["user-token"];
   if (typeof header !== "undefined") {
