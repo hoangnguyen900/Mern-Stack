@@ -8,10 +8,10 @@ import DoQuiz from "./layouts/DoQuiz/DoQuiz";
 import { Router, Route, Switch } from "react-router-dom";
 import history from "./history";
 
-import Join from "../src/layouts/Join/Join";
-import Home from "../src/layouts/Home/Home";
-
-
+import Join from "./layouts/Join/Join";
+import Home from "./layouts/Home/Home";
+import PreGame from './components/PreGame/PreGame';
+import QuizStart from './components/Join/QuizStart/QuizStart';
 class App extends React.Component {
   render() {
     return (
@@ -35,6 +35,14 @@ class App extends React.Component {
               render={({ match }) => <DoQuiz match={match} />}
             />
 
+            <Route path="/join/:question_table_id/start">
+              <QuizStart />
+            </Route>
+
+            <Route
+              path="/join/pre-game"
+              render={({ match }) => <PreGame match={match} />}
+            />
             {/* <Route
               path="/signup"
               component = {SignUp}
