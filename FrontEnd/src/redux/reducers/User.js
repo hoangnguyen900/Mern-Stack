@@ -13,6 +13,11 @@ let myReducer = (state = initialState, action) => {
       return {
         ...state
       };
+    case types.SHOW_ONE_QUESTION_TABLE:
+      return {
+        questionTable: { ...action.data },
+        showQuizCode: true
+      };
     default:
       return state;
   }

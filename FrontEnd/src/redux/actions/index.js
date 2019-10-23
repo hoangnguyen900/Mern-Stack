@@ -319,3 +319,34 @@ export const showListQuestionTable = () => {
     type: types.SHOW_QUESTION_TABLE
   };
 };
+export const getQuestionTableByCode = code => {
+  return dispatch => {
+    axios({
+      method: "post",
+      url: URLs.QUESTION_TABLE_CODE_API_URL,
+      headers: {
+        "content-type": "application/json"
+      },
+      data: {
+        code
+      }
+    })
+      .then(res => {
+        console.log("API show QUESTION TABLE by CODE", res.data);
+        if (res.data !== "")
+          dispatch({
+            type: types.SHOW_ONE_QUESTION_TABLE,
+            data: res.data
+          });
+        else
+          Swal.fire({
+            type: "error",
+            title: "Oops...",
+            text: "Your code is not right!"
+          });
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};

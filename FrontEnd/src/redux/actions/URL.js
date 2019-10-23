@@ -11,10 +11,11 @@ export const UPDATE_PROFILE_API_URL =
 export const QUESTION_API_URL = `${domain}/api/question`;
 export const UPDATE_QUESTION_ANSWER_API_URL = `${domain}/api/question_answer_update`;
 export const UPDATE_QUESTION_API_URL = `${domain}/api/question_update`;
-
+//question table
 export const ANSWER_API_URL = `${domain}/api/questionchoices`;
 export const QUESTION_TABLE_API_URL = `${domain}/api/questiontable`;
 export const SUBJECT_API_URL = `${domain}/api/subject`;
 export const ANSWER_RECORD_API_URL = `${domain}/api/user_answer`;
-//activity
+//user
 export const USER_QUESTION_TABLE_API_URL = `${domain}/api/get_user_question_table`;
+export const QUESTION_TABLE_CODE_API_URL = `${domain}/api/get_question_table_code`;

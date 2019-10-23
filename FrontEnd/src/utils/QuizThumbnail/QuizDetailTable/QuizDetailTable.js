@@ -11,10 +11,8 @@ class QuizDetailTable extends React.Component {
       isDisplay: "block"
     };
   }
-  render() {
+  showSampleQuestion = () => {
     let { data } = this.props;
-    console.log(this.props.data);
-    // render a list of question
     let arr = [];
     for (let i = 0; i < 3; i++)
       if (typeof data.questions[i] !== "undefined")
@@ -26,7 +24,34 @@ class QuizDetailTable extends React.Component {
             <div className="sample-image"></div>
           </div>
         );
-
+    return arr;
+  };
+  showLevel = () => {
+    let { data } = this.props;
+    switch (data.level) {
+      case 0:
+        return "Easy";
+      case 1:
+        return "Medium";
+      case 2:
+        return "Hard";
+      default:
+        return "N/A";
+    }
+  };
+  showGrades = () => {
+    let { data } = this.props;
+    let grades = "";
+    if (data.grade_begin === data.grade_end) grades = `${data.grade_begin}th`;
+    else grades = `${data.grade_begin}th to ${data.grade_end}th `;
+    return grades;
+  };
+  render() {
+    let { data } = this.props;
+    // render a list of question
+    let arr = this.showSampleQuestion();
+    let grades = this.showGrades();
+    let level = this.showLevel();
     return (
       <div className="popup-quiz-detail-table">
         <div className="popup_inner-quiz-detail-table">
@@ -40,7 +65,9 @@ class QuizDetailTable extends React.Component {
               />
             </button>
             <div className="quiz-flat-info-quiz-detail-table">
-              <div className="question-number-quiz-detail-table">{data.questions.length} Qs</div>
+              <div className="question-number-quiz-detail-table">
+                {data.questions.length} Qs
+              </div>
               <div className="play-number-quiz-detail-table">
                 {data.played !== 0 ? data.played : "0"} plays
               </div>
@@ -52,7 +79,7 @@ class QuizDetailTable extends React.Component {
               <img src={require("../images/ava.png")} alt="ava" />
               <div className="author-name">{this.props.userName}</div>
               <div className="grade">
-                Grades: <span> 1th to 2th</span>
+                Grades: <span> {grades}</span>
                 {/*bind at 1st and 2nd */}
               </div>
             </div>
@@ -60,7 +87,7 @@ class QuizDetailTable extends React.Component {
           </div>
           <div className="popup-body-quiz-detail-table">
             <div className="difficult-level">
-              Difficult level: <span>{data.level}</span>
+              Difficult level: <span>{level}</span>
             </div>
             <h5>Sample questions</h5>
             <div className="sample-questions-container">{arr}</div>
