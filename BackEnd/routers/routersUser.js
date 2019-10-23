@@ -8,6 +8,31 @@ const Question = require("../models/Question");
 const AnswerRecord = require("../models/AnswerRecord");
 const jwt = require("jsonwebtoken");
 
+router.post("/api/test", (req, res) => {
+  let dataArr = [];
+  AnswerRecord.max("id", {
+    where: {
+      user_id: 1,
+      question_table_id: 1
+    }
+  })
+    .then(length => {
+      const addData = async () => {
+        for (let i = 1; i <= length; i++) {
+          AnswerRecord.findOne({
+            where: {
+              id: i
+            }
+          }).then(data => {
+            dataArr.push(data);
+          });
+        }
+      };
+      addData().then(res.send(dataArr));
+    })
+    .catch(err => console.log(err));
+});
+
 router.post("/api/get-user", (req, res) =>
   User.findOne({
     where: {
@@ -30,21 +55,31 @@ router.post("/api/user_answer", verifyToken, (req, res) => {
   jwt.verify(req.token, "hoangtri", (err, authData) => {
     if (err) res.sendStatus(403);
     else {
-      for (let i = 0; i < req.body.length; i++)
-        req.body[i].user_id = authData.user_id.id;
-      AnswerRecord.bulkCreate(req.body)
-        .then(data => {
-          AnswerRecord.findAll({
-            include: {
-              model: QuestionChoices,
-              attributes: ["is_right"]
-            },
-            where: {
-              user_id: data[0].user_id,
-              question_table_id: data[0].question_table_id
-            }
-          }).then(data => res.send(data));
+      AnswerRecord.max("id", {
+        where: {
+          user_id: authData.user_id.id,
+          question_table_id: req.body[0].question_table_id
+        }
+      })
+        .then(id => {
+          for (let i = 0; i < req.body.length; i++) {
+            req.body[i].user_id = authData.user_id.id;
+            req.body[i].id = id + 1;
+          }
+          AnswerRecord.bulkCreate(req.body).then(data => {
+            AnswerRecord.findAll({
+              include: {
+                model: QuestionChoices,
+                attributes: ["is_right"]
+              },
+              where: {
+                user_id: data[0].user_id,
+                question_table_id: data[0].question_table_id
+              }
+            }).then(data => res.send(data));
+          });
         })
+
         .catch(err => console.log(err));
     }
   });

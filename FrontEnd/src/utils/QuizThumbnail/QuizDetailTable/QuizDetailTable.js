@@ -2,8 +2,8 @@ import React from "react";
 import "./QuizDetailTable.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import history from "../../../history";
 class QuizDetailTable extends React.Component {
   constructor(props) {
     super(props);
@@ -45,6 +45,10 @@ class QuizDetailTable extends React.Component {
     if (data.grade_begin === data.grade_end) grades = `${data.grade_begin}th`;
     else grades = `${data.grade_begin}th to ${data.grade_end}th `;
     return grades;
+  };
+  playQuizOnClickHandler = () => {
+    let { data } = this.props;
+    history.push(`/join/${data.id}/start`);
   };
   render() {
     let { data } = this.props;
@@ -93,7 +97,7 @@ class QuizDetailTable extends React.Component {
             <div className="sample-questions-container">{arr}</div>
           </div>
           <div className="popup-footer-quiz-detail-table">
-            <button>Play</button>
+            <button onClick={this.playQuizOnClickHandler}>Play</button>
           </div>
         </div>
       </div>

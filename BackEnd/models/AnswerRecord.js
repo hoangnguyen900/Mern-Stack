@@ -2,6 +2,12 @@ const Sequelize = require("sequelize");
 const db = require("../database");
 
 const AnswerRecord = db.define("answer_record", {
+  id: {
+    type: "INT(11)",
+    allowNull: false,
+    defaultValue: null,
+    primaryKey: true
+  },
   user_id: {
     type: "INT(11)",
     allowNull: false,
