@@ -32,7 +32,7 @@
 
         .quiz-info-done {
 
-            width: 300px;
+            min-width: 200px;
             height: 100%;
             padding: 10px 20px;
             display: flex;
@@ -42,11 +42,12 @@
                 background: #662900;
                 padding: 25px;
                 border-radius: 10px;
+                margin-bottom: 25px;
 
                 .quiz-basic-info {
                     display: flex;
                     flex-direction: row;
-
+                    
                     img {
                         width: 60px;
                         margin-right: 10px;
@@ -66,12 +67,39 @@
                     }
                 }
             }
+
+            .attempt-group-container {
+                background: #662900;
+                border-radius: 10px;
+                padding: 0 25px;
+            }
         }
 
         .player-config {
-            background: blue;
+            padding: 10px 25px;
             width: 500px;
             height: 100%;
+            .practice-btn-group{
+                width: 100%;
+                padding: 5px 0;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                background:#662900;
+                border-radius: 10px;
+                padding-bottom: 10px;
+                button{
+                    border:none;
+                    border-radius: 10px;
+                    padding: 10px 60px;
+                    background:#00C985;
+                    box-shadow: 0 4px 0 0 #00a06a;
+                    color: white;
+                    font-family: Quicksand, Helvetica, Arial;
+                    font-weight: 900;
+                    font-size: 24px;
+                }
+            }
         }
     }
 }
