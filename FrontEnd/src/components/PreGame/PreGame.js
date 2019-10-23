@@ -38,10 +38,16 @@ class PreGame extends React.Component {
 
                         <div className="attempt-group-container">
                             <QuizAttempt />
+                            <QuizAttempt />
+                            <QuizAttempt />
+                            <QuizAttempt />
+                            <QuizAttempt />
                         </div>
                     </div>
                     <div className="player-config">
-
+                        <div className="practice-btn-group">
+                            <button>Play</button>
+                        </div>
                     </div>
                 </div>
             </div>
