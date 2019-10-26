@@ -21,6 +21,7 @@ AnswerRecord.belongsTo(User, { foreignKey: "user_id" });
 AnswerRecord.belongsTo(QuestionTable, { foreignKey: "question_table_id" });
 AnswerRecord.belongsTo(Question, { foreignKey: "question_id" });
 AnswerRecord.belongsTo(QuestionChoices, { foreignKey: "choice_id" });
+
 /////////////////////////////////////////////
 QuestionTable.belongsTo(Subject, {
   foreignKey: "subject_id"

@@ -350,3 +350,28 @@ export const getQuestionTableByCode = code => {
       });
   };
 };
+// Pre-Game
+export const getListUserAttempt = question_table_id => {
+  return dispatch => {
+    let token = localStorage.getItem("token");
+    axios({
+      method: "post",
+      url: URLs.USER_ATTEMPT_API_URL,
+      headers: {
+        "content-type": "application/json",
+        "user-token": token
+      },
+      data: { question_table_id }
+    })
+      .then(res => {
+        console.log("API show QUESTION TABLE", res.data);
+        dispatch({
+          type: types.SHOW_USER_ATTEMPT,
+          data: res.data
+        });
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};

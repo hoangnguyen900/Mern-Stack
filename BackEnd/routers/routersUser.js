@@ -4,35 +4,43 @@ const User = require("../models/User");
 const QuestionChoices = require("../models/QuestionChoices");
 const QuestionTable = require("../models/QuestionTable");
 const Question = require("../models/Question");
-
 const AnswerRecord = require("../models/AnswerRecord");
 const jwt = require("jsonwebtoken");
-
-router.post("/api/test", (req, res) => {
+// find all the number of attempt that user do quiz
+router.post("/api/quiz_attempt", verifyToken, (req, res) => {
   let dataArr = [];
-  AnswerRecord.max("id", {
-    where: {
-      user_id: 1,
-      question_table_id: 1
-    }
-  })
-    .then(length => {
-      const addData = async () => {
+  jwt.verify(req.token, "hoangtri", (err, authData) => {
+    AnswerRecord.max("id", {
+      where: {
+        user_id: authData.user_id.id,
+        question_table_id: req.body.question_table_id
+      }
+    })
+      .then(length => {
         for (let i = 1; i <= length; i++) {
-          AnswerRecord.findOne({
+          AnswerRecord.findAll({
             where: {
-              id: i
-            }
+              id: i,
+              user_id: authData.user_id.id,
+              question_table_id: req.body.question_table_id
+            },
+            include: [
+              {
+                model: Question,
+                include: QuestionChoices
+              },
+              QuestionChoices
+            ]
           }).then(data => {
             dataArr.push(data);
+            if (i == length) res.send(dataArr);
           });
         }
-      };
-      addData().then(res.send(dataArr));
-    })
-    .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
+  });
 });
-
+//login check email password
 router.post("/api/get-user", (req, res) =>
   User.findOne({
     where: {
@@ -50,7 +58,7 @@ router.post("/api/get-user", (req, res) =>
     }
   })
 );
-
+// record all answer that user do quiz, and then send the correct answer to client
 router.post("/api/user_answer", verifyToken, (req, res) => {
   jwt.verify(req.token, "hoangtri", (err, authData) => {
     if (err) res.sendStatus(403);
@@ -84,6 +92,8 @@ router.post("/api/user_answer", verifyToken, (req, res) => {
     }
   });
 });
+
+//show question table created by user
 router.post("/api/get_user_question_table", verifyToken, (req, res) =>
   jwt.verify(req.token, "hoangtri", (err, authData) => {
     if (err) res.sendStatus(403);
