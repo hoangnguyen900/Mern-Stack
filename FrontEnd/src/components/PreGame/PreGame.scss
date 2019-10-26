@@ -29,7 +29,8 @@
         flex-direction: row;
         justify-content: center;
         height: 100%;
-
+        overflow: auto;
+       
         .quiz-info-done {
 
             min-width: 200px;
