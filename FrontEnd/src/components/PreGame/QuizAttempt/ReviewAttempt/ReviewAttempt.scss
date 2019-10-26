@@ -1,0 +1,25 @@
+.review-attempt-container{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #cc5200;
+    .review-attempt-nav{
+        background: black;
+        height: 60px;
+        padding: 10px 5px;
+
+        button {
+            top: 0;
+            background: #545454;
+            border: none;
+            border-radius: 5px;
+            height: 40px;
+            width: 40px;
+
+            span {
+                color: white;
+                font-size: 24px;
+            }
+        }
+    }
+}
