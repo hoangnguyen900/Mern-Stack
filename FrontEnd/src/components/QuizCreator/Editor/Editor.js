@@ -93,7 +93,9 @@ class QuizCreatorEditor extends React.Component {
           </div>
           {element}
         </div>
-        <div className="quiz-info"></div>
+        <div className="quiz-info-container">
+
+        </div>
         {this.state.showPopupCreate ? (
           <CreatePopUp
             index={this.state.table.questions.length + 1}
