@@ -41,7 +41,7 @@ class App extends React.Component {
             />
 
             <Route
-              path="/join/pre-game"
+              path="/join/pre-game/:question_table_id"
               render={({ match }) => <PreGame match={match} />}
             />
             {/* <Route

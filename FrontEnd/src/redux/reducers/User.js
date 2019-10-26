@@ -18,6 +18,9 @@ let myReducer = (state = initialState, action) => {
         questionTable: { ...action.data },
         showQuizCode: true
       };
+    case types.SHOW_USER_ATTEMPT:
+      return [...action.data];
+
     default:
       return state;
   }

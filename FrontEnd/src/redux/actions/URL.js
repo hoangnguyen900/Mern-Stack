@@ -19,3 +19,4 @@ export const ANSWER_RECORD_API_URL = `${domain}/api/user_answer`;
 //user
 export const USER_QUESTION_TABLE_API_URL = `${domain}/api/get_user_question_table`;
 export const QUESTION_TABLE_CODE_API_URL = `${domain}/api/get_question_table_code`;
+export const USER_ATTEMPT_API_URL = `${domain}/api/quiz_attempt`;
