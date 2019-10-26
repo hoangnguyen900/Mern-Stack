@@ -11,6 +11,8 @@ import history from "./history";
 import Join from "./layouts/Join/Join";
 import Home from "./layouts/Home/Home";
 import PreGame from "./components/PreGame/PreGame";
+import ReviewAttempt from "./components/PreGame/QuizAttempt/ReviewAttempt/ReviewAttempt";
+
 import QuizStart from "./components/Join/QuizStart/QuizStart";
 class App extends React.Component {
   render() {
@@ -41,8 +43,13 @@ class App extends React.Component {
             />
 
             <Route
+              exact
               path="/join/pre-game/:question_table_id"
               render={({ match }) => <PreGame match={match} />}
+            />
+            <Route
+              path="/join/pre-game/:question_table_id/review"
+              render={({ match }) => <ReviewAttempt match={match} />}
             />
             {/* <Route
               path="/signup"

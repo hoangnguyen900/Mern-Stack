@@ -1,5 +1,6 @@
 import React from "react";
 import "./QuizAttempt.scss";
+import history from "../../../history";
 class QuizAttempt extends React.Component {
   constructor(props) {
     super(props);
@@ -49,7 +50,15 @@ class QuizAttempt extends React.Component {
         <div className="attempt-number-and-review-btn">
           <div className="attempt-number">Attempt {this.props.index + 1}</div>
           <div className="review-btn">
-            <button>Review</button>
+            <button
+              onClick={() =>
+                history.push(
+                  `/join/pre-game/${this.props.data[0].question_table_id}/review`
+                )
+              }
+            >
+              Review
+            </button>
           </div>
         </div>
         <div className="accuracy">
