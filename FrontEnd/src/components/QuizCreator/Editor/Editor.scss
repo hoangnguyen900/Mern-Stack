@@ -69,7 +69,7 @@
                 position: relative;
 
                 .quiz-image-choice {
-                    width: 190px;
+                    width: 195px;
                 }
 
 
@@ -98,11 +98,140 @@
                 }
             }
 
+            .quiz-info-edit-quiz-name {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+
+                .quiz-name {
+                    color: black;
+                    font-family: Quicksand, Helvetica, Arial;
+                    font-weight: bold;
+                    font-size: 24px;
+                }
+
+                button {
+                    border: none;
+                    background: none;
+                    top: 0;
+                    outline: none;
+                }
+            }
+
+            .quiz-scope-data {
+                .scope-public {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+
+                    button {
+                        border: none;
+                        background: none;
+                        outline: none;
+                        top: 0;
+                        color: #FD7E14;
+                        font-size: 13px;
+
+                        span {
+                            margin-right: 5px;
+                        }
+                    }
+                }
+            }
+
+            hr {
+                content: "";
+                width: 90%;
+            }
+
+            .quiz-grade {
+                display: flex;
+                flex-direction: row;
+                .quiz-sm-icon{
+                  flex-basis: 20px;
+                }
+                button {
+                    border: none;
+                    background: none;
+                    outline: none;
+                    top: 0;
+                    color: #6B6C77;
+                    width: 90%;
+                    height: 24px;
+                    text-align: left;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    font-size: 13px;
+                }
+
+                button:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            .quiz-subject {
+                display: flex;
+                flex-direction: row;
+                margin-left: 1px;
+                .quiz-sm-icon{
+                    flex-basis: 20px;
+                  }
+                
+                button {
+                    border: none;
+                    background: none;
+                    outline: none;
+                    top: 0;
+                    color: #6B6C77;
+                    width: 90%;
+                    height: 24px;
+                    text-align: left;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    font-size: 13px;
+                    white-space: nowrap;
+                }
+
+                button:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            .quiz-import {
+                display: flex;
+                flex-direction: row;
+                .quiz-sm-icon{
+                    flex-basis: 20px;
+                  }
+                
+                button {
+                    border: none;
+                    background: none;
+                    outline: none;
+                    top: 0;
+                    color: #6B6C77;
+                    width: 90%;
+                    height: 24px;
+                    text-align: left;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    font-size: 13px;
+                }
+
+                button:hover {
+                    text-decoration: underline;
+                }
+            }
+
             .quiz-image-choice-overlay:hover .overlay-edit {
                 opacity: 0.8;
             }
-        }
 
+
+        }
     }
 }
 
@@ -118,6 +247,7 @@
     background-color: rgba(0, 0, 0, 0.5);
     overflow: scroll;
     overflow-x: hidden;
+    z-index: 3;
 
     .popup_inner {
         position: absolute;
@@ -132,6 +262,7 @@
         width: 50%;
         min-width: 300px;
         max-width: 500px;
+        z-index: 3;
 
         .popup-header {
             p {

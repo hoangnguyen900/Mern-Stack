@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import * as actions from "./../../../redux/actions/index";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle, faPencilAlt, faEye, faBurn, faGraduationCap, faBook, faUpload } from "@fortawesome/free-solid-svg-icons";
 import CreatePopUp from "./CreatePopUp";
 class QuizCreatorEditor extends React.Component {
   constructor() {
@@ -100,6 +100,41 @@ class QuizCreatorEditor extends React.Component {
               <div className="overlay-edit">
                 <div className="overlay-text">Edit image</div>
               </div>
+            </div>
+            <div className="quiz-info-edit-quiz-name">
+              <div className="quiz-name">
+                Basic English
+              </div>
+              <button>
+                <span><FontAwesomeIcon icon={faPencilAlt}
+                  color="#00C985"
+                  size="lg" /></span>
+              </button>
+            </div>
+            <div className="quiz-scope-data">
+              <div className="scope-public">
+                <button>
+                  <span>
+                    <FontAwesomeIcon icon={faEye} />{/*change to faEyeSlash if private */}
+                  </span>
+                  Public {/** change to "private" if private */}
+                </button>
+              </div>
+
+            </div>
+            <hr/>
+            <div className="quiz-grade">
+              <div className="quiz-sm-icon"><FontAwesomeIcon icon={faGraduationCap} color="#6B6C77"/></div>
+              <button>1st Grade</button>
+            </div>
+            <div className="quiz-subject">
+              <div className="quiz-sm-icon"><FontAwesomeIcon icon={faBook} color="#6B6C77"/></div>
+              <button>Physic</button>
+            </div>
+         
+            <div className="quiz-import">
+              <div className="quiz-sm-icon"><FontAwesomeIcon icon={faUpload} color="#6B6C77"/></div>
+              <button>Import from file</button>
             </div>
 
           </div>

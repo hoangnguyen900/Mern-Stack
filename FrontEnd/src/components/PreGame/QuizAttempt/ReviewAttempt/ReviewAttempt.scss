@@ -29,9 +29,10 @@
         flex-direction: row;
         justify-content: center;
         height: 100%;
-        overflow: auto;
+        overflow: hidden;
 
         .review-sumary {
+            
             min-width: 200px;
             height: 100%;
             width: 600px;
@@ -39,7 +40,7 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            
+            overflow: auto;
 
             .stick-top-action-container {
                 background: #662900;
@@ -217,3 +218,29 @@
         }
     }
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+    position:absolute;
+    right: 0;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background:  #FD7E14; 
+    border-radius: 10px;
+    position:absolute;
+    right: 0;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #801a00; 
+  }
