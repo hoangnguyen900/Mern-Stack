@@ -314,6 +314,29 @@ export const getListQuestionTable = () => {
       });
   };
 };
+export const getListUserDoQuestionTable = () => {
+  return dispatch => {
+    let token = localStorage.getItem("token");
+    axios({
+      method: "post",
+      url: URLs.GET_COMPLETED_TABLE,
+      headers: {
+        "content-type": "application/json",
+        "user-token": token
+      }
+    })
+      .then(res => {
+        console.log("API show QUESTION TABLE", res.data);
+        dispatch({
+          type: types.SHOW_QUESTION_TABLE_COMPLETED,
+          data: res.data
+        });
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};
 export const showListQuestionTable = () => {
   return {
     type: types.SHOW_QUESTION_TABLE
@@ -344,6 +367,30 @@ export const getQuestionTableByCode = code => {
             title: "Oops...",
             text: "Your code is not right!"
           });
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};
+export const isUserDoQuizBefore = question_table_id => {
+  return dispatch => {
+    let token = localStorage.getItem("token");
+    axios({
+      method: "post",
+      url: URLs.CHECK_USER_DO_QUIZ_API_URL,
+      headers: {
+        "content-type": "application/json",
+        "user-token": token
+      },
+      data: { question_table_id }
+    })
+      .then(res => {
+        console.log("API show QUESTION TABLE", res.data);
+        dispatch({
+          type: types.CHECK_USER_DO_QUIZ,
+          data: res.data
+        });
       })
       .catch(er => {
         console.log("er", er);

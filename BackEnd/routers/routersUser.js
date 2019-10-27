@@ -1,3 +1,4 @@
+const Sequelize = require("sequelize");
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
@@ -92,7 +93,78 @@ router.post("/api/user_answer", verifyToken, (req, res) => {
     }
   });
 });
+//check if user do the table before
+router.post("/api/is_user_did_table", verifyToken, (req, res) =>
+  jwt.verify(req.token, "hoangtri", (err, authData) => {
+    if (err) res.sendStatus(403);
+    else {
+      AnswerRecord.findOne({
+        where: {
+          user_id: authData.user_id.id,
+          question_table_id: req.body.question_table_id
+        }
+      })
+        .then(data => {
+          if (data === null) res.send(false);
+          else res.send(true);
+        })
+        .catch(err => console.log(err));
+    }
+  })
+);
+router.post("/api/get_completed_table", verifyToken, (req, res) =>
+  jwt.verify(req.token, "hoangtri", (err, authData) => {
+    if (err) res.sendStatus(403);
+    else {
+      AnswerRecord.findAll({
+        where: {
+          user_id: authData.user_id.id
+        },
+        attributes: [
+          Sequelize.fn("DISTINCT", Sequelize.col("question_table_id")),
+          "question_table_id"
+        ]
+      })
+        .then(idArr => {
+          let data = [];
+          for (let i = 0; i < idArr.length; i++) {
+            QuestionTable.findOne({
+              where: { id: idArr[i].question_table_id },
+              include: [
+                {
+                  model: Question,
+                  attributes: ["id"]
+                },
+                {
+                  model: AnswerRecord,
+                  include: [
+                    {
+                      model: QuestionChoices,
+                      attributes: ["is_right"]
+                    }
+                  ],
+                  where: {
+                    user_id: authData.user_id.id
+                  },
+                  attributes: ["id"]
+                },
+                {
+                  model: User,
 
+                  attributes: ["first_name", "last_name"]
+                }
+              ],
+              attributes: ["id", "title", "image", "played", "admin"]
+            }).then(questionTable => {
+              data.push(questionTable);
+              if (i == idArr.length - 1) res.send(data);
+            });
+          }
+        })
+        .catch(err => console.log(err));
+    }
+  })
+);
 //show question table created by user
 router.post("/api/get_user_question_table", verifyToken, (req, res) =>
   jwt.verify(req.token, "hoangtri", (err, authData) => {

@@ -21,6 +21,7 @@ class CreatedQuizzes extends React.Component {
     this.props.showListQuestionTable();
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
+    console.log("created", nextProps.user);
     this.setState({
       data: nextProps.user[0]
     });

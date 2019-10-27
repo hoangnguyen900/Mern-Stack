@@ -4,6 +4,7 @@ import "./QuizThumbnail.scss";
 import { connect } from "react-redux";
 import * as actions from "./../../redux/actions/index";
 import QuizDetailTable from "./QuizDetailTable/QuizDetailTable";
+import history from "../../history";
 class QuizThumbnail extends React.Component {
   constructor(props) {
     super(props);
@@ -17,28 +18,91 @@ class QuizThumbnail extends React.Component {
 
         questions: []
       },
-      isShowPopup: false
+      isCompleted: false,
+      isRunning: false,
+      isShowPopup: false,
+      accuracy: 0
     };
   }
   componentDidMount() {
-    let { data } = this.props;
+    let { data, isCompleted } = this.props;
+    if (typeof isCompleted !== "undefined") {
+      this.calculate();
+      this.setState({
+        isCompleted: isCompleted
+      });
+    }
 
     this.setState({
       data: data
     });
   }
+  onClickHandler = () => {
+    let question_table_id = this.props.data.id;
+    if (this.state.isCompleted)
+      history.push(`/join/pre-game/${question_table_id}`);
+    else this.togglePopup();
+  };
   togglePopup = () => {
     this.setState({
       isShowPopup: !this.state.isShowPopup
     });
   };
-  render() {
-    let { data } = this.state;
+  calculate = () => {
+    let { data } = this.props;
+    let Arr = [];
+    let i = 1;
+    let attemptArr = [];
+    data.answer_records.forEach((answerRecord, index) => {
+      if (answerRecord.id !== i) {
+        i++;
+        Arr.push(attemptArr);
+        attemptArr = [];
+      }
+      attemptArr.push(answerRecord);
+      if (index === data.answer_records.length - 1) Arr.push(attemptArr);
+    });
+    // console.log("mark", this.calculateAccuracy(Arr));
+    let accuracyArr = [];
+    Arr.forEach(attempt => {
+      accuracyArr.push(this.calculateAccuracy(attempt));
+    });
+    let accuracy = Math.max(...accuracyArr);
+    this.setState({
+      accuracy: accuracy
+    });
+  };
 
+  calculateAccuracy = dataArr => {
+    //calculate the accuracy
+    let rightAnswer = 0;
+    dataArr.forEach(attempt => {
+      if (attempt.question_choice.is_right) rightAnswer++;
+    });
+    let accuracy = (rightAnswer / dataArr.length).toFixed(2) * 100;
+    return accuracy;
+  };
+  accuracyColor = accuracy => {
+    switch (true) {
+      case accuracy <= 10:
+        return "#ff0000";
+      case accuracy <= 55:
+        return "#f5a623";
+      case accuracy <= 80:
+        return "#99cc00";
+      case accuracy <= 100:
+        return "#4caf50";
+      default:
+        return "";
+    }
+  };
+  render() {
+    let { data, isCompleted, isRunning, accuracy } = this.state;
+    let color = this.accuracyColor(accuracy);
     //console.log("props", this.props.data);
     return (
       <div>
-        <div className="quiz-thumbnail-container" onClick={this.togglePopup}>
+        <div className="quiz-thumbnail-container" onClick={this.onClickHandler}>
           <img src={require("./images/thumbnail.jpg")} alt="thumbnail" />
           <div className="quiz-flat-info">
             <div className="question-number">{data.questions.length} Qs</div>
@@ -54,17 +118,23 @@ class QuizThumbnail extends React.Component {
               <span>By:</span> {this.props.userName}
             </span>
           </div>
+          {isRunning ? (
+            <div className="progression">
+              <div className="pr-ing">
+                <div className="pr-bar">3 questions left</div>
+              </div>
+            </div>
+          ) : null}
 
-          <div className="progression">
-            <div className="pr-ing">
-              <div className="pr-bar">3 questions left</div>
+          {isCompleted ? (
+            <div className="accuracy">
+              <div className="pr-ing">
+                <div className="pr-bar" style={{ background: color }}>
+                  {accuracy}% accuracy
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="accuracy">
-            <div className="pr-ing">
-              <div className="pr-bar">45% accuracy</div>
-            </div>
-          </div>
+          ) : null}
         </div>
         {this.state.isShowPopup ? (
           <QuizDetailTable

@@ -13,6 +13,9 @@ let myReducer = (state = initialState, action) => {
       return {
         ...state
       };
+    case types.SHOW_QUESTION_TABLE_COMPLETED:
+      return { ...state, completedQuiz: [...action.data] };
+
     case types.SHOW_ONE_QUESTION_TABLE:
       return {
         questionTable: { ...action.data },
@@ -20,7 +23,9 @@ let myReducer = (state = initialState, action) => {
       };
     case types.SHOW_USER_ATTEMPT:
       return [...action.data];
-
+    case types.CHECK_USER_DO_QUIZ:
+      state.isPlayedBefore = action.data;
+      return { ...state };
     default:
       return state;
   }

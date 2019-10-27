@@ -1,6 +1,7 @@
 import React from "react";
 import "./QuizDetailTable.scss";
-
+import { connect } from "react-redux";
+import * as actions from "../../../redux/actions/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import history from "../../../history";
@@ -8,8 +9,18 @@ class QuizDetailTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDisplay: "block"
+      isDisplay: "block",
+      isPlayedBefore: false
     };
+  }
+  componentDidMount() {
+    let { data } = this.props;
+    this.props.isUserDoQuizBefore(data.id);
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    this.setState({
+      isPlayedBefore: nextProps.user.isPlayedBefore
+    });
   }
   showSampleQuestion = () => {
     let { data } = this.props;
@@ -48,7 +59,8 @@ class QuizDetailTable extends React.Component {
   };
   playQuizOnClickHandler = () => {
     let { data } = this.props;
-    history.push(`/join/${data.id}/start`);
+    if (this.state.isPlayedBefore) history.push(`/join/pre-game/${data.id}`);
+    else history.push(`/join/${data.id}/start`);
   };
   render() {
     let { data } = this.props;
@@ -104,5 +116,19 @@ class QuizDetailTable extends React.Component {
     );
   }
 }
-
-export default QuizDetailTable;
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    isUserDoQuizBefore: question_table_id => {
+      dispatch(actions.isUserDoQuizBefore(question_table_id));
+    }
+  };
+};
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(QuizDetailTable);
