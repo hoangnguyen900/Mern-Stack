@@ -76,16 +76,17 @@ router.post("/api/user_answer", verifyToken, (req, res) => {
             req.body[i].id = id + 1;
           }
           AnswerRecord.bulkCreate(req.body).then(data => {
-            AnswerRecord.findAll({
-              include: {
-                model: QuestionChoices,
-                attributes: ["is_right"]
-              },
-              where: {
-                user_id: data[0].user_id,
-                question_table_id: data[0].question_table_id
-              }
-            }).then(data => res.send(data));
+            res.send(data);
+            // AnswerRecord.findAll({
+            //   include: {
+            //     model: QuestionChoices,
+            //     attributes: ["is_right"]
+            //   },
+            //   where: {
+            //     user_id: data[0].user_id,
+            //     question_table_id: data[0].question_table_id
+            //   }
+            // }).then(data => res.send(data));
           });
         })
 

@@ -3,7 +3,7 @@ import * as URLs from "./URL";
 
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import history from "./../../history";
 export const loginAPI = state => {
   return dispatch => {
     axios({
@@ -278,11 +278,8 @@ export const addAnswerRecord = data => {
       data: data
     })
       .then(res => {
-        console.log("res create record", res.data);
-        dispatch({
-          type: types.CREATE_ANSWER_RECORD,
-          data: res.data
-        });
+        history.push(`/join/pre-game/${data[0].question_table_id}`);
+        localStorage.setItem("attempt_id", res.data[0].id);
       })
       .catch(er => {
         console.log("er", er);

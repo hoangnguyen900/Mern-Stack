@@ -4,39 +4,56 @@ import TimeBar from "../Timebar/TimeBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight, faCircle } from "@fortawesome/free-solid-svg-icons";
 class QuestionShow extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       id: 0,
       question: "",
       question_choices: [],
-      time: 0
+      time: 0,
+      disableButton: false
     };
+  }
+  componentWillUnmount() {
+    let { question_choices } = this.state;
+    let index = localStorage.getItem("choiceIndex");
+    console.log("stop", index);
+
+    if (index === null) {
+      let questionChoice = {
+        id: 0
+      };
+      this.props.recordAnswer(this.state.id, questionChoice);
+    } else this.props.recordAnswer(this.state.id, question_choices[index]);
+    localStorage.removeItem("choiceIndex");
   }
   onClickCheckAnswer = index => {
     //let { index, question } = this.props;
-    let { question_choices } = this.state;
-    if (question_choices[index].is_right) {
-      //   let list = this.state.question;
-      //   list.question_choices[index].check = true;
-      this.setState(preState => ({
-        question_choices: preState.question_choices.map((qChoice, i) => {
-          return i === index ? { ...qChoice, check: true } : qChoice;
-        })
-      }));
-    } else {
-      this.setState(preState => ({
-        question_choices: preState.question_choices.map((qChoice, i) => {
-          return i === index ? { ...qChoice, check: false } : qChoice;
-        })
-      }));
+    let { question_choices, disableButton } = this.state;
+    if (disableButton === false) {
+      if (question_choices[index].is_right) {
+        //   let list = this.state.question;
+        //   list.question_choices[index].check = true;
+        this.setState(preState => ({
+          question_choices: preState.question_choices.map((qChoice, i) => {
+            return i === index ? { ...qChoice, check: true } : qChoice;
+          })
+        }));
+      } else {
+        this.setState(preState => ({
+          question_choices: preState.question_choices.map((qChoice, i) => {
+            return i === index ? { ...qChoice, check: false } : qChoice;
+          })
+        }));
+      }
+      this.props.doneQuestionHandler();
+      this.setState({
+        disableButton: true
+      });
     }
-    this.props.doneQuestionHandler(this.state.id, question_choices[index]);
   };
   componentDidMount() {
     let { question } = this.props;
-
 
     this.setState({
       id: question.id,
@@ -47,7 +64,7 @@ class QuestionShow extends React.Component {
   }
 
   render() {
-    const { id, time, question, question_choices } = this.state;
+    const { id, time, question, question_choices, disableButton } = this.state;
     const element = question_choices.map((answer, index) => {
       let color = () => {
         if (answer.check === false) return "#F14D76";
@@ -56,8 +73,16 @@ class QuestionShow extends React.Component {
       };
       return (
         <div className="question-answer" key={index}>
-          <button onClick={() => this.onClickCheckAnswer(index)}>
-            <span><FontAwesomeIcon icon={faCircle} color={color()} /></span>
+          <button
+            onClick={() => {
+              this.onClickCheckAnswer(index);
+              localStorage.setItem("choiceIndex", index);
+            }}
+            disabled={disableButton}
+          >
+            <span>
+              <FontAwesomeIcon icon={faCircle} color={color()} />
+            </span>
             <span>{answer.answer}</span>
           </button>
         </div>

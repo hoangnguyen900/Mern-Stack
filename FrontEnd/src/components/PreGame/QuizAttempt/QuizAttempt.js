@@ -42,7 +42,6 @@ class QuizAttempt extends React.Component {
     }
   };
   render() {
-    console.log(this.props.data);
     let accuracy = this.calculateAccuracy();
     let color = this.accuracyColor(accuracy);
     return (

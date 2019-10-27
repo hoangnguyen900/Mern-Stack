@@ -5,6 +5,7 @@ import question from "./Question";
 import subject from "./Subject";
 import login from "./Login";
 import user from "./User";
+import attempt from "./Attempt";
 
 import { combineReducers } from "redux";
 const myReducer = combineReducers({
@@ -12,6 +13,7 @@ const myReducer = combineReducers({
   questionTable,
   subject,
   login,
-  user
+  user,
+  attempt
 });
 export default myReducer;
