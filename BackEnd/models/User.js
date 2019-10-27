@@ -25,6 +25,11 @@ const User = db.define("user", {
     allowNull: true,
     primaryKey: false
   },
+  birth: {
+    type: "DATE",
+    allowNull: true,
+    primaryKey: false
+  },
   subject_id: {
     type: "INT(11)",
     allowNull: true,
@@ -40,6 +45,18 @@ const User = db.define("user", {
   password: {
     type: "VARCHAR(50)",
     allowNull: true,
+    primaryKey: false
+  },
+  avatar: {
+    type: "VARCHAR(200)",
+    allowNull: true,
+    defaultValue: null,
+    primaryKey: false
+  },
+  role_id: {
+    type: "int(11)",
+    allowNull: true,
+    defaultValue: 1,
     primaryKey: false
   }
 });

@@ -15,6 +15,7 @@ class Join extends React.Component {
   componentDidMount() {
     //get data API from backend
     this.props.getListQuestionTable();
+    this.props.getListUserDoQuestionTable();
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
     console.log(nextProps.user);
@@ -69,6 +70,9 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     getQuestionTableByCode: code => {
       dispatch(actions.getQuestionTableByCode(code));
+    },
+    getListUserDoQuestionTable: () => {
+      dispatch(actions.getListUserDoQuestionTable());
     }
   };
 };

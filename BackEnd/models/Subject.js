@@ -16,7 +16,7 @@ const Subject = db.define("subject", {
     primaryKey: false
   },
   icon: {
-    type: "LONGBLOB",
+    type: "VARCHAR(200)",
     allowNull: true,
     defaultValue: null,
     primaryKey: false

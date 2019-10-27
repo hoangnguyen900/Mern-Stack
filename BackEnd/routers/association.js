@@ -7,13 +7,20 @@ const QuestionChoices = require("../models/QuestionChoices");
 const Subject = require("../models/Subject");
 const User = require("../models/User");
 const AnswerRecord = require("../models/AnswerRecord");
+const UserRole = require("../models/UserRole");
 
+//////////////
+UserRole.hasMany(User, { foreignKey: "role_id" });
+//////////////
 Subject.hasMany(QuestionTable, { foreignKey: "subject_id" });
 Subject.hasMany(User, { foreignKey: "subject_id" });
 //////////////////////////////////////////
 User.hasMany(QuestionTable, { foreignKey: "admin" });
 User.belongsTo(Subject, {
   foreignKey: "subject_id"
+});
+User.belongsTo(UserRole, {
+  foreignKey: "role_id"
 });
 User.hasMany(AnswerRecord, { foreignKey: "user_id" });
 //////////////////////////////////////////////

@@ -1,5 +1,5 @@
 const domain = "http://localhost:3000";
-export const LOGIN_API_URL = `${domain}/api/get-user`;
+export const LOGIN_API_URL = `${domain}/api/get_user`;
 export const LOGOUT_API_URL = "https://terralogic-training.web.app/api/logout";
 export const SIGN_UP_API_URL =
   "https://terralogic-training.firebaseapp.com/api/sign_up";
@@ -20,3 +20,5 @@ export const ANSWER_RECORD_API_URL = `${domain}/api/user_answer`;
 export const USER_QUESTION_TABLE_API_URL = `${domain}/api/get_user_question_table`;
 export const QUESTION_TABLE_CODE_API_URL = `${domain}/api/get_question_table_code`;
 export const USER_ATTEMPT_API_URL = `${domain}/api/quiz_attempt`;
+export const CHECK_USER_DO_QUIZ_API_URL = `${domain}/api/is_user_did_table`;
+export const GET_COMPLETED_TABLE = `${domain}/api/get_completed_table`;
