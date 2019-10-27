@@ -107,7 +107,7 @@ class QuizCreatorEditor extends React.Component {
               </div>
               <button>
                 <span><FontAwesomeIcon icon={faPencilAlt}
-                  color="#00C985"
+                  color="#FD7E14"
                   size="lg" /></span>
               </button>
             </div>

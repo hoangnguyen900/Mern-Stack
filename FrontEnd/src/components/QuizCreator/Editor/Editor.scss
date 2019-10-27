@@ -103,6 +103,7 @@
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
+                padding-right: 25px;
 
                 .quiz-name {
                     color: black;
@@ -298,6 +299,7 @@
                 border: 1px solid #ccc;
                 border-radius: 5px;
                 background-color: white;
+                top: 0;
             }
         }
 
