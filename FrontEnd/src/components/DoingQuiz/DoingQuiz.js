@@ -3,11 +3,8 @@ import "./DoingQuiz.scss";
 import QuestionShow from "../DoingQuiz/QuestionShow/QuestionShow";
 import { connect } from "react-redux";
 import * as actions from "./../../redux/actions/index";
-import history from "../../history";
 var showQuestion;
-var mark = 0;
 class DoingQuiz extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +14,6 @@ class DoingQuiz extends React.Component {
           question: "",
           question_choices: [],
           time: 0
-
         }
       ],
       data: [],
@@ -35,13 +31,7 @@ class DoingQuiz extends React.Component {
     let question_table_id = this.props.match.params.question_table_id;
     this.props.showListQuestionAnswer(question_table_id);
   }
-  doneQuestionHandler = (question_id, question_choice) => {
-    clearTimeout(showQuestion);
-    setTimeout(() => {
-      this.setState({
-        changeQuestion: true
-      });
-    }, 500);
+  recordAnswer = (question_id, question_choice) => {
     ///create data to send API
     let question_table_id = parseInt(this.props.match.params.question_table_id);
     let data = {
@@ -51,12 +41,15 @@ class DoingQuiz extends React.Component {
     };
     let dataPush = this.state.data;
     dataPush.push({ ...data });
-
-    // calculate mark for user
-    if (question_choice.is_right) {
-      let total = this.state.questions.length;
-      mark = mark + 100 / total;
-    }
+    console.log("dataPush", dataPush);
+  };
+  doneQuestionHandler = () => {
+    clearTimeout(showQuestion);
+    setTimeout(() => {
+      this.setState({
+        changeQuestion: true
+      });
+    }, 500);
   };
   createQuestion = () => {
     let { questions, count, isDone, changeQuestion, data } = this.state;
@@ -88,8 +81,7 @@ class DoingQuiz extends React.Component {
       }
       if (isDone === true) {
         this.props.addAnswerRecord(data);
-        console.log("total mark", mark.toFixed(1));
-        history.push(`/quiz/${this.props.match.params.question_table_id}`);
+        clearTimeout(showQuestion);
       } else
         return (
           <QuestionShow
@@ -97,6 +89,7 @@ class DoingQuiz extends React.Component {
             index={count}
             question={questions[count]}
             doneQuestionHandler={this.doneQuestionHandler}
+            recordAnswer={this.recordAnswer}
           />
         );
     }
