@@ -91,7 +91,7 @@ class QuizCreatorQuestionDetail extends React.Component {
                   <span>
                     <FontAwesomeIcon
                       icon={faCircle}
-                      color={answer.is_right ? "#00C985" : "#F14D76"}
+                      color={answer.is_right ? "#00C985" : "#F14D76"} size="lg"
                     />
                     <span>{answer.answer}</span>
                   </span>

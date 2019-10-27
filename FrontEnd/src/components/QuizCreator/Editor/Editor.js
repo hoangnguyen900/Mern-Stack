@@ -94,7 +94,15 @@ class QuizCreatorEditor extends React.Component {
           {element}
         </div>
         <div className="quiz-info-container">
+          <div className="quiz-info-edit-container">
+            <div className="quiz-image-choice-overlay">
+              <img className="quiz-image-choice" src={require("./images/thumbnail.jpg")} alt="quizImageChoice" />
+              <div className="overlay-edit">
+                <div className="overlay-text">Edit image</div>
+              </div>
+            </div>
 
+          </div>
         </div>
         {this.state.showPopupCreate ? (
           <CreatePopUp

@@ -52,14 +52,14 @@ class QuestionShow extends React.Component {
       let color = () => {
         if (answer.check === false) return "#F14D76";
         if (answer.check === true) return "#00c985";
-        return "black";
+        return "#d9d9d9";
       };
       return (
         <div className="question-answer" key={index}>
-          <span onClick={() => this.onClickCheckAnswer(index)}>
-            <FontAwesomeIcon icon={faCircle} color={color()} />
+          <button onClick={() => this.onClickCheckAnswer(index)}>
+            <span><FontAwesomeIcon icon={faCircle} color={color()} /></span>
             <span>{answer.answer}</span>
-          </span>
+          </button>
         </div>
       );
     });

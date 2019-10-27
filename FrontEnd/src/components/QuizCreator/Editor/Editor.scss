@@ -54,9 +54,55 @@
         flex-grow: 0;
         min-width: 200px;
         width: 300px;
-        padding: 10px;
+        padding: 30px;
         margin-left: 40px;
-       
+
+        .quiz-info-edit-container {
+            border-radius: 10px;
+            border: 1px solid #E6E6E6;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+
+            .quiz-image-choice-overlay {
+                padding: 0 10px;
+                position: relative;
+
+                .quiz-image-choice {
+                    width: 190px;
+                }
+
+
+                .overlay-edit {
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    opacity: 0;
+                    height: 100%;
+                    width: 100%;
+                    transition: .2s ease;
+                    background-color: black;
+                    border-radius: 5px;
+
+                    .overlay-text {
+                        color: white;
+                        font-size: 20px;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        text-align: center;
+                    }
+                }
+            }
+
+            .quiz-image-choice-overlay:hover .overlay-edit {
+                opacity: 0.8;
+            }
+        }
+
     }
 }
 
@@ -125,9 +171,9 @@
         }
 
         .popup-footer {
-            display: flex!important;
-            flex-direction: row!important;
-            justify-content: flex-end!important;
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: flex-end !important;
 
             .question-time-container {
                 display: flex;
@@ -162,13 +208,14 @@
                 font-size: 16px;
                 border: 1px solid #ccc;
                 border-radius: 5px;
-                box-shadow: none!important;
+                box-shadow: none !important;
             }
 
-            button:hover{
+            button:hover {
                 position: relative;
                 top: 0;
             }
+
             .b-cancel {
                 background-color: white;
             }

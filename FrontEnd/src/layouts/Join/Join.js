@@ -3,8 +3,6 @@ import "./Join.scss";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import JoinNav from "../../components/Join/Nav/Nav";
 import Activity from "../../components/Join/Activity/Activity";
-import ReviewAttempt from "../../components/PreGame/QuizAttempt/ReviewAttempt/ReviewAttempt";
-
 import Join from "../../components/Join/Join";
 
 class JoinLayout extends React.Component {
