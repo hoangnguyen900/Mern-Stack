@@ -278,8 +278,8 @@ export const addAnswerRecord = data => {
       data: data
     })
       .then(res => {
-        history.push(`/join/pre-game/${data[0].question_table_id}`);
         localStorage.setItem("attempt_id", res.data[0].id);
+        history.push(`/join/pre-game/${data[0].question_table_id}/review`);
       })
       .catch(er => {
         console.log("er", er);
@@ -325,13 +325,18 @@ export const getListUserDoQuestionTable = () => {
       .then(res => {
         console.log("API show QUESTION TABLE", res.data);
         dispatch({
-          type: types.SHOW_QUESTION_TABLE_COMPLETED,
+          type: types.GET_QUESTION_TABLE_COMPLETED,
           data: res.data
         });
       })
       .catch(er => {
         console.log("er", er);
       });
+  };
+};
+export const showListUserDoQuestionTable = () => {
+  return {
+    type: types.SHOW_QUESTION_TABLE_COMPLETED
   };
 };
 export const showListQuestionTable = () => {
@@ -408,7 +413,7 @@ export const getListUserAttempt = question_table_id => {
       data: { question_table_id }
     })
       .then(res => {
-        console.log("API show QUESTION TABLE", res.data);
+        console.log("API show List User Attempt", res.data);
         dispatch({
           type: types.SHOW_USER_ATTEMPT,
           data: res.data
@@ -419,3 +424,28 @@ export const getListUserAttempt = question_table_id => {
       });
   };
 };
+export const getAttempt = (question_table_id, attempt_id) => {
+  return dispatch => {
+    let token = localStorage.getItem("token");
+    axios({
+      method: "post",
+      url: URLs.ATTEMPT_RECORD_API_URL,
+      headers: {
+        "content-type": "application/json",
+        "user-token": token
+      },
+      data: { question_table_id, attempt_id }
+    })
+      .then(res => {
+        console.log("API show Attemp record", res.data);
+        dispatch({
+          type: types.SHOW_ANSWER_RECORD,
+          data: res.data
+        });
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};
+//
