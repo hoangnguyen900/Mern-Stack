@@ -42,7 +42,7 @@ router.post("/api/quiz_attempt", verifyToken, (req, res) => {
   });
 });
 //login check email password
-router.post("/api/get-user", (req, res) =>
+router.post("/api/get_user", (req, res) =>
   User.findOne({
     where: {
       email: req.body.email,
