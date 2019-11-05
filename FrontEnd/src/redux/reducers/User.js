@@ -9,11 +9,10 @@ let myReducer = (state = initialState, action) => {
       return {
         ...state
       };
-    case types.SHOW_QUESTION_TABLE_COMPLETED:
-      return { ...state, completedQuiz: [...action.data] };
 
     case types.SHOW_ONE_QUESTION_TABLE:
       return {
+        ...state,
         questionTable: { ...action.data },
         showQuizCode: true
       };

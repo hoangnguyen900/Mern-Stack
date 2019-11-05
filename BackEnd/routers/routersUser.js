@@ -94,6 +94,33 @@ router.post("/api/user_answer", verifyToken, (req, res) => {
     }
   });
 });
+router.post("/api/attempt_record", verifyToken, (req, res) => {
+  jwt.verify(req.token, "hoangtri", (err, authData) => {
+    if (err) res.sendStatus(403);
+    else {
+      AnswerRecord.findAll({
+        include: [
+          {
+            model: QuestionChoices,
+            attributes: ["is_right", "id"]
+          },
+          {
+            model: Question,
+            include: [QuestionChoices]
+          }
+        ],
+        where: {
+          id: req.body.attempt_id,
+          user_id: authData.user_id.id,
+          question_table_id: req.body.question_table_id
+        }
+      })
+        .then(data => res.send(data))
+
+        .catch(err => console.log(err));
+    }
+  });
+});
 //check if user do the table before
 router.post("/api/is_user_did_table", verifyToken, (req, res) =>
   jwt.verify(req.token, "hoangtri", (err, authData) => {

@@ -19,6 +19,10 @@ class Join extends React.Component {
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
     console.log(nextProps.user);
+    localStorage.setItem(
+      "username",
+      `${nextProps.user[0].first_name} ${nextProps.user[0].last_name}`
+    );
     this.setState({
       showQuizCode: nextProps.user.showQuizCode,
       questionTable: nextProps.user.questionTable
@@ -37,6 +41,7 @@ class Join extends React.Component {
   };
   render() {
     let { questionTable } = this.state;
+
     return (
       <div className="join-container">
         <div className="enter-quiz">

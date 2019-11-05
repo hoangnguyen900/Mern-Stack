@@ -12,11 +12,11 @@ class CompletedQuizzes extends React.Component {
     };
   }
   componentDidMount() {
-    this.props.showListQuestionTable();
+    this.props.showListUserDoQuestionTable();
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log("completed", nextProps.user);
-    let { completedQuiz } = nextProps.user;
+    console.log("completed", nextProps);
+    let { completedQuiz } = nextProps.completed;
     this.setState({
       data: completedQuiz
     });
@@ -40,15 +40,16 @@ class CompletedQuizzes extends React.Component {
 }
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    showListQuestionTable: () => {
-      dispatch(actions.showListQuestionTable());
+    showListUserDoQuestionTable: () => {
+      dispatch(actions.showListUserDoQuestionTable());
     }
   };
 };
 const mapStateToProps = state => {
   return {
     questionTable: state.questionTable,
-    user: state.user
+    user: state.user,
+    completed: state.completed
   };
 };
 export default connect(

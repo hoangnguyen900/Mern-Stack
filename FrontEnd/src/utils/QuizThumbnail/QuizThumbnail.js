@@ -77,7 +77,7 @@ class QuizThumbnail extends React.Component {
     //calculate the accuracy
     let rightAnswer = 0;
     dataArr.forEach(attempt => {
-      if (attempt.question_choice.is_right) rightAnswer++;
+      if (attempt.question_choice.is_right === 1) rightAnswer++;
     });
     let accuracy = (rightAnswer / dataArr.length).toFixed(2) * 100;
     return accuracy;

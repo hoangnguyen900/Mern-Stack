@@ -12,7 +12,6 @@ class QuizAttempt extends React.Component {
   componentDidMount() {
     let { data } = this.props;
     //let { data } = this.state;
-
     this.setState({
       data: data
     });
@@ -22,7 +21,7 @@ class QuizAttempt extends React.Component {
     //calculate the accuracy
     let rightAnswer = 0;
     data.forEach(attempt => {
-      if (attempt.question_choice.is_right) rightAnswer++;
+      if (attempt.question_choice.is_right === 1) rightAnswer++;
     });
     let accuracy = (rightAnswer / data.length).toFixed(2) * 100;
     return accuracy;
@@ -50,11 +49,12 @@ class QuizAttempt extends React.Component {
           <div className="attempt-number">Attempt {this.props.index + 1}</div>
           <div className="review-btn">
             <button
-              onClick={() =>
+              onClick={() => {
+                localStorage.setItem("attempt_id", this.props.data[0].id);
                 history.push(
                   `/join/pre-game/${this.props.data[0].question_table_id}/review`
-                )
-              }
+                );
+              }}
             >
               Review
             </button>

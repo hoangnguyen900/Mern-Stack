@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions/index";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-
+import history from "../../history";
 import QuizAttempt from "./QuizAttempt/QuizAttempt";
 class PreGame extends React.Component {
   constructor(props) {
@@ -25,13 +25,15 @@ class PreGame extends React.Component {
   }
   render() {
     let { data } = this.state;
+    let question_table_id = this.props.match.params.question_table_id;
+
     let quizAttemptElm = data.map((attempt, index) => {
       return <QuizAttempt key={index} data={attempt} index={index} />;
     });
     return (
       <div className="pre-game-container">
         <div className="pre-game-nav">
-          <button>
+          <button onClick={() => history.push(`/join/`)}>
             <span>
               <FontAwesomeIcon icon={faTimes} />
             </span>
@@ -57,7 +59,11 @@ class PreGame extends React.Component {
           </div>
           <div className="player-config">
             <div className="practice-btn-group">
-              <button>Play</button>
+              <button
+                onClick={() => history.push(`/join/game/${question_table_id}`)}
+              >
+                Play
+              </button>
             </div>
           </div>
         </div>
