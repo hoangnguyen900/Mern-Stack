@@ -12,7 +12,7 @@ import Join from "./layouts/Join/Join";
 import Home from "./layouts/Home/Home";
 import PreGame from "./components/PreGame/PreGame";
 import ReviewAttempt from "./components/PreGame/QuizAttempt/ReviewAttempt/ReviewAttempt";
-
+import AdminLayout from "./layouts/Admin/Admin";
 import QuizStart from "./components/Join/QuizStart/QuizStart";
 class App extends React.Component {
   render() {
@@ -30,6 +30,10 @@ class App extends React.Component {
             <Route
               path="/admin/:admin"
               render={({ match }) => <QuizCreateModal match={match} />}
+            />
+            <Route
+              exact path="/admin"
+              render={({ match }) => <AdminLayout match={match} />}
             />
 
             <Route
@@ -55,6 +59,9 @@ class App extends React.Component {
               path="/signup"
               component = {SignUp}
             /> */}
+
+            
+
           </Switch>
         </Router>
       </div>

@@ -9,14 +9,17 @@ import { connect } from "react-redux";
 import * as actions from "./../../../redux/actions/index";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle, faPencilAlt, faEye, faBurn, faGraduationCap, faBook, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle, faPencilAlt, faEye, faGraduationCap, faBook, faUpload } from "@fortawesome/free-solid-svg-icons";
 import CreatePopUp from "./CreatePopUp";
+
+import CreateGradePopUp from './CreateGradePopUp';
 class QuizCreatorEditor extends React.Component {
   constructor() {
     super();
     this.state = {
       showPopupCreate: false,
       showPopupEdit: false,
+      showPopupGrade: false,
       dataEdit: {},
       question_table_id: 1,
       //questions: [],
@@ -33,11 +36,25 @@ class QuizCreatorEditor extends React.Component {
         showPopupEdit: !showPopupEdit,
         dataEdit: {}
       });
-    } else
+    }
+    if (showPopupCreate === true) {
       this.setState({
         showPopupCreate: !showPopupCreate
       });
+    }
   };
+
+  togglePopupGrade = () => {
+    let { showPopupGrade } = this.state;
+
+    if (showPopupGrade === true) {
+      this.setState({
+        showPopupGrade: !showPopupGrade,
+      });
+    }
+
+  };
+
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.question == null)
       this.setState({
@@ -84,7 +101,13 @@ class QuizCreatorEditor extends React.Component {
       <div className="editor">
         <div className="question-editor">
           <div className="button-group">
-            <button onClick={this.togglePopup} className="button b-create">
+            <button onClick={() => {
+              this.setState({
+                showPopupCreate: !this.state.showPopupCreate
+              })
+              this.togglePopup()
+            }
+            } className="button b-create">
               <FontAwesomeIcon icon={faPlusCircle} />
               Create a new question
             </button>
@@ -122,18 +145,24 @@ class QuizCreatorEditor extends React.Component {
               </div>
 
             </div>
-            <hr/>
+            <hr />
             <div className="quiz-grade">
-              <div className="quiz-sm-icon"><FontAwesomeIcon icon={faGraduationCap} color="#6B6C77"/></div>
-              <button>1st Grade</button>
+              <div className="quiz-sm-icon"><FontAwesomeIcon icon={faGraduationCap} color="#6B6C77" /></div>
+              <button onClick={() => {
+                this.setState({
+                  showPopupGrade: !this.state.showPopupGrade
+                })
+                this.togglePopupGrade()
+              }
+              }>1st Grade</button>
             </div>
             <div className="quiz-subject">
-              <div className="quiz-sm-icon"><FontAwesomeIcon icon={faBook} color="#6B6C77"/></div>
+              <div className="quiz-sm-icon"><FontAwesomeIcon icon={faBook} color="#6B6C77" /></div>
               <button>Physic</button>
             </div>
-         
+
             <div className="quiz-import">
-              <div className="quiz-sm-icon"><FontAwesomeIcon icon={faUpload} color="#6B6C77"/></div>
+              <div className="quiz-sm-icon"><FontAwesomeIcon icon={faUpload} color="#6B6C77" /></div>
               <button>Import from file</button>
             </div>
 
@@ -154,6 +183,13 @@ class QuizCreatorEditor extends React.Component {
             data={this.state.dataEdit}
           />
         ) : null}
+
+        {this.state.showPopupGrade ? (
+          <CreateGradePopUp
+            closePopup={this.togglePopupGrade}
+          />
+        ) : null
+        }
       </div>
     );
   }

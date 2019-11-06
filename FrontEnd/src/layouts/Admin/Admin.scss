@@ -1,0 +1,11 @@
+.admin-layout-container{
+    height: 100%;
+    width: 100%;
+
+    br {
+        display: block;
+        margin: 3px 0;
+        content: "";
+        line-height: 1px;
+    }
+}

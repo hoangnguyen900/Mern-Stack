@@ -149,9 +149,11 @@
             .quiz-grade {
                 display: flex;
                 flex-direction: row;
-                .quiz-sm-icon{
-                  flex-basis: 20px;
+
+                .quiz-sm-icon {
+                    flex-basis: 20px;
                 }
+
                 button {
                     border: none;
                     background: none;
@@ -176,10 +178,11 @@
                 display: flex;
                 flex-direction: row;
                 margin-left: 1px;
-                .quiz-sm-icon{
+
+                .quiz-sm-icon {
                     flex-basis: 20px;
-                  }
-                
+                }
+
                 button {
                     border: none;
                     background: none;
@@ -203,10 +206,11 @@
             .quiz-import {
                 display: flex;
                 flex-direction: row;
-                .quiz-sm-icon{
+
+                .quiz-sm-icon {
                     flex-basis: 20px;
-                  }
-                
+                }
+
                 button {
                     border: none;
                     background: none;
@@ -252,8 +256,8 @@
 
     .popup_inner {
         position: absolute;
-        left: calc((25%-500px)/2);
-        top: 10%;
+        left: calc((80%-500px)/2) !important;
+        top: 50% !important;
         background: white;
         border-radius: 5px;
         display: flex;
@@ -273,7 +277,24 @@
                 img {
                     height: 30px;
                     width: 30px;
+                    margin-right: 10px;
                 }
+            }
+            button{
+                top:0;
+                height: 40px;
+                min-width: 100px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-shadow: none !important;
+                background-color: white;
+            }
+            .choose-question-types{
+                flex-grow: 1;
+                display:flex;
+                flex-direction: row;
+                justify-content: flex-end;
             }
         }
 
@@ -300,6 +321,7 @@
                 border-radius: 5px;
                 background-color: white;
                 top: 0;
+
             }
         }
 
@@ -361,6 +383,89 @@
 
                 span {
                     margin-left: 10px;
+                }
+            }
+        }
+    }
+}
+
+.grade-popup-container {
+    height: 100%;
+    width: 100%;
+    @extend .popup;
+
+    .popup {
+
+        .popup_inner {
+            top: 40%!important;
+            left: 50%!important;
+
+            .popup-header {
+                display: flex;
+                flex-direction: column;
+                padding-bottom: 0;
+                p {
+                    img {
+                        height: 64px;
+                        width: 64px;
+                    }
+                }
+
+                hr {
+                    content: "";
+                    width: 100%;
+                }
+            }
+
+            .popup-body {
+                .add-title-image-section {
+                    .section-name {
+                        color: rgba(41, 42, 58, 0.67);
+                        font-size: 14px;
+                        padding: 5px 10px;
+                        margin-top: 0;
+                    }
+
+                    .title-image-picker {
+
+                        height: 110px;
+                        border: 2px dashed #DFDFE0;
+                        margin: 5px 10px;
+                        border-radius: 10px;
+                        position: relative;
+
+                        .default-title-image {
+                            position: absolute;
+                            transform: translate(-50%, -50%);
+                            left: 50%;
+                            top: 50%;
+                            width: 160px;
+                            height: 100px;
+                            margin: 0;
+                        }
+
+                        .delete-title-image {
+                            position: absolute;
+                            background-color: red;
+                            padding: 10px;
+                            padding-top: 0;
+                            margin: 0;
+                            border-radius: 5px;
+                            right: 5px;
+                            top: 5px;
+                        }
+                    }
+                }
+
+
+
+                .select-language-section {
+                    @extend .add-title-image-section;
+
+                }
+
+                .select-grade-section {
+                    @extend .add-title-image-section;
                 }
             }
         }
