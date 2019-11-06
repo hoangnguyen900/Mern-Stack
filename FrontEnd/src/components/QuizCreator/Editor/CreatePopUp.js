@@ -192,6 +192,27 @@ class QuestionCreatePopup extends React.Component {
                 />
                 Question {index}
               </p>
+              <div className="choose-question-types">
+                <ButtonToolbar>
+                  {["down"].map(direction => (
+                    <DropdownButton
+                      drop={direction}
+                      variant="light"
+                      title={` ${this.state.timeTitle} seconds `}
+                      id={`dropdown-button-drop-${direction}`}
+                      key={direction}
+                      onSelect={this.onSelectHandler}
+                      size="sm"
+                      background-color="white"
+                    >
+                      <Dropdown.Item eventKey="single">Single answer</Dropdown.Item>
+                      <Dropdown.Item eventKey="multi">Multi select</Dropdown.Item>
+                     
+                    </DropdownButton>
+                  ))}
+                </ButtonToolbar>
+              </div>
+
               <hr />
             </div>
             <div className="popup-body">
