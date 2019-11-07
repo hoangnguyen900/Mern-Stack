@@ -42,12 +42,16 @@ class QuestionCreatePopup extends React.Component {
         index: -1,
         isCheck: 0
       },
-      temptCheck: {}
+      temptCheck: {},
+      questionType: {
+        title: "Single answer",
+        isOneAnswer: true
+      }
     };
   }
   componentDidMount() {
     let { data } = this.props;
-    let { questionsArr, answers } = this.state;
+    let { questionsArr } = this.state;
     let display = "block";
     if (typeof data !== "undefined") {
       //console.log(data);
@@ -155,7 +159,6 @@ class QuestionCreatePopup extends React.Component {
   onChangeAnswer = (index, answer) => {
     listAns[index] = answer;
     console.log(listAns);
-    //this.checkOneRightAnswerHandler(index);
   };
   checkOneRightAnswerHandler = index => {
     let { temptCheck, checkOneRightAnswer } = this.state;
@@ -204,26 +207,42 @@ class QuestionCreatePopup extends React.Component {
       }
     });
   };
-  onSelectHandler = event => {
+  onSelectTimeHandler = event => {
     let data = this.state.data;
     data.time = parseInt(event);
     this.setState({
       timeTitle: data.time
     });
   };
-
+  onSelectQuestionTypeHandler = event => {
+    var isTrueSet = event === "true";
+    let title = "";
+    if (isTrueSet) title = "Single answer";
+    else title = "Multi-select";
+    this.setState({
+      questionType: {
+        title: title,
+        isOneAnswer: isTrueSet
+      },
+      temptCheck: {},
+      checkOneRightAnswer: {
+        index: -1,
+        isCheck: 0
+      }
+    });
+  };
   render() {
     let {
       isDisplay,
       questionsArr,
       answers,
       checkOneRightAnswer,
-      timeTitle
+      timeTitle,
+      questionType
     } = this.state;
     let { index } = this.props;
-    console.log(this.state.timeTitle);
     let list = typeof this.props.data === "undefined" ? questionsArr : answers;
-    //console.log("list", list);
+    console.log("questionType", questionType);
 
     let element = list.map((data, index) => {
       return (
@@ -233,6 +252,7 @@ class QuestionCreatePopup extends React.Component {
           handleOnclickDeleteOptions={this.handleOnclickDeleteOptions}
           onChangeAnswer={this.onChangeAnswer}
           data={data}
+          isOneAnswer={questionType.isOneAnswer}
           checkOneRightAnswer={checkOneRightAnswer}
           checkOneRightAnswerHandler={this.checkOneRightAnswerHandler}
         />
@@ -258,16 +278,19 @@ class QuestionCreatePopup extends React.Component {
                     <DropdownButton
                       drop={direction}
                       variant="light"
-                      title={` ${this.state.timeTitle} seconds `}
+                      title={` ${questionType.title} `}
                       id={`dropdown-button-drop-${direction}`}
                       key={direction}
-                      onSelect={this.onSelectHandler}
+                      onSelect={this.onSelectQuestionTypeHandler}
                       size="sm"
                       background-color="white"
                     >
-                      <Dropdown.Item eventKey="single">Single answer</Dropdown.Item>
-                      <Dropdown.Item eventKey="multi">Multi select</Dropdown.Item>
-                     
+                      <Dropdown.Item eventKey={true}>
+                        Single answer
+                      </Dropdown.Item>
+                      <Dropdown.Item eventKey={false}>
+                        Multi select
+                      </Dropdown.Item>
                     </DropdownButton>
                   ))}
                 </ButtonToolbar>
@@ -302,14 +325,14 @@ class QuestionCreatePopup extends React.Component {
                 </span>
                 <div className="question-time">
                   <ButtonToolbar>
-                    {["up"].map(direction => (
+                    {["down"].map(direction => (
                       <DropdownButton
                         drop={direction}
-                        letiant="light"
+                        variant="light"
                         title={` ${timeTitle} seconds `}
                         id={`dropdown-button-drop-${direction}`}
                         key={direction}
-                        onSelect={this.onSelectHandler}
+                        onSelect={this.onSelectTimeHandler}
                         size="sm"
                         background-color="white"
                       >
