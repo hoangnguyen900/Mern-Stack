@@ -8,18 +8,20 @@ import * as actions from "./../../../redux/actions/index";
 import { ButtonToolbar, Dropdown, DropdownButton } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faClock } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
+
 const listPrototype = [
   {
     index: 0
   },
   {
-    index: 0
+    index: 1
   },
   {
-    index: 0
+    index: 2
   },
   {
-    index: 0
+    index: 3
   }
 ];
 let listAns = [...listPrototype];
@@ -27,7 +29,7 @@ class QuestionCreatePopup extends React.Component {
   constructor() {
     super();
     this.state = {
-      questionsArr: [1, 2, 3, 4],
+      questionsArr: listAns,
       isDisplay: "block",
       timeTitle: 30,
       data: {
@@ -35,17 +37,30 @@ class QuestionCreatePopup extends React.Component {
         question: "",
         time: 30
       },
-      answers: []
+      answers: [],
+      checkOneRightAnswer: {
+        index: -1,
+        isCheck: 0
+      },
+      temptCheck: {},
+      questionType: {
+        title: "Single answer",
+        isOneAnswer: true
+      }
     };
   }
   componentDidMount() {
     let { data } = this.props;
+    let { questionsArr } = this.state;
+    let display = "block";
     if (typeof data !== "undefined") {
-      console.log(data);
-
+      //console.log(data);
+      let tempt = this.state;
+      tempt.answers = data.question_choices;
+      let { answers } = this.state;
+      for (let i = 0; i < answers.length; i++) answers[i].index = i;
       this.setState({
         timeTitle: data.time,
-
         answers: data.question_choices,
         data: {
           ...data,
@@ -53,34 +68,33 @@ class QuestionCreatePopup extends React.Component {
           question: data.question
         }
       });
+      if (answers.length >= 5) display = "none";
     }
-    if (this.state.questionsArr.length >= 5)
-      this.setState({
-        isDisplay: "none"
-      });
+    if (questionsArr.length >= 5) display = "none";
+    this.setState({
+      isDisplay: display
+    });
   }
   handleOnclickDeleteOptions = index => {
     let { data } = this.props;
     if (typeof data === "undefined") {
+      listAns.splice(index, 1);
       this.setState({
-        question: this.state.questionsArr.pop()
+        questionsArr: listAns
       });
-      if (this.state.questionsArr.length < 5) {
-        this.setState({
-          isDisplay: "block"
-        });
-      }
+      //console.log("delete", this.state.questionsArr);
     } else {
-      listAns.splice(index - 1, 1);
-      console.log("delete", listAns);
+      listAns = this.state.answers;
+      listAns.splice(index, 1);
       this.setState({
         answers: listAns
       });
-      if (listAns.length < 5) {
-        this.setState({
-          isDisplay: "block"
-        });
-      }
+      //console.log("delete", this.state.answers);
+    }
+    if (listAns.length < 5) {
+      this.setState({
+        isDisplay: "block"
+      });
     }
   };
   addQuestionOnclick = () => {
@@ -89,19 +103,20 @@ class QuestionCreatePopup extends React.Component {
     let display = "";
 
     if (typeof data !== "undefined") {
-      console.log(answers);
+      //console.log(answers);
       let arr = answers;
-      arr.push({ index: 0 });
+      let indexTempt = answers[answers.length - 1].index + 1;
+      arr.push({ index: indexTempt });
       this.setState({
         answers: arr
       });
       answers.length < 5 ? (display = "block") : (display = "none");
     } else {
-      let arr = questionsArr;
-      arr.push(arr.length + 1);
-      console.log(arr);
+      let indexTempt = listAns[listAns.length - 1].index + 1;
+      listAns.push({ index: indexTempt });
+      //console.log(listAns);
       this.setState({
-        questionsArr: arr
+        questionsArr: listAns
       });
       questionsArr.length < 5 ? (display = "block") : (display = "none");
     }
@@ -110,11 +125,10 @@ class QuestionCreatePopup extends React.Component {
       isDisplay: display
     });
   };
-
   onSubmitHandle = event => {
     event.preventDefault();
-    for (var i = 0; i < listAns.length; i++) {
-      if (listAns[i].index === 0) {
+    for (let i = 0; i < listAns.length; i++) {
+      if (typeof listAns[i].answer === "undefined") {
         listAns.splice(i, 1);
         i--;
       }
@@ -142,8 +156,46 @@ class QuestionCreatePopup extends React.Component {
 
     listAns = [...listPrototype];
   };
-  onChangeAnswer = answer => {
-    listAns[answer.index - 1] = answer;
+  onChangeAnswer = (index, answer) => {
+    listAns[index] = answer;
+    console.log(listAns);
+  };
+  checkOneRightAnswerHandler = index => {
+    let { temptCheck, checkOneRightAnswer } = this.state;
+    if (!Object.keys(temptCheck).length) {
+      this.setState({
+        temptCheck: {
+          ...temptCheck,
+          index: index
+        },
+        checkOneRightAnswer: {
+          index: index,
+          isCheck: 1
+        }
+      });
+    } else {
+      let temptIndex = temptCheck;
+      if (index === temptIndex.index && checkOneRightAnswer.isCheck === 1) {
+        this.setState({
+          temptCheck: {},
+          checkOneRightAnswer: {
+            index: -1,
+            isCheck: 0
+          }
+        });
+      } else {
+        Swal.fire({
+          position: "top-start",
+          type: "warning",
+          title: "You have to choose 1 right answer!!",
+          showConfirmButton: false,
+          timer: 1500,
+          heightAuto: false
+        });
+      }
+    }
+
+    //console.log(this.state.temptIndex);
   };
   handleOnChangeInput = event => {
     let value = event.target.value;
@@ -155,26 +207,54 @@ class QuestionCreatePopup extends React.Component {
       }
     });
   };
-  onSelectHandler = event => {
+  onSelectTimeHandler = event => {
     let data = this.state.data;
     data.time = parseInt(event);
     this.setState({
       timeTitle: data.time
     });
   };
-
+  onSelectQuestionTypeHandler = event => {
+    var isTrueSet = event === "true";
+    let title = "";
+    if (isTrueSet) title = "Single answer";
+    else title = "Multi-select";
+    this.setState({
+      questionType: {
+        title: title,
+        isOneAnswer: isTrueSet
+      },
+      temptCheck: {},
+      checkOneRightAnswer: {
+        index: -1,
+        isCheck: 0
+      }
+    });
+  };
   render() {
-    let { isDisplay, questionsArr, answers } = this.state;
+    let {
+      isDisplay,
+      questionsArr,
+      answers,
+      checkOneRightAnswer,
+      timeTitle,
+      questionType
+    } = this.state;
     let { index } = this.props;
     let list = typeof this.props.data === "undefined" ? questionsArr : answers;
+    console.log("questionType", questionType);
+
     let element = list.map((data, index) => {
       return (
         <QuizCreatorQuestionInput
-          key={index}
-          index={index + 1}
+          key={data.index}
+          index={index}
           handleOnclickDeleteOptions={this.handleOnclickDeleteOptions}
           onChangeAnswer={this.onChangeAnswer}
           data={data}
+          isOneAnswer={questionType.isOneAnswer}
+          checkOneRightAnswer={checkOneRightAnswer}
+          checkOneRightAnswerHandler={this.checkOneRightAnswerHandler}
         />
       );
     });
@@ -198,16 +278,19 @@ class QuestionCreatePopup extends React.Component {
                     <DropdownButton
                       drop={direction}
                       variant="light"
-                      title={` ${this.state.timeTitle} seconds `}
+                      title={` ${questionType.title} `}
                       id={`dropdown-button-drop-${direction}`}
                       key={direction}
-                      onSelect={this.onSelectHandler}
+                      onSelect={this.onSelectQuestionTypeHandler}
                       size="sm"
                       background-color="white"
                     >
-                      <Dropdown.Item eventKey="single">Single answer</Dropdown.Item>
-                      <Dropdown.Item eventKey="multi">Multi select</Dropdown.Item>
-                     
+                      <Dropdown.Item eventKey={true}>
+                        Single answer
+                      </Dropdown.Item>
+                      <Dropdown.Item eventKey={false}>
+                        Multi select
+                      </Dropdown.Item>
                     </DropdownButton>
                   ))}
                 </ButtonToolbar>
@@ -242,14 +325,14 @@ class QuestionCreatePopup extends React.Component {
                 </span>
                 <div className="question-time">
                   <ButtonToolbar>
-                    {["up"].map(direction => (
+                    {["down"].map(direction => (
                       <DropdownButton
                         drop={direction}
                         variant="light"
-                        title={` ${this.state.timeTitle} seconds `}
+                        title={` ${timeTitle} seconds `}
                         id={`dropdown-button-drop-${direction}`}
                         key={direction}
-                        onSelect={this.onSelectHandler}
+                        onSelect={this.onSelectTimeHandler}
                         size="sm"
                         background-color="white"
                       >
@@ -266,7 +349,11 @@ class QuestionCreatePopup extends React.Component {
               <button
                 className="b-cancel"
                 type="button"
-                onClick={this.props.closePopup}
+                onClick={() => {
+                  this.props.closePopup();
+                  listAns = [...listPrototype];
+                  console.log(listAns);
+                }}
               >
                 CANCEL
               </button>

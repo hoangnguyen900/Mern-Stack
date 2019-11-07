@@ -18,7 +18,8 @@ class QuizCreatorQuestionInput extends React.Component {
       is_right: false,
       answer: "",
       question_id: 0,
-      index: 0
+      index: 0,
+      indexCheck: -1
     };
   }
 
@@ -27,27 +28,55 @@ class QuizCreatorQuestionInput extends React.Component {
   };
   componentDidMount = () => {
     let display = false;
-    let { data } = this.props;
-    this.props.index > 2 ? (display = true) : (display = false);
+    let { data, index } = this.props;
+    index > 1 ? (display = true) : (display = false);
+    if (typeof data.answer !== "undefined")
+      this.setState({
+        answer: data.answer,
+        is_right: data.is_right,
+        question_id: data.question_id
+      });
     this.setState({
       isDisplayDelIcon: display
     });
-    if (typeof data.id !== "undefined")
-      this.setState({
-        is_right: data.is_right,
-        answer: data.answer,
-        question_id: data.question_id
-      });
   };
   handleOnClickIsTrueAns = () => {
-    let is_right = !this.state.is_right;
-    this.setState({
-      is_right: is_right
-    });
-    let { index } = this.props;
+    let is_right = this.state.is_right;
+    let { index, data, checkOneRightAnswer, isOneAnswer } = this.props;
     let { answer, question_id } = this.state;
+    //console.log(this.props.checkOneRightAnswer);
+    if (isOneAnswer) {
+      this.props.checkOneRightAnswerHandler(index);
+      if (checkOneRightAnswer.isCheck === 0) {
+        is_right = !this.state.is_right;
+        this.setState({
+          is_right: is_right
+        });
+      } else if (
+        checkOneRightAnswer.isCheck === 1 &&
+        checkOneRightAnswer.index === index
+      ) {
+        is_right = !this.state.is_right;
+        this.setState({
+          is_right: is_right
+        });
+      }
+    }
+    // multi select
+    else {
+      is_right = !this.state.is_right;
+      this.setState({
+        is_right: is_right
+      });
+    }
+    let dataIndex = data.index;
 
-    this.props.onChangeAnswer({ index, answer, is_right, question_id });
+    this.props.onChangeAnswer(index, {
+      index: dataIndex,
+      answer,
+      is_right,
+      question_id
+    });
   };
   handleOnChangeInput = event => {
     let value = event.target.value;
@@ -55,16 +84,45 @@ class QuizCreatorQuestionInput extends React.Component {
     this.setState({
       [name]: value
     });
-    let { index } = this.props;
+    let { index, data } = this.props;
+    let dataIndex = data.index;
+
     let { is_right, question_id } = this.state;
     let answer = value;
-    this.props.onChangeAnswer({ index, answer, is_right, question_id });
+    this.props.onChangeAnswer(index, {
+      index: dataIndex,
+      answer,
+      is_right,
+      question_id
+    });
+    if (answer === "")
+      this.props.onChangeAnswer(index, {
+        index: dataIndex
+      });
   };
   render() {
     var { isDisplayDelIcon, is_right, answer, question_id } = this.state;
-    let { index, data } = this.props;
+    let { index, data, isOneAnswer } = this.props;
+
+    let dataIndex = data.index;
+    //console.log("props", this.props.checkOneRightAnswer);
     if (typeof data.id !== "undefined")
-      this.props.onChangeAnswer({ index, answer, is_right, question_id });
+      this.props.onChangeAnswer(index, {
+        index: dataIndex,
+        answer,
+        is_right,
+        question_id
+      });
+    // if (isOneAnswer) {
+    //   let reset = this.state;
+    //   reset.is_right = false;
+    //   this.props.onChangeAnswer(index, {
+    //     index: dataIndex,
+    //     answer,
+    //     is_right,
+    //     question_id
+    //   });
+    // }
 
     return (
       <div className="question-input">
