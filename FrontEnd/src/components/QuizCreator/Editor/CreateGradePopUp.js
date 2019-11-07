@@ -1,8 +1,8 @@
 import React from 'react';
 import './Editor.scss';
-
+import { ButtonToolbar, Dropdown, DropdownButton } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt, faSave } from "@fortawesome/free-solid-svg-icons";
 class CreateGradePopUp extends React.Component {
 	constructor(props) {
 		super(props);
@@ -50,7 +50,46 @@ class CreateGradePopUp extends React.Component {
 									<div className="section-name">
 										3. Select grades
 									</div>
+									<div className="grade-start-end">
+										<ButtonToolbar>
+											{["down"].map(direction => (
+												<DropdownButton
+													drop={direction}
+													variant="light"
+													title={` ${this.state.timeTitle} seconds `}
+													id={`dropdown-button-drop-${direction}`}
+													key={direction}
+													onSelect={this.onSelectHandler}
+													size="sm"
+													background-color="white"
+												>
+													<Dropdown.Item eventKey="single">Single answer</Dropdown.Item>
+													<Dropdown.Item eventKey="multi">Multi select</Dropdown.Item>
+
+												</DropdownButton>
+											))}
+										</ButtonToolbar>
+										<ButtonToolbar>
+											{["down"].map(direction => (
+												<DropdownButton
+													drop={direction}
+													variant="light"
+													title={` ${this.state.timeTitle} seconds `}
+													id={`dropdown-button-drop-${direction}`}
+													key={direction}
+													onSelect={this.onSelectHandler}
+													size="sm"
+													background-color="white"
+												>
+													<Dropdown.Item eventKey="single">Single answer</Dropdown.Item>
+													<Dropdown.Item eventKey="multi">Multi select</Dropdown.Item>
+
+												</DropdownButton>
+											))}
+										</ButtonToolbar>
+									</div>
 								</div>
+								<hr/>
 							</div>
 							<div className="popup-footer">
 								<button
@@ -60,6 +99,11 @@ class CreateGradePopUp extends React.Component {
 								>
 									CANCEL
                 </button>
+
+								<button className="b-save" type="submit">
+									<FontAwesomeIcon size="1x" icon={faSave} color="white" />
+									<span>SAVE</span>
+								</button>
 							</div>
 						</div>
 					</form>

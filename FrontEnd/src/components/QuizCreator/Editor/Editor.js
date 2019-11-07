@@ -13,6 +13,7 @@ import { faPlusCircle, faPencilAlt, faEye, faGraduationCap, faBook, faUpload } f
 import CreatePopUp from "./CreatePopUp";
 
 import CreateGradePopUp from './CreateGradePopUp';
+import CreateSubjectPopUp from './CreateSubjectPopUp';
 class QuizCreatorEditor extends React.Component {
   constructor() {
     super();
@@ -20,6 +21,7 @@ class QuizCreatorEditor extends React.Component {
       showPopupCreate: false,
       showPopupEdit: false,
       showPopupGrade: false,
+      showPopupSubject: false,
       dataEdit: {},
       question_table_id: 1,
       //questions: [],
@@ -50,6 +52,17 @@ class QuizCreatorEditor extends React.Component {
     if (showPopupGrade === true) {
       this.setState({
         showPopupGrade: !showPopupGrade,
+      });
+    }
+
+  };
+
+  togglePopupSubject = () => {
+    let { showPopupSubject } = this.state;
+
+    if (showPopupSubject === true) {
+      this.setState({
+        showPopupSubject: !showPopupSubject,
       });
     }
 
@@ -118,7 +131,14 @@ class QuizCreatorEditor extends React.Component {
         </div>
         <div className="quiz-info-container">
           <div className="quiz-info-edit-container">
-            <div className="quiz-image-choice-overlay">
+            <div className="quiz-image-choice-overlay"
+              onClick={() => {
+                this.setState({
+                  showPopupGrade: !this.state.showPopupGrade
+                })
+                this.togglePopupGrade()
+              }
+              }>
               <img className="quiz-image-choice" src={require("./images/thumbnail.jpg")} alt="quizImageChoice" />
               <div className="overlay-edit">
                 <div className="overlay-text">Edit image</div>
@@ -158,7 +178,14 @@ class QuizCreatorEditor extends React.Component {
             </div>
             <div className="quiz-subject">
               <div className="quiz-sm-icon"><FontAwesomeIcon icon={faBook} color="#6B6C77" /></div>
-              <button>Physic</button>
+              <button onClick={() => {
+                this.setState({
+                  showPopupSubject: !this.state.showPopupSubject
+                })
+                this.togglePopupSubject()
+              }
+              }
+              >Physic</button>
             </div>
 
             <div className="quiz-import">
@@ -187,6 +214,13 @@ class QuizCreatorEditor extends React.Component {
         {this.state.showPopupGrade ? (
           <CreateGradePopUp
             closePopup={this.togglePopupGrade}
+          />
+        ) : null
+        }
+
+        {this.state.showPopupSubject ? (
+          <CreateSubjectPopUp
+            closePopup={this.togglePopupSubject}
           />
         ) : null
         }
