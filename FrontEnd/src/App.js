@@ -14,6 +14,7 @@ import PreGame from "./components/PreGame/PreGame";
 import ReviewAttempt from "./components/PreGame/QuizAttempt/ReviewAttempt/ReviewAttempt";
 import AdminLayout from "./layouts/Admin/Admin";
 import QuizStart from "./components/Join/QuizStart/QuizStart";
+import MyQuizControl from './components/Admin/Page/MyQuizzes/MyQuizDetail/MyQuizControl/MyQuizControl';
 class App extends React.Component {
   render() {
     return (
@@ -27,8 +28,8 @@ class App extends React.Component {
             />
 
             <Route exact path="/join" component={Join} />
-            <Route
-              path="/admin/:admin"
+            <Route exact
+              path="/admin/quiz/:admin"
               render={({ match }) => <QuizCreateModal match={match} />}
             />
             <Route
@@ -59,8 +60,10 @@ class App extends React.Component {
               path="/signup"
               component = {SignUp}
             /> */}
-
-            
+            <Route
+              path="/test/control"
+              render={({ match }) => <MyQuizControl match={match} />}
+            />
 
           </Switch>
         </Router>

@@ -336,6 +336,7 @@ class QuestionCreatePopup extends React.Component {
                         size="sm"
                         background-color="white"
                       >
+                        <Dropdown.Item eventKey="5">5 seconds</Dropdown.Item>
                         <Dropdown.Item eventKey="15">15 seconds</Dropdown.Item>
                         <Dropdown.Item eventKey="30">30 seconds</Dropdown.Item>
                         <Dropdown.Item eventKey="45">45 seconds</Dropdown.Item>
