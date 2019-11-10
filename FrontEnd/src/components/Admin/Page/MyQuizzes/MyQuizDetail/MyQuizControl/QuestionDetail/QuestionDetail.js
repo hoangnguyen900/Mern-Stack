@@ -22,6 +22,13 @@ class QuizControlQuestionDetail extends React.Component {
                     <div className="question-ordinal">
                         Question 1
                     </div>
+
+                    <div className="question-tick">
+                        <span>
+                            <FontAwesomeIcon icon={faClock}/>
+                        </span>
+                        30 seconds
+                    </div>
                 </div>
                 <div className="quiz-control-question-body"></div>
                 <div className="quiz-control-question-footer"></div>
