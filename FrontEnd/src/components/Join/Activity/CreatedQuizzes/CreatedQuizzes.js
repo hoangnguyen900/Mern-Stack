@@ -18,6 +18,7 @@ class CreatedQuizzes extends React.Component {
   }
   componentDidMount() {
     //get data from redux
+    console.log("match", this.props.match);
     this.props.showListQuestionTable();
   }
   UNSAFE_componentWillReceiveProps(nextProps) {

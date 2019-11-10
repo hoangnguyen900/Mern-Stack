@@ -35,7 +35,8 @@ class QuestionCreatePopup extends React.Component {
       data: {
         id: 0,
         question: "",
-        time: 30
+        time: 30,
+        is_one_right_ans: true
       },
       answers: [],
       checkOneRightAnswer: {
@@ -45,7 +46,8 @@ class QuestionCreatePopup extends React.Component {
       temptCheck: {},
       questionType: {
         title: "Single answer",
-        isOneAnswer: true
+        isOneAnswer: true,
+        isChange: false
       }
     };
   }
@@ -53,11 +55,12 @@ class QuestionCreatePopup extends React.Component {
     let { data } = this.props;
     let { questionsArr } = this.state;
     let display = "block";
+    //edit
     if (typeof data !== "undefined") {
       //console.log(data);
       let tempt = this.state;
       tempt.answers = data.question_choices;
-      let { answers } = this.state;
+      let { answers, questionType, temptCheck } = this.state;
       for (let i = 0; i < answers.length; i++) answers[i].index = i;
       this.setState({
         timeTitle: data.time,
@@ -66,6 +69,32 @@ class QuestionCreatePopup extends React.Component {
           ...data,
           id: data.id,
           question: data.question
+        }
+      });
+      let typeTitle = "";
+      let isOneAnswer = true;
+      if (data.is_one_right_ans) typeTitle = "Single answer";
+      else {
+        typeTitle = "Multi-select";
+        isOneAnswer = false;
+      }
+      let rightAnswerIndex = -1;
+      for (let i = 0; i < data.question_choices.length; i++)
+        if (data.question_choices[i].is_right)
+          rightAnswerIndex = data.question_choices[i].index;
+      this.setState({
+        questionType: {
+          ...questionType,
+          title: typeTitle,
+          isOneAnswer: isOneAnswer
+        },
+        temptCheck: {
+          ...temptCheck,
+          index: rightAnswerIndex
+        },
+        checkOneRightAnswer: {
+          index: rightAnswerIndex,
+          isCheck: 1
         }
       });
       if (answers.length >= 5) display = "none";
@@ -127,34 +156,50 @@ class QuestionCreatePopup extends React.Component {
   };
   onSubmitHandle = event => {
     event.preventDefault();
-    for (let i = 0; i < listAns.length; i++) {
-      if (typeof listAns[i].answer === "undefined") {
-        listAns.splice(i, 1);
-        i--;
-      }
-    }
-    if (typeof this.props.data === "undefined") {
-      let question_table_id = this.props.match.params.question_table_id;
-      this.props.createQuestionAndAnswersAPI(
-        question_table_id,
-        this.state.data,
-        listAns
-      );
-    } else {
-      let index = this.props.index;
-      this.props.updateQuestionAndAnswersAPI(
-        this.state.data,
-        listAns,
-        index - 1
-      );
-      this.setState({
-        answers: []
+    let isCheck = 0;
+    for (let i = 0; i < listAns.length; i++)
+      if (listAns[i].is_right && listAns[i].answer !== "") isCheck++;
+    if (isCheck === 0)
+      Swal.fire({
+        position: "top",
+        type: "warning",
+        title: "Please check the right answer !!",
+        showConfirmButton: false,
+        timer: 1500,
+        heightAuto: false
       });
+    else {
+      for (let i = 0; i < listAns.length; i++)
+        if (
+          typeof listAns[i].answer === "undefined" ||
+          listAns[i].answer === ""
+        ) {
+          listAns.splice(i, 1);
+          i--;
+        }
+      if (typeof this.props.data === "undefined") {
+        let question_table_id = this.props.match.params.question_table_id;
+        this.props.createQuestionAndAnswersAPI(
+          question_table_id,
+          this.state.data,
+          listAns
+        );
+      } else {
+        let index = this.props.index;
+        this.props.updateQuestionAndAnswersAPI(
+          this.state.data,
+          listAns,
+          index - 1
+        );
+        this.setState({
+          answers: []
+        });
+      }
+
+      this.props.closePopup();
+
+      listAns = [...listPrototype];
     }
-
-    this.props.closePopup();
-
-    listAns = [...listPrototype];
   };
   onChangeAnswer = (index, answer) => {
     listAns[index] = answer;
@@ -222,7 +267,20 @@ class QuestionCreatePopup extends React.Component {
     this.setState({
       questionType: {
         title: title,
-        isOneAnswer: isTrueSet
+        isOneAnswer: isTrueSet,
+        isChange: true
+      },
+      data: {
+        ...this.state.data,
+        is_one_right_ans: isTrueSet
+      }
+    });
+  };
+  onChangeQuestionType = () => {
+    this.setState({
+      questionType: {
+        ...this.state.questionType,
+        isChange: false
       },
       temptCheck: {},
       checkOneRightAnswer: {
@@ -242,7 +300,6 @@ class QuestionCreatePopup extends React.Component {
     } = this.state;
     let { index } = this.props;
     let list = typeof this.props.data === "undefined" ? questionsArr : answers;
-    console.log("questionType", questionType);
 
     let element = list.map((data, index) => {
       return (
@@ -252,9 +309,10 @@ class QuestionCreatePopup extends React.Component {
           handleOnclickDeleteOptions={this.handleOnclickDeleteOptions}
           onChangeAnswer={this.onChangeAnswer}
           data={data}
-          isOneAnswer={questionType.isOneAnswer}
+          questionType={questionType}
           checkOneRightAnswer={checkOneRightAnswer}
           checkOneRightAnswerHandler={this.checkOneRightAnswerHandler}
+          onChangeQuestionType={this.onChangeQuestionType}
         />
       );
     });
@@ -352,7 +410,6 @@ class QuestionCreatePopup extends React.Component {
                 onClick={() => {
                   this.props.closePopup();
                   listAns = [...listPrototype];
-                  console.log(listAns);
                 }}
               >
                 CANCEL

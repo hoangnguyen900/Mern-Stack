@@ -7,13 +7,20 @@ import "font-awesome/css/font-awesome.min.css";
 //import ToggleBox from '../ToggleBox/ToggleBox';
 import { connect } from "react-redux";
 import * as actions from "./../../../redux/actions/index";
-
+import history from "../../../history";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle, faPencilAlt, faEye, faGraduationCap, faBook, faUpload } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlusCircle,
+  faPencilAlt,
+  faEye,
+  faGraduationCap,
+  faBook,
+  faUpload
+} from "@fortawesome/free-solid-svg-icons";
 import CreatePopUp from "./CreatePopUp";
 
-import CreateGradePopUp from './CreateGradePopUp';
-import CreateSubjectPopUp from './CreateSubjectPopUp';
+import CreateGradePopUp from "./CreateGradePopUp";
+import CreateSubjectPopUp from "./CreateSubjectPopUp";
 class QuizCreatorEditor extends React.Component {
   constructor() {
     super();
@@ -26,7 +33,8 @@ class QuizCreatorEditor extends React.Component {
       question_table_id: 1,
       //questions: [],
       table: {
-        questions: []
+        questions: [],
+        isFinish: false
       }
     };
   }
@@ -51,10 +59,9 @@ class QuizCreatorEditor extends React.Component {
 
     if (showPopupGrade === true) {
       this.setState({
-        showPopupGrade: !showPopupGrade,
+        showPopupGrade: !showPopupGrade
       });
     }
-
   };
 
   togglePopupSubject = () => {
@@ -62,10 +69,9 @@ class QuizCreatorEditor extends React.Component {
 
     if (showPopupSubject === true) {
       this.setState({
-        showPopupSubject: !showPopupSubject,
+        showPopupSubject: !showPopupSubject
       });
     }
-
   };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -98,6 +104,10 @@ class QuizCreatorEditor extends React.Component {
       }
     });
   };
+  onClickFinishQuizHandler = () => {
+    let { question_table_id } = this.props.match.params;
+    this.props.finishQuestionTable((question_table_id));
+  };
   render() {
     let element = this.state.table.questions.map((data, index) => {
       return (
@@ -111,119 +121,154 @@ class QuizCreatorEditor extends React.Component {
       );
     });
     return (
-      <div className="editor">
-        <div className="question-editor">
-          <div className="button-group">
-            <button onClick={() => {
-              this.setState({
-                showPopupCreate: !this.state.showPopupCreate
-              })
-              this.togglePopup()
-            }
-            } className="button b-create">
-              <FontAwesomeIcon icon={faPlusCircle} />
-              Create a new question
-            </button>
-            <p>Or</p>
-            <button className="button b-teleport">Teleport</button>
+      <div className="page-container">
+        <div className="quiz-creator-nav">
+          <div className="logo">
+            <img src={require("./images/logo.png")} alt="quiz-icon" />
           </div>
-          {element}
+
+          <div className="button-group">
+            <button
+              className="b-exit button"
+              onClick={() => history.push("/join")}
+            >
+              EXIT
+            </button>
+            <button
+              className="b-finish button"
+              onClick={this.onClickFinishQuizHandler}
+            >
+              FINISH
+            </button>
+          </div>
         </div>
-        <div className="quiz-info-container">
-          <div className="quiz-info-edit-container">
-            <div className="quiz-image-choice-overlay"
-              onClick={() => {
-                this.setState({
-                  showPopupGrade: !this.state.showPopupGrade
-                })
-                this.togglePopupGrade()
-              }
-              }>
-              <img className="quiz-image-choice" src={require("./images/thumbnail.jpg")} alt="quizImageChoice" />
-              <div className="overlay-edit">
-                <div className="overlay-text">Edit image</div>
-              </div>
-            </div>
-            <div className="quiz-info-edit-quiz-name">
-              <div className="quiz-name">
-                Basic English
-              </div>
-              <button>
-                <span><FontAwesomeIcon icon={faPencilAlt}
-                  color="#FD7E14"
-                  size="lg" /></span>
+        <div className="editor">
+          <div className="question-editor">
+            <div className="button-group">
+              <button
+                onClick={() => {
+                  this.setState({
+                    showPopupCreate: !this.state.showPopupCreate
+                  });
+                  this.togglePopup();
+                }}
+                className="button b-create"
+              >
+                <FontAwesomeIcon icon={faPlusCircle} />
+                Create a new question
               </button>
+              <p>Or</p>
+              <button className="button b-teleport">Teleport</button>
             </div>
-            <div className="quiz-scope-data">
-              <div className="scope-public">
+            {element}
+          </div>
+          <div className="quiz-info-container">
+            <div className="quiz-info-edit-container">
+              <div
+                className="quiz-image-choice-overlay"
+                onClick={() => {
+                  this.setState({
+                    showPopupGrade: !this.state.showPopupGrade
+                  });
+                  this.togglePopupGrade();
+                }}
+              >
+                <img
+                  className="quiz-image-choice"
+                  src={require("./images/thumbnail.jpg")}
+                  alt="quizImageChoice"
+                />
+                <div className="overlay-edit">
+                  <div className="overlay-text">Edit image</div>
+                </div>
+              </div>
+              <div className="quiz-info-edit-quiz-name">
+                <div className="quiz-name">Basic English</div>
                 <button>
                   <span>
-                    <FontAwesomeIcon icon={faEye} />{/*change to faEyeSlash if private */}
+                    <FontAwesomeIcon
+                      icon={faPencilAlt}
+                      color="#FD7E14"
+                      size="lg"
+                    />
                   </span>
-                  Public {/** change to "private" if private */}
+                </button>
+              </div>
+              <div className="quiz-scope-data">
+                <div className="scope-public">
+                  <button>
+                    <span>
+                      <FontAwesomeIcon icon={faEye} />
+                      {/*change to faEyeSlash if private */}
+                    </span>
+                    Public {/** change to "private" if private */}
+                  </button>
+                </div>
+              </div>
+              <hr />
+              <div className="quiz-grade">
+                <div className="quiz-sm-icon">
+                  <FontAwesomeIcon icon={faGraduationCap} color="#6B6C77" />
+                </div>
+                <button
+                  onClick={() => {
+                    this.setState({
+                      showPopupGrade: !this.state.showPopupGrade
+                    });
+                    this.togglePopupGrade();
+                  }}
+                >
+                  1st Grade
+                </button>
+              </div>
+              <div className="quiz-subject">
+                <div className="quiz-sm-icon">
+                  <FontAwesomeIcon icon={faBook} color="#6B6C77" />
+                </div>
+                <button
+                  onClick={() => {
+                    this.setState({
+                      showPopupSubject: !this.state.showPopupSubject
+                    });
+                    this.togglePopupSubject();
+                  }}
+                >
+                  Physic
                 </button>
               </div>
 
+              <div className="quiz-import">
+                <div className="quiz-sm-icon">
+                  <FontAwesomeIcon icon={faUpload} color="#6B6C77" />
+                </div>
+                <button>Import from file</button>
+              </div>
             </div>
-            <hr />
-            <div className="quiz-grade">
-              <div className="quiz-sm-icon"><FontAwesomeIcon icon={faGraduationCap} color="#6B6C77" /></div>
-              <button onClick={() => {
-                this.setState({
-                  showPopupGrade: !this.state.showPopupGrade
-                })
-                this.togglePopupGrade()
-              }
-              }>1st Grade</button>
-            </div>
-            <div className="quiz-subject">
-              <div className="quiz-sm-icon"><FontAwesomeIcon icon={faBook} color="#6B6C77" /></div>
-              <button onClick={() => {
-                this.setState({
-                  showPopupSubject: !this.state.showPopupSubject
-                })
-                this.togglePopupSubject()
-              }
-              }
-              >Physic</button>
-            </div>
-
-            <div className="quiz-import">
-              <div className="quiz-sm-icon"><FontAwesomeIcon icon={faUpload} color="#6B6C77" /></div>
-              <button>Import from file</button>
-            </div>
-
           </div>
+          {this.state.showPopupCreate ? (
+            <CreatePopUp
+              index={this.state.table.questions.length + 1}
+              closePopup={this.togglePopup}
+              match={this.props.match}
+            />
+          ) : null}
+          {this.state.showPopupEdit ? (
+            <CreatePopUp
+              index={this.state.dataEdit.index}
+              closePopup={this.togglePopup}
+              match={this.props.match}
+              data={this.state.dataEdit}
+            />
+          ) : null}
+
+          {this.state.showPopupGrade ? (
+            <CreateGradePopUp closePopup={this.togglePopupGrade} />
+          ) : null}
+
+          {this.state.showPopupSubject ? (
+            <CreateSubjectPopUp closePopup={this.togglePopupSubject} />
+          ) : null}
         </div>
-        {this.state.showPopupCreate ? (
-          <CreatePopUp
-            index={this.state.table.questions.length + 1}
-            closePopup={this.togglePopup}
-            match={this.props.match}
-          />
-        ) : null}
-        {this.state.showPopupEdit ? (
-          <CreatePopUp
-            index={this.state.dataEdit.index}
-            closePopup={this.togglePopup}
-            match={this.props.match}
-            data={this.state.dataEdit}
-          />
-        ) : null}
-
-        {this.state.showPopupGrade ? (
-          <CreateGradePopUp
-            closePopup={this.togglePopupGrade}
-          />
-        ) : null
-        }
-
-        {this.state.showPopupSubject ? (
-          <CreateSubjectPopUp
-            closePopup={this.togglePopupSubject}
-          />
-        ) : null
-        }
       </div>
     );
   }
@@ -235,6 +280,9 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     deleteQuestionAndAnswersAPI: (id, index) => {
       dispatch(actions.deleteQuestionAndAnswersAPI(id, index));
+    },
+    finishQuestionTable: id => {
+      dispatch(actions.finishQuestionTable(id));
     }
   };
 };

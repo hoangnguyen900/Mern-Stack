@@ -11,18 +11,22 @@ class JoinLayout extends React.Component {
     this.state = {};
   }
   render() {
+    let { match } = this.props;
+    console.log(match);
+
     return (
       <BrowserRouter>
         <div className="join-layout-container">
           <JoinNav />
           <br></br>
           <Switch>
-            <Route exact path="/join">
-              <Join />
+            <Route exact path={`${match.url}`}>
+              <Join match={match} />
             </Route>
-            <Route path="/join/activity">
-              <Activity />
-            </Route>
+            <Route
+              path={`${match.url}/activity`}
+              render={({ match }) => <Activity match={match} />}
+            />
           </Switch>
         </div>
       </BrowserRouter>

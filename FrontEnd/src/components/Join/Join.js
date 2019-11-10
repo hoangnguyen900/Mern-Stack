@@ -16,6 +16,7 @@ class Join extends React.Component {
     //get data API from backend
     this.props.getListQuestionTable();
     this.props.getListUserDoQuestionTable();
+    console.log(this.props.match);
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
     console.log(nextProps.user);

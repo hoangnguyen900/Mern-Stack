@@ -26,13 +26,18 @@ class App extends React.Component {
               render={({ match }) => <QuizCreator match={match} />}
             />
 
-            <Route exact path="/join" component={Join} />
+            <Route
+              exact
+              path="/join"
+              render={({ match }) => <Join match={match} />}
+            />
             <Route
               path="/admin/:admin"
               render={({ match }) => <QuizCreateModal match={match} />}
             />
             <Route
-              exact path="/admin"
+              exact
+              path="/admin"
               render={({ match }) => <AdminLayout match={match} />}
             />
 
@@ -59,9 +64,6 @@ class App extends React.Component {
               path="/signup"
               component = {SignUp}
             /> */}
-
-            
-
           </Switch>
         </Router>
       </div>

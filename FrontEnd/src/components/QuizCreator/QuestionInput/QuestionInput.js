@@ -30,22 +30,25 @@ class QuizCreatorQuestionInput extends React.Component {
     let display = false;
     let { data, index } = this.props;
     index > 1 ? (display = true) : (display = false);
-    if (typeof data.answer !== "undefined")
+    if (typeof data.answer !== "undefined") {
       this.setState({
         answer: data.answer,
         is_right: data.is_right,
         question_id: data.question_id
       });
+
+      //if (data.is_right) localStorage.setItem("rightAnswerIndex", index);
+    }
     this.setState({
       isDisplayDelIcon: display
     });
   };
   handleOnClickIsTrueAns = () => {
     let is_right = this.state.is_right;
-    let { index, data, checkOneRightAnswer, isOneAnswer } = this.props;
+    let { index, data, checkOneRightAnswer, questionType } = this.props;
     let { answer, question_id } = this.state;
     //console.log(this.props.checkOneRightAnswer);
-    if (isOneAnswer) {
+    if (questionType.isOneAnswer) {
       this.props.checkOneRightAnswerHandler(index);
       if (checkOneRightAnswer.isCheck === 0) {
         is_right = !this.state.is_right;
@@ -95,14 +98,10 @@ class QuizCreatorQuestionInput extends React.Component {
       is_right,
       question_id
     });
-    if (answer === "")
-      this.props.onChangeAnswer(index, {
-        index: dataIndex
-      });
   };
   render() {
     var { isDisplayDelIcon, is_right, answer, question_id } = this.state;
-    let { index, data, isOneAnswer } = this.props;
+    let { index, data, questionType } = this.props;
 
     let dataIndex = data.index;
     //console.log("props", this.props.checkOneRightAnswer);
@@ -113,16 +112,18 @@ class QuizCreatorQuestionInput extends React.Component {
         is_right,
         question_id
       });
-    // if (isOneAnswer) {
-    //   let reset = this.state;
-    //   reset.is_right = false;
-    //   this.props.onChangeAnswer(index, {
-    //     index: dataIndex,
-    //     answer,
-    //     is_right,
-    //     question_id
-    //   });
-    // }
+
+    if (questionType.isOneAnswer && questionType.isChange) {
+      let reset = this.state;
+      reset.is_right = false;
+      this.props.onChangeAnswer(index, {
+        index: dataIndex,
+        answer,
+        is_right: false,
+        question_id
+      });
+      this.props.onChangeQuestionType();
+    }
 
     return (
       <div className="question-input">
