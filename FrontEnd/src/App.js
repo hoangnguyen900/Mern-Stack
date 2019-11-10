@@ -67,11 +67,6 @@ class App extends React.Component {
               path="/signup"
               component = {SignUp}
             /> */}
-
-            <Route
-              path="/test/control"
-              render={({ match }) => <MyQuizControl match={match} />}
-            />
           </Switch>
         </Router>
       </div>
