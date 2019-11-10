@@ -54,7 +54,7 @@ class JoinNav extends React.Component {
         <div className="button-group">
           <button
             className="b-sign-up"
-            onClick={() => history.push(`/admin/${token}`)}
+            onClick={() => history.push(`/admin/quiz/${token}`)}
           >
             <FontAwesomeIcon icon={faPlusCircle} /> Create new Quiz
           </button>
