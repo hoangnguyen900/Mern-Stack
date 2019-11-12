@@ -14,7 +14,6 @@ import PreGame from "./components/PreGame/PreGame";
 import ReviewAttempt from "./components/PreGame/QuizAttempt/ReviewAttempt/ReviewAttempt";
 import AdminLayout from "./layouts/Admin/Admin";
 import QuizStart from "./components/Join/QuizStart/QuizStart";
-import MyQuizControl from "./components/Admin/Page/MyQuizzes/MyQuizDetail/MyQuizControl/MyQuizControl";
 class App extends React.Component {
   render() {
     return (

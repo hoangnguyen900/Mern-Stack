@@ -10,11 +10,17 @@ class QuizDetailTable extends React.Component {
     super(props);
     this.state = {
       isDisplay: "block",
-      isPlayedBefore: false
+      isPlayedBefore: false,
+      disabled: false
     };
   }
   componentDidMount() {
     let { data } = this.props;
+    console.log("data", data);
+    if (!data.is_finish)
+      this.setState({
+        disabled: true
+      });
     this.props.isUserDoQuizBefore(data.id);
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -64,6 +70,7 @@ class QuizDetailTable extends React.Component {
   };
   render() {
     let { data } = this.props;
+    let { disabled } = this.state;
     // render a list of question
     let arr = this.showSampleQuestion();
     let grades = this.showGrades();
@@ -109,7 +116,13 @@ class QuizDetailTable extends React.Component {
             <div className="sample-questions-container">{arr}</div>
           </div>
           <div className="popup-footer-quiz-detail-table">
-            <button onClick={this.playQuizOnClickHandler}>Play</button>
+            <button
+              style={disabled ? { opacity: "0.3", cursor: "no-drop" } : {}}
+              disabled={disabled}
+              onClick={this.playQuizOnClickHandler}
+            >
+              Play
+            </button>
           </div>
         </div>
       </div>

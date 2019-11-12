@@ -19,22 +19,23 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import CreatePopUp from "./CreatePopUp";
 
-import CreateGradePopUp from "./CreateGradePopUp";
-import CreateSubjectPopUp from "./CreateSubjectPopUp";
+import ShowPreviewPopUp from "./ShowPreviewPopUp";
+import ShowSubjectPopUp from "./ShowSubjectPopUp";
 class QuizCreatorEditor extends React.Component {
   constructor() {
     super();
     this.state = {
       showPopupCreate: false,
       showPopupEdit: false,
-      showPopupGrade: false,
+      showPopupPreview: false,
       showPopupSubject: false,
       dataEdit: {},
       question_table_id: 1,
       //questions: [],
       table: {
         questions: [],
-        isFinish: false
+        isFinish: false,
+        image: null
       }
     };
   }
@@ -54,12 +55,12 @@ class QuizCreatorEditor extends React.Component {
     }
   };
 
-  togglePopupGrade = () => {
-    let { showPopupGrade } = this.state;
+  togglePopupPreview = () => {
+    let { showPopupPreview } = this.state;
 
-    if (showPopupGrade === true) {
+    if (showPopupPreview === true) {
       this.setState({
-        showPopupGrade: !showPopupGrade
+        showPopupPreview: !showPopupPreview
       });
     }
   };
@@ -106,9 +107,10 @@ class QuizCreatorEditor extends React.Component {
   };
   onClickFinishQuizHandler = () => {
     let { question_table_id } = this.props.match.params;
-    this.props.finishQuestionTable((question_table_id));
+    this.props.finishQuestionTable(question_table_id);
   };
   render() {
+    let { image } = this.state.table;
     let element = this.state.table.questions.map((data, index) => {
       return (
         <QuizCreatorQuestionDetail
@@ -168,14 +170,14 @@ class QuizCreatorEditor extends React.Component {
                 className="quiz-image-choice-overlay"
                 onClick={() => {
                   this.setState({
-                    showPopupGrade: !this.state.showPopupGrade
+                    showPopupPreview: !this.state.showPopupPreview
                   });
-                  this.togglePopupGrade();
+                  this.togglePopupPreview();
                 }}
               >
                 <img
                   className="quiz-image-choice"
-                  src={require("./images/thumbnail.jpg")}
+                  src={image !== null ? image : require("./images/none.png")}
                   alt="quizImageChoice"
                 />
                 <div className="overlay-edit">
@@ -213,9 +215,9 @@ class QuizCreatorEditor extends React.Component {
                 <button
                   onClick={() => {
                     this.setState({
-                      showPopupGrade: !this.state.showPopupGrade
+                      showPopupPreview: !this.state.showPopupPreview
                     });
-                    this.togglePopupGrade();
+                    this.togglePopupPreview();
                   }}
                 >
                   1st Grade
@@ -261,12 +263,18 @@ class QuizCreatorEditor extends React.Component {
             />
           ) : null}
 
-          {this.state.showPopupGrade ? (
-            <CreateGradePopUp closePopup={this.togglePopupGrade} />
+          {this.state.showPopupPreview ? (
+            <ShowPreviewPopUp
+              closePopup={this.togglePopupPreview}
+              data={this.state.table}
+            />
           ) : null}
 
           {this.state.showPopupSubject ? (
-            <CreateSubjectPopUp closePopup={this.togglePopupSubject} />
+            <ShowSubjectPopUp
+              closePopup={this.togglePopupSubject}
+              data={this.state.table}
+            />
           ) : null}
         </div>
       </div>
@@ -292,7 +300,4 @@ const mapStateToProps = state => {
     question: state.question
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(QuizCreatorEditor);
+export default connect(mapStateToProps, mapDispatchToProps)(QuizCreatorEditor);

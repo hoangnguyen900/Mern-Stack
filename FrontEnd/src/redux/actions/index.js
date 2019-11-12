@@ -217,6 +217,24 @@ export const finishQuestionTable = id => {
       });
   };
 };
+export const updateImageTable = (id, image) => {
+  return dispatch => {
+    axios({
+      method: "put",
+      url: URLs.UPDATE_TABLE_API_URL,
+      headers: {
+        "content-type": "application/json"
+      },
+      data: { id, image }
+    })
+      .then(res => {
+        console.log("res Update image success", res);
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};
 export const showListSubject = () => {
   return dispatch => {
     axios({
