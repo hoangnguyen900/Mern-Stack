@@ -24,6 +24,7 @@ class MyQuizControl extends React.Component {
     this.state = {};
   }
   render() {
+    let { history } = this.props;
     return (
       <div className="my-quiz-control-container">
         <div className="quiz-control-header">
@@ -89,7 +90,11 @@ class MyQuizControl extends React.Component {
             </div>
             <div className="action-btn-group">
               <button className="action-btn b-host">Live game</button>
-              <button className="action-btn b-host">Host game</button>
+              <button className="action-btn b-host"
+                onClick={() => {
+                  history.push("/admin/quiz/homework/1");
+                }}
+              >Host game</button>
             </div>
           </div>
 

@@ -4,14 +4,12 @@ import { withRouter } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faBook } from "@fortawesome/free-solid-svg-icons";
-import history from "../../../../../history";
 class MyQuizDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
   render() {
-    console.log(this.props);
     let { history } = this.props;
     return (
       <div

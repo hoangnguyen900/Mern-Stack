@@ -14,6 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import MyQuizzes from './MyQuizzes/MyQuizzes';
 import MyQuizControl from './MyQuizzes/MyQuizDetail/MyQuizControl/MyQuizControl';
+import QuizControlHostGame from './MyQuizzes/MyQuizDetail/MyQuizControl/QuestionDetail/HostGame/HostGame'
 //import history from "../../../history";
 class AdminPage extends React.Component {
     constructor(props) {
@@ -110,6 +111,11 @@ class AdminPage extends React.Component {
                             <Route
                                 path="/admin/private/:question_table_id"
                                 component={MyQuizControl}
+                            />
+
+                            <Route
+                                path="/admin/quiz/homework/:question_table_id"
+                                component={QuizControlHostGame}
                             />
                         </Switch>
                     </div>

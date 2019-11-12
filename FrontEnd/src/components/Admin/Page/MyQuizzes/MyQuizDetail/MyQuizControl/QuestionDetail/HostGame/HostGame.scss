@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+.quiz-control-host-game-container {
+    .quiz-name {
+        font-family: "PT Sans Caption";
+        font-size: 28px;
+        font-weight: bold;
+        color: #4a4a4a;
+        text-align: center;
+    }
+
+    .quiz-num {
+        font-family: 'OpenSans', sans-serif, Helvetica, Arial;
+        text-align: center;
+    }
+
+    .quiz-step-text {
+        margin-top: 20px;
+        text-align: center;
+        font-weight: 550;
+        font-family: 'OpenSans', sans-serif, Helvetica, Arial;
+        color: #4a4a4a;
+    }
+
+    .quiz-end-day{
+        text-align: center;
+    }
+}
+
