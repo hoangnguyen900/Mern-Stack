@@ -1,7 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './HostGame.scss';
-import { Menu, Dropdown, Button, Icon } from 'antd';
+
 
 
 class QuizControlHostGame extends React.Component {
@@ -39,7 +38,7 @@ class QuizControlHostGame extends React.Component {
                     </Dropdown>
                 </div>
             </div>
-            
+
         );
     }
 }
