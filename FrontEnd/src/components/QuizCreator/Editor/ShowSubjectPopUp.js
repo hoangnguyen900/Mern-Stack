@@ -1,6 +1,6 @@
 import React from 'react';
 import './Editor.scss';
-class CreateGradePopUp extends React.Component {
+class ShowSubjectPopUp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {}
@@ -76,4 +76,4 @@ class CreateGradePopUp extends React.Component {
     }
 }
 
-export default CreateGradePopUp;
+export default ShowSubjectPopUp;
