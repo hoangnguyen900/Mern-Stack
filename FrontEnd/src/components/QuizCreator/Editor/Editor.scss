@@ -1,5 +1,4 @@
 .editor {
-
     display: flex;
     flex-direction: row;
     height: 100%;
@@ -56,6 +55,7 @@
         width: 300px;
         padding: 30px;
         margin-left: 40px;
+        
 
         .quiz-info-edit-container {
             border-radius: 10px;
@@ -63,7 +63,8 @@
             padding: 12px;
             display: flex;
             flex-direction: column;
-            width: 100%;
+            width: 240px;
+            position: fixed;
 
             .quiz-image-choice-overlay {
                 padding: 0 10px;
