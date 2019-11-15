@@ -57,10 +57,12 @@ class QuizCreate extends React.Component {
   };
 
   render() {
+    let {data}=this.state
     const element = this.state.subject.map(subj => {
       return (
-        <div className="subject" key={subj.id}>
-          <button
+        //active-subject
+        <div className={data.subject_id===subj.id? "subject active-subject":"subject"} key={subj.id}>
+          <button 
             type="button"
             name="subject_id"
             value={subj.id}
@@ -94,7 +96,6 @@ class QuizCreate extends React.Component {
 
                   <div className="subject-clouds">{element}</div>
                 </div>
-                <p>sub id: {this.state.data.subject_id}</p>
               </div>
               <div className="init-quiz-create-footer">
                 <button type="submit">Create</button>

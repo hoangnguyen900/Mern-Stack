@@ -74,6 +74,16 @@ class ReviewAttempt extends React.Component {
     let questionAttempt = data.map((attempt, index) => {
       return <ReviewQuestion key={index} data={attempt} index={index} />;
     });
+
+    let accuracyStyle = `@keyframes progressAnimation{
+      0% {
+        width: 5%;background-color: #F9BCCA;
+      }
+      100%{
+        width: ${accuracy}%;
+        background-color: #00C985;
+      }
+    }`
     return (
       <div className="review-attempt-container">
         <div className="review-attempt-nav">
@@ -116,7 +126,7 @@ class ReviewAttempt extends React.Component {
             <h4 className="review-section-title">Accuracy</h4>
 
             <div className="review-accuracy-container">
-              <div className="review-progress-container">
+              <div className="review-progress-container" style={{ accuracyStyle }}>
                 <div className="review-progress review-progress-moved">
                   <div
                     className="review-progress-bar"
@@ -171,7 +181,7 @@ class ReviewAttempt extends React.Component {
             <div className="review-questions-container">{questionAttempt}</div>
           </div>
         </div>
-      </div>
+      </div >
     );
   }
 }

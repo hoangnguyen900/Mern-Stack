@@ -2,9 +2,11 @@ import React from "react";
 import "./Editor.scss";
 import { connect } from "react-redux";
 import * as actions from "./../../../redux/actions/index";
-import { ButtonToolbar, Dropdown, DropdownButton } from "react-bootstrap";
+
+import { Menu, Dropdown, Button, Icon } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faSave } from "@fortawesome/free-solid-svg-icons";
+import 'antd/dist/antd.css';
 class ShowPreviewPopUp extends React.Component {
   constructor(props) {
     super(props);
@@ -36,6 +38,22 @@ class ShowPreviewPopUp extends React.Component {
   };
   render() {
     let { image } = this.state;
+    const menu = (
+      <Menu >
+        <Menu.Item key="1">
+          
+          1st menu item
+        </Menu.Item>
+        <Menu.Item key="2">
+          
+          2nd menu item
+        </Menu.Item>
+        <Menu.Item key="3">
+          
+          3rd item
+        </Menu.Item>
+      </Menu>
+    );
     return (
       <div className="grade-popup-container">
         <div className="popup">
@@ -78,48 +96,17 @@ class ShowPreviewPopUp extends React.Component {
                 <div className="select-grade-section">
                   <div className="section-name">2. Select grades</div>
                   <div className="grade-start-end">
-                    <ButtonToolbar>
-                      {["down"].map(direction => (
-                        <DropdownButton
-                          drop={direction}
-                          variant="light"
-                          title={` ${this.state.timeTitle} seconds `}
-                          id={`dropdown-button-drop-${direction}`}
-                          key={direction}
-                          onSelect={this.onSelectHandler}
-                          size="sm"
-                          background-color="white"
-                        >
-                          <Dropdown.Item eventKey="single">
-                            Single answer
-                          </Dropdown.Item>
-                          <Dropdown.Item eventKey="multi">
-                            Multi select
-                          </Dropdown.Item>
-                        </DropdownButton>
-                      ))}
-                    </ButtonToolbar>
-                    <ButtonToolbar>
-                      {["down"].map(direction => (
-                        <DropdownButton
-                          drop={direction}
-                          variant="light"
-                          title={` ${this.state.timeTitle} seconds `}
-                          id={`dropdown-button-drop-${direction}`}
-                          key={direction}
-                          onSelect={this.onSelectHandler}
-                          size="sm"
-                          background-color="white"
-                        >
-                          <Dropdown.Item eventKey="single">
-                            Single answer
-                          </Dropdown.Item>
-                          <Dropdown.Item eventKey="multi">
-                            Multi select
-                          </Dropdown.Item>
-                        </DropdownButton>
-                      ))}
-                    </ButtonToolbar>
+                    <Dropdown overlay={menu} trigger={['click']}>
+                      <Button>
+                        Button <Icon type="down" />
+                      </Button>
+                    </Dropdown>
+
+                    <Dropdown overlay={menu} trigger={['click']}>
+                      <Button>
+                        Button <Icon type="down" />
+                      </Button>
+                    </Dropdown>
                   </div>
                 </div>
                 <hr />

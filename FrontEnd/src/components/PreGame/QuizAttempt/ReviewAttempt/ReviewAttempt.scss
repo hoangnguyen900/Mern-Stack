@@ -135,7 +135,6 @@
                         width: 80%; //final accuracy
                         background-color: #00C985;
                         animation: progressAnimation 1s;
-
                     }
 
                     .review-progress-bar {
@@ -164,7 +163,6 @@
                         }
 
                         100% {
-                            width: 80%; // transition accuracy
                             background-color: #00C985;
                         }
                     }
