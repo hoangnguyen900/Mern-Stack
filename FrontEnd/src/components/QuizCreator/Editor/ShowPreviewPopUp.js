@@ -79,14 +79,17 @@ class ShowPreviewPopUp extends React.Component {
                       onChange={this.fileChangedHandler}
                       ref={fileInput => (this.fileInput = fileInput)}
                     />
-                    <img
-                      src={
-                        image !== null ? image : require("./images/none.png")
-                      }
-                      alt="defaul title "
-                      className="default-title-image"
-                      onClick={() => this.fileInput.click()}
-                    />
+                    <div className="crop-quiz-title-img">
+                      <img className="default-title-image"
+                        src={
+                          image !== null ? image : require("./images/none.png")
+                        }
+                        alt="defaul title "
+                        
+                        onClick={() => this.fileInput.click()}
+                      />
+                    </div>
+
                     <div
                       className="delete-title-image"
                       onClick={() => this.setState({ image: null })}
