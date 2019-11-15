@@ -1,13 +1,13 @@
 .quiz-thumbnail-container {
     height: fit-content;
-    width: 280px;
+    width: 240px;
     border-radius: 15px;
     background-color: white;
     padding-bottom: 10px;
-    margin: 20px 20px;
+    margin: 20px 10px;
 
     img {
-        width: 280px;
+        width: 240px;
         height: calc(280px/2);
         border-radius: 15px 15px 50% 50% / 15px 15px 26% 26%;
     }

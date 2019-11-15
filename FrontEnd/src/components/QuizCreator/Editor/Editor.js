@@ -175,11 +175,14 @@ class QuizCreatorEditor extends React.Component {
                   this.togglePopupPreview();
                 }}
               >
-                <img
-                  className="quiz-image-choice"
-                  src={image !== null ? image : require("./images/none.png")}
-                  alt="quizImageChoice"
-                />
+                <div className="crop-quiz-img-choice">
+                  <img
+                    className="quiz-image-choice"
+                    src={image !== null ? image : require("./images/none.png")}
+                    alt="quizImageChoice"
+                  />
+                </div>
+
                 <div className="overlay-edit">
                   <div className="overlay-text">Edit image</div>
                 </div>
