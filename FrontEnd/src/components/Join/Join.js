@@ -14,9 +14,7 @@ class Join extends React.Component {
   }
   componentDidMount() {
     //get data API from backend
-    this.props.getListQuestionTable();
-    this.props.getListUserDoQuestionTable();
-    console.log(this.props.match);
+    //this.props.getListQuestionTable();
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
     console.log(nextProps.user);
@@ -88,7 +86,4 @@ const mapStateToProps = state => {
     user: state.user
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Join);
+export default connect(mapStateToProps, mapDispatchToProps)(Join);

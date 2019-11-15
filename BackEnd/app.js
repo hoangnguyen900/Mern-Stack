@@ -11,8 +11,8 @@ const routersQuestionChoices = require("./routers/routersQuestionChoices");
 const routersUser = require("./routers/routersUser");
 const db = require("./database");
 
-app.use(bodyparser.urlencoded({ extended: true }));
-app.use(bodyparser.json());
+app.use(bodyparser.json({ limit: "50mb" }));
+app.use(bodyparser.urlencoded({ limit: "50mb", extended: true }));
 
 //test DB
 db.authenticate()

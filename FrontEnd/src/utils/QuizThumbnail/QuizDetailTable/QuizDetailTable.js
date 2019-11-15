@@ -79,7 +79,14 @@ class QuizDetailTable extends React.Component {
       <div className="popup-quiz-detail-table">
         <div className="popup_inner-quiz-detail-table">
           <div className="popup-header-quiz-detail-table">
-            <img src={require("../images/thumbnail.jpg")} alt="thumbnail" />
+            <img
+              src={
+                data.image !== null
+                  ? data.image
+                  : require("../images/thumbnail.jpg")
+              }
+              alt="thumbnail"
+            />
             <button onClick={this.props.togglePopup}>
               <FontAwesomeIcon
                 icon={faTimesCircle}
@@ -141,7 +148,4 @@ const mapStateToProps = state => {
     user: state.user
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(QuizDetailTable);
+export default connect(mapStateToProps, mapDispatchToProps)(QuizDetailTable);

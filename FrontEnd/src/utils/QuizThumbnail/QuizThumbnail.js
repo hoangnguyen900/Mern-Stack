@@ -13,7 +13,7 @@ class QuizThumbnail extends React.Component {
         id: 0,
         code: 0,
         title: "",
-        image: "",
+        image: null,
         played: 0,
 
         questions: []
@@ -103,7 +103,14 @@ class QuizThumbnail extends React.Component {
     return (
       <div>
         <div className="quiz-thumbnail-container" onClick={this.onClickHandler}>
-          <img src={require("./images/thumbnail.jpg")} alt="thumbnail" />
+          <img
+            src={
+              data.image !== null
+                ? data.image
+                : require("./images/thumbnail.jpg")
+            }
+            alt="thumbnail"
+          />
           <div className="quiz-flat-info">
             <div className="question-number">{data.questions.length} Qs</div>
             <div className="play-number">
@@ -160,7 +167,4 @@ const mapStateToProps = state => {
     user: state.user
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(QuizThumbnail);
+export default connect(mapStateToProps, mapDispatchToProps)(QuizThumbnail);

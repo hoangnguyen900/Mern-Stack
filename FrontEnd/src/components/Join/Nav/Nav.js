@@ -1,5 +1,7 @@
 import React from "react";
 import "./Nav.scss";
+import { connect } from "react-redux";
+import * as actions from "../../../redux/actions/index";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,6 +16,12 @@ class JoinNav extends React.Component {
     super(props);
     this.state = {};
   }
+  componentDidMount() {
+    //get data API from backend
+    this.props.getListQuestionTable();
+    this.props.getListUserDoQuestionTable();
+  }
+
   render() {
     let token = localStorage.getItem("token");
     return (
@@ -64,5 +72,21 @@ class JoinNav extends React.Component {
     );
   }
 }
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    getListQuestionTable: () => {
+      dispatch(actions.getListQuestionTable());
+    },
 
-export default JoinNav;
+    getListUserDoQuestionTable: () => {
+      dispatch(actions.getListUserDoQuestionTable());
+    }
+  };
+};
+const mapStateToProps = state => {
+  return {
+    questionTable: state.questionTable,
+    user: state.user
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(JoinNav);

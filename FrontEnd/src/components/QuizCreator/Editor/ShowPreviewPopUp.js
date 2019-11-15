@@ -18,8 +18,6 @@ class ShowPreviewPopUp extends React.Component {
     });
   }
   fileChangedHandler = event => {
-    let { id } = this.props.data;
-    console.log(id);
     let fileReader = new FileReader();
     if (event.target.files[0]) {
       fileReader.readAsDataURL(event.target.files[0]); // fileReader.result -> URL.
@@ -33,8 +31,8 @@ class ShowPreviewPopUp extends React.Component {
   };
   onSubmitHandler = e => {
     e.preventDefault();
-    let { id, image } = this.state;
-    this.props.updateImageTable(id, image);
+    this.props.updateTable(this.state);
+    this.props.closePopup();
   };
   render() {
     let { image } = this.state;
@@ -53,10 +51,7 @@ class ShowPreviewPopUp extends React.Component {
               <div className="popup-body">
                 <div className="add-title-image-section">
                   <div className="section-name">1. Add title image</div>
-                  <div
-                    className="title-image-picker"
-                    onClick={() => this.fileInput.click()}
-                  >
+                  <div className="title-image-picker">
                     <input
                       style={{ display: "none" }}
                       type="file"
@@ -69,8 +64,12 @@ class ShowPreviewPopUp extends React.Component {
                       }
                       alt="defaul title "
                       className="default-title-image"
+                      onClick={() => this.fileInput.click()}
                     />
-                    <div className="delete-title-image">
+                    <div
+                      className="delete-title-image"
+                      onClick={() => this.setState({ image: null })}
+                    >
                       <FontAwesomeIcon icon={faTrashAlt} color="white" />
                     </div>
                   </div>
@@ -148,8 +147,8 @@ class ShowPreviewPopUp extends React.Component {
 }
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    updateImageTable: (id, image) => {
-      dispatch(actions.updateImageTable(id, image));
+    updateTable: data => {
+      dispatch(actions.updateTable(data));
     }
   };
 };

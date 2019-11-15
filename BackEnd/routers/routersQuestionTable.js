@@ -42,7 +42,11 @@ router.get("/api/questiontable/:id", (req, res) => {
     res.send(data);
   });
 });
-
+router.put("/api/table_update", (req, res) => {
+  QuestionTable.update(req.body, { where: { id: req.body.id } })
+    .then(data => res.send(data))
+    .catch(err => console.log(err));
+});
 router.post("/api/questiontable", verifyToken, (req, res) => {
   jwt.verify(req.token, "hoangtri", (err, authData) => {
     if (err) res.sendStatus(403);
