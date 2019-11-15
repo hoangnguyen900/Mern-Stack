@@ -72,20 +72,20 @@ class QuestionShow extends React.Component {
         return "#d9d9d9";
       };
       return (
-        <div className="question-answer" key={index}>
-          <button
+        //<div className="question-answer" >
+          <button className="question-answer" key={index}
             onClick={() => {
               this.onClickCheckAnswer(index);
               localStorage.setItem("choiceIndex", index);
             }}
             disabled={disableButton}
           >
-            <span>
-              <FontAwesomeIcon icon={faCircle} color={color()} />
+            <span className="dot-answer">
+              <FontAwesomeIcon icon={faCircle} size="lg" color={color()} />
+              <span className="answer-beside-dot">{answer.answer}</span>
             </span>
-            <span>{answer.answer}</span>
           </button>
-        </div>
+       // </div>
       );
     });
     return (

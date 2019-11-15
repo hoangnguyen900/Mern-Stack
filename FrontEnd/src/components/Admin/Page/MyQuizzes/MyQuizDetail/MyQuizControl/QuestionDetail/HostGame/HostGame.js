@@ -1,7 +1,7 @@
 import React from 'react';
 import './HostGame.scss';
-
-
+import { Menu, Dropdown, Button, Icon } from 'antd';
+import 'antd/dist/antd.css';
 
 class QuizControlHostGame extends React.Component {
     constructor(props) {
@@ -9,18 +9,51 @@ class QuizControlHostGame extends React.Component {
         this.state = {}
     }
     render() {
-        const menu = (
+        const day = (
             <Menu >
                 <Menu.Item key="1">
-                    <Icon type="user" />
+
                     1st menu item
               </Menu.Item>
                 <Menu.Item key="2">
-                    <Icon type="user" />
+
                     2nd menu item
               </Menu.Item>
                 <Menu.Item key="3">
-                    <Icon type="user" />
+
+                    3rd item
+              </Menu.Item>
+            </Menu>
+        );
+
+        const hour = (
+            <Menu >
+                <Menu.Item key="1">
+
+                    1st menu item
+              </Menu.Item>
+                <Menu.Item key="2">
+
+                    2nd menu item
+              </Menu.Item>
+                <Menu.Item key="3">
+
+                    3rd item
+              </Menu.Item>
+            </Menu>
+        );
+        const minute = (
+            <Menu >
+                <Menu.Item key="1">
+
+                    1st menu item
+              </Menu.Item>
+                <Menu.Item key="2">
+
+                    2nd menu item
+              </Menu.Item>
+                <Menu.Item key="3">
+
                     3rd item
               </Menu.Item>
             </Menu>
@@ -31,11 +64,36 @@ class QuizControlHostGame extends React.Component {
                 <div className="quiz-num">4 questions</div>
                 <div className="quiz-step-text">Students should complete the quiz by:</div>
                 <div className="quiz-end-day">
-                    <Dropdown overlay={menu} trigger={['click']}>
+                    <Dropdown overlay={day} trigger={['click']}>
                         <Button>
-                            Button <Icon type="down" />
+                            <Icon type="calendar" /> Nov 13th <Icon type="down" />
                         </Button>
                     </Dropdown>
+                </div>
+
+                <div className="quiz-end-hour-minute">
+                    <div className="hour">
+                        <Dropdown overlay={hour} trigger={['click']}>
+                            <Button>
+                                Nov 13th <Icon type="down" />
+                            </Button>
+                        </Dropdown>
+                    </div>
+                    <div className="minute">
+                        <Dropdown overlay={minute} trigger={['click']}>
+                            <Button>
+                                Nov 13th <Icon type="down" />
+                            </Button>
+                        </Dropdown>
+                    </div>
+                </div>
+
+                <div className="quiz-time-left">
+                    <span>1</span> day, <span>1</span> hour, <span>1</span> minute from now 
+                </div>
+
+                <div className="quiz-hosting-btn">
+                    <button>Host Game</button>
                 </div>
             </div>
 

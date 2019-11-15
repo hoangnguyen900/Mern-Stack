@@ -3,10 +3,6 @@ import './QuestionDetail.scss';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faBars,
-    faPencilAlt,
-    faCopy,
-    faTrashAlt,
     faCircle,
     faClock
 } from "@fortawesome/free-solid-svg-icons";

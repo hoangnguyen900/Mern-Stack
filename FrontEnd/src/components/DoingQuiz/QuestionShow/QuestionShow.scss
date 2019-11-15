@@ -95,31 +95,30 @@
 
                 .question-answer {
                     margin-left: 10px;
-                    flex-basis: 45%;
+                    width: fit-content;
+                    min-width: 45%;
+                    max-width: 100%;
                     margin-bottom: 16px;
+                    top: 0;
+                    background: none;
+                    border: none;
 
-                    button {
+                    .dot-answer {
                         display: flex;
                         flex-direction: row;
                         flex-wrap: nowrap;
-                        width: fit-content;
-                        border: none;
-                        background: none;
-                        padding: 10px 5px;
-                        align-items: center;
-                        top: 0;
-                        outline: none;
-                        
-                        span {
+                        align-items: flex-start;
+                        width: 100%;
+
+                        .answer-beside-dot {
+                            margin-left: 10px;
                             color: #725068;
                             font-size: 14px;
                             word-break: break-all;
-                            margin-right: 5px;
+                            height: auto;
                         }
                     }
                 }
-
-
             }
         }
 
@@ -149,6 +148,7 @@
                     border: none;
                     border-radius: 5px;
                     padding: 0 10px;
+                    top: 0;
                 }
             }
         }
