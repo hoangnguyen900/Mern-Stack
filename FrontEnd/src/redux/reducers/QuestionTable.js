@@ -28,9 +28,8 @@ let myReducer = (state = initialState, action) => {
       };
       return { ...state };
     case types.UPDATE_QUESTION_TABLE: {
-      console.log("action", ...action.data);
-      state[0].questions[action.index] = {
-        ...state[0].questions[action.index],
+      state[0] = {
+        ...state[0],
         ...action.data
       };
       return { ...state };

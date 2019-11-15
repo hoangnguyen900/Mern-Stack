@@ -2,11 +2,10 @@ import React from "react";
 import "./Editor.scss";
 import { connect } from "react-redux";
 import * as actions from "./../../../redux/actions/index";
-
-import { Menu, Dropdown, Button, Icon } from 'antd';
+import { Select } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faSave } from "@fortawesome/free-solid-svg-icons";
-import 'antd/dist/antd.css';
+import "antd/dist/antd.css";
 class ShowPreviewPopUp extends React.Component {
   constructor(props) {
     super(props);
@@ -36,24 +35,28 @@ class ShowPreviewPopUp extends React.Component {
     this.props.updateTable(this.state);
     this.props.closePopup();
   };
+  handleChangeSelected = value => {
+    console.log(`Selected: ${value}`);
+  };
   render() {
     let { image } = this.state;
-    const menu = (
-      <Menu >
-        <Menu.Item key="1">
-          
-          1st menu item
-        </Menu.Item>
-        <Menu.Item key="2">
-          
-          2nd menu item
-        </Menu.Item>
-        <Menu.Item key="3">
-          
-          3rd item
-        </Menu.Item>
-      </Menu>
-    );
+    const { Option } = Select;
+    const menu = [
+      <Option key="1">1st</Option>,
+      <Option key="2">2nd</Option>,
+      <Option key="3">3rd</Option>,
+      <Option key="4">4th</Option>,
+      <Option key="5">5th</Option>,
+      <Option key="6">6th</Option>,
+      <Option key="7">7th</Option>,
+      <Option key="8">8th</Option>,
+      <Option key="9">9th</Option>,
+      <Option key="10">10th</Option>,
+      <Option key="11">11th</Option>,
+      <Option key="12">12th</Option>,
+      <Option key="13">University</Option>,
+      <Option key="14">Professional Development</Option>
+    ];
     return (
       <div className="grade-popup-container">
         <div className="popup">
@@ -96,17 +99,21 @@ class ShowPreviewPopUp extends React.Component {
                 <div className="select-grade-section">
                   <div className="section-name">2. Select grades</div>
                   <div className="grade-start-end">
-                    <Dropdown overlay={menu} trigger={['click']}>
-                      <Button>
-                        Button <Icon type="down" />
-                      </Button>
-                    </Dropdown>
+                    <Select
+                      defaultValue="0"
+                      onChange={this.handleChangeSelected}
+                      style={{ width: 200 }}
+                    >
+                      {menu}
+                    </Select>
 
-                    <Dropdown overlay={menu} trigger={['click']}>
-                      <Button>
-                        Button <Icon type="down" />
-                      </Button>
-                    </Dropdown>
+                    <Select
+                      defaultValue="0"
+                      onChange={this.handleChangeSelected}
+                      style={{ width: 200 }}
+                    >
+                      {menu}
+                    </Select>
                   </div>
                 </div>
                 <hr />

@@ -33,7 +33,7 @@ class PreGame extends React.Component {
     return (
       <div className="pre-game-container">
         <div className="pre-game-nav">
-          <button onClick={() => history.push(`/join/`)}>
+          <button onClick={() => history.push(`/`)}>
             <span>
               <FontAwesomeIcon icon={faTimes} />
             </span>
@@ -83,7 +83,4 @@ const mapStateToProps = state => {
     user: state.user
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PreGame);
+export default connect(mapStateToProps, mapDispatchToProps)(PreGame);

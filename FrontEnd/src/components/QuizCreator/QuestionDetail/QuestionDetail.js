@@ -1,6 +1,5 @@
 import React from "react";
 import "./QuestionDetail.scss";
-import { ButtonToolbar, Dropdown, DropdownButton } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -10,6 +9,8 @@ import {
   faCircle,
   faClock
 } from "@fortawesome/free-solid-svg-icons";
+import { Select } from "antd";
+
 //
 import { connect } from "react-redux";
 import * as actions from "./../../../redux/actions/index";
@@ -47,8 +48,9 @@ class QuizCreatorQuestionDetail extends React.Component {
     this.props.onClickEditHandler(index + 1, data);
   };
   render() {
-    console.log(this.props);
     let { time } = this.state;
+    const { Option } = Select;
+
     return (
       <div className="question-detail-container">
         <div className="question-detail-header">
@@ -91,7 +93,8 @@ class QuizCreatorQuestionDetail extends React.Component {
                   <span>
                     <FontAwesomeIcon
                       icon={faCircle}
-                      color={answer.is_right ? "#00C985" : "#F14D76"} size="lg"
+                      color={answer.is_right ? "#00C985" : "#F14D76"}
+                      size="lg"
                     />
                     <span>{answer.answer}</span>
                   </span>
@@ -105,27 +108,16 @@ class QuizCreatorQuestionDetail extends React.Component {
             <FontAwesomeIcon icon={faClock} color="gray" />
           </span>
           <div className="question-time">
-            <ButtonToolbar>
-              {["up"].map(direction => (
-                <DropdownButton
-                  drop={direction}
-                  variant="light"
-                  title={` ${
-                    time === 0 ? this.props.data.time : time
-                  } seconds `}
-                  id={`dropdown-button-drop-${direction}`}
-                  key={direction}
-                  onSelect={this.onSelectTimeHandler}
-                  size="sm"
-                  background-color="white"
-                >
-                  <Dropdown.Item eventKey="15">15 seconds</Dropdown.Item>
-                  <Dropdown.Item eventKey="30">30 seconds</Dropdown.Item>
-                  <Dropdown.Item eventKey="45">45 seconds</Dropdown.Item>
-                  <Dropdown.Item eventKey="60">60 seconds</Dropdown.Item>
-                </DropdownButton>
-              ))}
-            </ButtonToolbar>
+            <Select
+              defaultValue={time === 0 ? `${this.props.data.time}` : "30"}
+              onChange={this.onSelectTimeHandler}
+              style={{ width: 120 }}
+            >
+              <Option key="15">15 seconds</Option>
+              <Option key="30">30 seconds</Option>
+              <Option key="45">45 seconds</Option>
+              <Option key="60">60 seconds</Option>
+            </Select>
           </div>
         </div>
       </div>

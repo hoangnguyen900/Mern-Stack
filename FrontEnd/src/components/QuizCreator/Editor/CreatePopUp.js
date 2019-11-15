@@ -5,10 +5,10 @@ import "font-awesome/css/font-awesome.min.css";
 //import ToggleBox from '../ToggleBox/ToggleBox';
 import { connect } from "react-redux";
 import * as actions from "./../../../redux/actions/index";
-import { ButtonToolbar, Dropdown, DropdownButton } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faClock } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
+import { Select } from "antd";
 
 const listPrototype = [
   {
@@ -298,6 +298,7 @@ class QuestionCreatePopup extends React.Component {
       timeTitle,
       questionType
     } = this.state;
+    const { Option } = Select;
     let { index } = this.props;
     let list = typeof this.props.data === "undefined" ? questionsArr : answers;
 
@@ -331,27 +332,14 @@ class QuestionCreatePopup extends React.Component {
                 Question {index}
               </p>
               <div className="choose-question-types">
-                <ButtonToolbar>
-                  {["down"].map(direction => (
-                    <DropdownButton
-                      drop={direction}
-                      variant="light"
-                      title={` ${questionType.title} `}
-                      id={`dropdown-button-drop-${direction}`}
-                      key={direction}
-                      onSelect={this.onSelectQuestionTypeHandler}
-                      size="sm"
-                      background-color="white"
-                    >
-                      <Dropdown.Item eventKey={true}>
-                        Single answer
-                      </Dropdown.Item>
-                      <Dropdown.Item eventKey={false}>
-                        Multi select
-                      </Dropdown.Item>
-                    </DropdownButton>
-                  ))}
-                </ButtonToolbar>
+                <Select
+                  defaultValue="true"
+                  onChange={this.onSelectQuestionTypeHandler}
+                  style={{ width: 150 }}
+                >
+                  <Option key={true}>Single answer</Option>
+                  <Option key={false}>Multi select</Option>
+                </Select>
               </div>
 
               <hr />
@@ -382,26 +370,16 @@ class QuestionCreatePopup extends React.Component {
                   <FontAwesomeIcon icon={faClock} color="gray" />
                 </span>
                 <div className="question-time">
-                  <ButtonToolbar>
-                    {["down"].map(direction => (
-                      <DropdownButton
-                        drop={direction}
-                        variant="light"
-                        title={` ${timeTitle} seconds `}
-                        id={`dropdown-button-drop-${direction}`}
-                        key={direction}
-                        onSelect={this.onSelectTimeHandler}
-                        size="sm"
-                        background-color="white"
-                      >
-                        <Dropdown.Item eventKey="5">5 seconds</Dropdown.Item>
-                        <Dropdown.Item eventKey="15">15 seconds</Dropdown.Item>
-                        <Dropdown.Item eventKey="30">30 seconds</Dropdown.Item>
-                        <Dropdown.Item eventKey="45">45 seconds</Dropdown.Item>
-                        <Dropdown.Item eventKey="60">60 seconds</Dropdown.Item>
-                      </DropdownButton>
-                    ))}
-                  </ButtonToolbar>
+                  <Select
+                    defaultValue={`${timeTitle}`}
+                    onChange={this.onSelectTimeHandler}
+                    style={{ width: 120 }}
+                  >
+                    <Option key="15">15 seconds</Option>
+                    <Option key="30">30 seconds</Option>
+                    <Option key="45">45 seconds</Option>
+                    <Option key="60">60 seconds</Option>
+                  </Select>
                 </div>
               </div>
 
