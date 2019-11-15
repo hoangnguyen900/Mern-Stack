@@ -79,14 +79,21 @@ class QuizDetailTable extends React.Component {
       <div className="popup-quiz-detail-table">
         <div className="popup_inner-quiz-detail-table">
           <div className="popup-header-quiz-detail-table">
-            <img
-              src={
-                data.image !== null
-                  ? data.image
-                  : require("../images/thumbnail.jpg")
-              }
-              alt="thumbnail"
-            />
+
+            <div className="crop-table-img">
+              <img
+                src={
+                  data.image !== null
+                    ? data.image
+                    : require("../images/thumbnail.jpg")
+                }
+                alt="thumbnail"
+              />
+            </div>
+
+
+
+
             <button onClick={this.props.togglePopup}>
               <FontAwesomeIcon
                 icon={faTimesCircle}

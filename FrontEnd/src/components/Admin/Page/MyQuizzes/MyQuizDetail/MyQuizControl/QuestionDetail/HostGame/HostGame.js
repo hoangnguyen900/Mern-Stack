@@ -71,6 +71,10 @@ class QuizControlHostGame extends React.Component {
         <div className="quiz-hosting-btn">
           <button>Host Game</button>
         </div>
+
+        <div className="generated-code-container">
+          ------
+        </div>
       </div>
     );
   }
