@@ -19,7 +19,7 @@ let myReducer = (state = initialState, action) => {
       return { ...state };
     case types.CREATE_QUESTION_TABLE:
       return { ...action.data };
-    case types.UPDATE_QUESTION_TABLE:
+    case types.UPDATE_QUESTION_TABLE_QUESTION:
       state[0].questions[action.index] = {
         ...state[0].questions[action.index],
         question: action.question.question,
@@ -27,6 +27,14 @@ let myReducer = (state = initialState, action) => {
         question_choices: [...action.question_choices]
       };
       return { ...state };
+    case types.UPDATE_QUESTION_TABLE: {
+      state[0] = {
+        ...state[0],
+        ...action.data
+      };
+      return { ...state };
+    }
+
     case types.UPDATE_TIME:
       state[0].questions[action.index] = {
         ...state[0].questions[action.index],

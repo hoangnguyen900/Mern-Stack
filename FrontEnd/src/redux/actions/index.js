@@ -106,7 +106,7 @@ export const updateQuestionAndAnswersAPI = (question, answers, index) => {
         });
         console.log("res Update success", res);
         dispatch({
-          type: types.UPDATE_QUESTION_TABLE,
+          type: types.UPDATE_QUESTION_TABLE_QUESTION,
           question,
           question_choices: res.data,
           index
@@ -217,7 +217,8 @@ export const finishQuestionTable = id => {
       });
   };
 };
-export const updateImageTable = (id, image) => {
+
+export const updateTable = data => {
   return dispatch => {
     axios({
       method: "put",
@@ -225,10 +226,22 @@ export const updateImageTable = (id, image) => {
       headers: {
         "content-type": "application/json"
       },
-      data: { id, image }
+      data: { ...data }
     })
       .then(res => {
-        console.log("res Update image success", res);
+        console.log("res Update question table success", res);
+        dispatch({
+          type: types.UPDATE_QUESTION_TABLE,
+          data: data
+        });
+        Swal.fire({
+          position: "center",
+          type: "success",
+          title: "Update Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+          heightAuto: false
+        });
       })
       .catch(er => {
         console.log("er", er);
@@ -272,27 +285,6 @@ export const createQuestionTable = data => {
         console.log("res create table", res.data);
         dispatch({
           type: types.CREATE_QUESTION_TABLE,
-          data: res.data
-        });
-      })
-      .catch(er => {
-        console.log("er", er);
-      });
-  };
-};
-export const updateQuestionTable = data => {
-  return dispatch => {
-    axios({
-      method: "put",
-      url: URLs.QUESTION_TABLE_API_URL,
-      headers: {
-        "content-type": "application/json"
-      }
-    })
-      .then(res => {
-        console.log("res update table", res.data);
-        dispatch({
-          type: types.UPDATE_QUESTION_TABLE,
           data: res.data
         });
       })
@@ -359,7 +351,7 @@ export const getListUserDoQuestionTable = () => {
       }
     })
       .then(res => {
-        console.log("API show QUESTION TABLE", res.data);
+        console.log("API show user do QUESTION TABLE ", res.data);
         dispatch({
           type: types.GET_QUESTION_TABLE_COMPLETED,
           data: res.data

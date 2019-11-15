@@ -56,7 +56,7 @@ const QuestionTable = db.define("question_table", {
     foreignKey: [Object]
   },
   image: {
-    type: "LONGBLOB",
+    type: "longtext",
     allowNull: true,
     defaultValue: null,
     primaryKey: false
@@ -73,6 +73,11 @@ const QuestionTable = db.define("question_table", {
     defaultValue: null,
     primaryKey: false,
     foreignKey: [Object]
+  },
+  is_finish: {
+    type: "TINYINT(1)",
+    allowNull: false,
+    defaultValue: 0
   }
 });
 // QuestionTable.associate = () => {

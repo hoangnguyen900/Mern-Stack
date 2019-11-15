@@ -26,6 +26,11 @@ const Question = db.define(
       allowNull: false,
       defaultValue: 30,
       primaryKey: false
+    },
+    is_one_right_ans: {
+      type: "TINYINT(1)",
+      allowNull: false,
+      defaultValue: 1
     }
   },
   { underscored: true }
