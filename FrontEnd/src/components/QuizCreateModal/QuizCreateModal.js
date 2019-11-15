@@ -26,6 +26,7 @@ class QuizCreate extends React.Component {
         subject: nextProps.subject
       });
     else {
+      //after submit
       console.log(this.props.questionTable);
       this.setState({
         id: nextProps.questionTable.id
@@ -57,12 +58,17 @@ class QuizCreate extends React.Component {
   };
 
   render() {
-    let {data}=this.state
+    let { data } = this.state;
     const element = this.state.subject.map(subj => {
       return (
         //active-subject
-        <div className={data.subject_id===subj.id? "subject active-subject":"subject"} key={subj.id}>
-          <button 
+        <div
+          className={
+            data.subject_id === subj.id ? "subject active-subject" : "subject"
+          }
+          key={subj.id}
+        >
+          <button
             type="button"
             name="subject_id"
             value={subj.id}
@@ -123,7 +129,4 @@ const mapStateToProps = state => {
     subject: state.subject
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(QuizCreate);
+export default connect(mapStateToProps, mapDispatchToProps)(QuizCreate);

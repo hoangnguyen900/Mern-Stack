@@ -124,8 +124,8 @@ class QuizDetailTable extends React.Component {
           </div>
           <div className="popup-footer-quiz-detail-table">
             <button
-              // style={disabled ? { opacity: "0.3", cursor: "no-drop" } : {}}
-              // disabled={disabled}
+              style={disabled ? { opacity: "0.3", cursor: "no-drop" } : {}}
+              disabled={disabled}
               onClick={this.playQuizOnClickHandler}
             >
               Play

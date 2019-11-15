@@ -35,7 +35,11 @@ class QuizCreatorEditor extends React.Component {
       table: {
         questions: [],
         isFinish: false,
-        image: null
+        image: null,
+        subject: {
+          id: 0,
+          title: ""
+        }
       }
     };
   }
@@ -110,7 +114,7 @@ class QuizCreatorEditor extends React.Component {
     this.props.finishQuestionTable(question_table_id);
   };
   render() {
-    let { image } = this.state.table;
+    let { image, subject } = this.state.table;
     let element = this.state.table.questions.map((data, index) => {
       return (
         <QuizCreatorQuestionDetail
@@ -192,6 +196,12 @@ class QuizCreatorEditor extends React.Component {
                       icon={faPencilAlt}
                       color="#FD7E14"
                       size="lg"
+                      onClick={() => {
+                        this.setState({
+                          showPopupSubject: !this.state.showPopupSubject
+                        });
+                        this.togglePopupSubject();
+                      }}
                     />
                   </span>
                 </button>
@@ -235,7 +245,7 @@ class QuizCreatorEditor extends React.Component {
                     this.togglePopupSubject();
                   }}
                 >
-                  Physic
+                  {subject.title}
                 </button>
               </div>
 

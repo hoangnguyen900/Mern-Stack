@@ -86,7 +86,6 @@ export const updateQuestionAndAnswersAPI = (question, answers, index) => {
 
       question_choices: answers
     };
-    console.log("redux", data);
     axios({
       method: "post",
       url: URLs.UPDATE_QUESTION_ANSWER_API_URL,
