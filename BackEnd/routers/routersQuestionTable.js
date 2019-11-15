@@ -36,7 +36,8 @@ router.get("/api/questiontable/:id", (req, res) => {
       {
         model: Question,
         include: QuestionChoices
-      }
+      },
+      Subject
     ]
   }).then(data => {
     res.send(data);
