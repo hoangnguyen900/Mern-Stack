@@ -103,14 +103,17 @@ class QuizThumbnail extends React.Component {
     return (
       <div>
         <div className="quiz-thumbnail-container" onClick={this.onClickHandler}>
-          <img
-            src={
-              data.image !== null
-                ? data.image
-                : require("./images/thumbnail.jpg")
-            }
-            alt="thumbnail"
-          />
+          <div className="crop-thumbnail-img">
+            <img
+              src={
+                data.image !== null
+                  ? data.image
+                  : require("./images/thumbnail.jpg")
+              }
+              alt="thumbnail"
+            />
+          </div>
+
           <div className="quiz-flat-info">
             <div className="question-number">{data.questions.length} Qs</div>
             <div className="play-number">

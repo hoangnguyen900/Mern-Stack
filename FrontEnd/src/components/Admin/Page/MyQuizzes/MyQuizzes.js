@@ -2,10 +2,21 @@ import React from 'react';
 import './MyQuizzes.scss';
 
 import MyQuizDetail from './MyQuizDetail/MyQuizDetail';
+
+import { connect } from "react-redux";
+import * as actions from '../../../../redux/actions/index';
 class MyQuizzes extends React.Component {
     constructor(props) {
         super(props);
         this.state = {}
+    }
+
+    componentDidMount(){
+        this.props.getListQuestionTable();
+    }
+
+    UNSAFE_componentWillReceiveProps(nextProps){
+        console.log(nextProps);
     }
     render() {
         return (
@@ -29,4 +40,22 @@ class MyQuizzes extends React.Component {
     }
 }
 
-export default MyQuizzes;
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+      getListQuestionTable: () => {
+        dispatch(actions.getListQuestionTable());
+      },
+  
+      getListUserDoQuestionTable: () => {
+        dispatch(actions.getListUserDoQuestionTable());
+      }
+    };
+  };
+  const mapStateToProps = state => {
+    return {
+      questionTable: state.questionTable,
+      user: state.user
+    };
+  };
+
+  export default connect(mapStateToProps, mapDispatchToProps)(MyQuizzes);
