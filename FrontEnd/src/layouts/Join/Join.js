@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import JoinNav from "../../components/Join/Nav/Nav";
 import Activity from "../../components/Join/Activity/Activity";
 import Join from "../../components/Join/Join";
-
+import history from "../../history";
 class JoinLayout extends React.Component {
   constructor(props) {
     super(props);
@@ -13,7 +13,7 @@ class JoinLayout extends React.Component {
   render() {
     let { match } = this.props;
     console.log(match);
-
+    if (!localStorage.getItem("token")) history.push("/");
     return (
       <BrowserRouter>
         <div className="join-layout-container">
