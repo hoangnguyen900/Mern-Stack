@@ -2,6 +2,7 @@ import React from "react";
 import "./HostGame.scss";
 import { Menu, Dropdown, Button, Icon } from "antd";
 import "antd/dist/antd.css";
+import { withRouter } from "react-router-dom";
 
 class QuizControlHostGame extends React.Component {
   constructor(props) {
@@ -72,12 +73,10 @@ class QuizControlHostGame extends React.Component {
           <button>Host Game</button>
         </div>
 
-        <div className="generated-code-container">
-          ------
-        </div>
+        <div className="generated-code-container">------</div>
       </div>
     );
   }
 }
 
-export default QuizControlHostGame;
+export default withRouter(QuizControlHostGame);

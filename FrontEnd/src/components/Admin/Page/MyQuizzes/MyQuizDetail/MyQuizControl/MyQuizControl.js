@@ -2,6 +2,8 @@ import React from "react";
 import "./MyQuizControl.scss";
 import { withRouter } from "react-router-dom";
 
+import { connect } from "react-redux";
+import * as actions from "../../../../../../redux/actions/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrashAlt,
@@ -21,10 +23,47 @@ import QuizControlQuestionDetail from "./QuestionDetail/QuestionDetail";
 class MyQuizControl extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      grade_begin: 0,
+      grade_end: 0,
+      id: 0,
+      image: "",
+      is_finish: 0,
+      is_public: 1,
+      level: 0,
+      played: 0,
+      title: "DOTA",
+      questions: [],
+      subject: {
+        title: ""
+      }
+    };
+  }
+  componentDidMount() {
+    this.props.showListQuestionTable();
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    let question_table_id = parseInt(this.props.match.params.question_table_id);
+    let { question_tables } = nextProps.user[0];
+    for (let i = 0; i < question_tables.length; i++)
+      if (question_tables[i].id === question_table_id) {
+        this.setState({
+          ...question_tables[i]
+        });
+        break;
+      }
   }
   render() {
+    console.log("state", this.state);
+    let gradeTitle = localStorage.getItem("gradeTitle");
+    let { title, image, played, questions, subject } = this.state;
     let { history } = this.props;
+    let element = questions.map((data, index) => {
+      return (
+        <QuizControlQuestionDetail key={index} data={data} index={index} />
+      );
+    });
     return (
       <div className="my-quiz-control-container">
         <div className="quiz-control-header">
@@ -32,12 +71,16 @@ class MyQuizControl extends React.Component {
             <img
               alt="header"
               className="header-img"
-              src={require("../../../../../../utils/QuizThumbnail/images/thumbnail.jpg")}
+              src={
+                image !== null
+                  ? image
+                  : require("../../../../../../utils/QuizThumbnail/images/thumbnail.jpg")
+              }
             />
           </div>
           <div className="header-info">
             <div className="title-and-func">
-              <div className="title">basic english</div>
+              <div className="title">{title}</div>
               <div className="func-group">
                 <div className="func">
                   <span>
@@ -56,20 +99,20 @@ class MyQuizControl extends React.Component {
                 <span>
                   <FontAwesomeIcon icon={faBook} color="#6B7C93" />
                 </span>
-                1 st grade - 2nd grade
+                {gradeTitle}
               </div>
               <div className="plays">
                 <span>
                   <FontAwesomeIcon icon={faPlay} color="#6B7C93" />
                 </span>
-                Played 4 times
+                Played {played} times
               </div>
             </div>
             <div className="subject">
               <span>
                 <FontAwesomeIcon icon={faAtlas} color="#6B7C93" />
               </span>
-              Physic
+              {subject.title}
             </div>
           </div>
         </div>
@@ -90,11 +133,14 @@ class MyQuizControl extends React.Component {
             </div>
             <div className="action-btn-group">
               <button className="action-btn b-host">Live game</button>
-              <button className="action-btn b-host"
+              <button
+                className="action-btn b-host"
                 onClick={() => {
                   history.push("/admin/quiz/homework/1");
                 }}
-              >Host game</button>
+              >
+                Host game
+              </button>
             </div>
           </div>
 
@@ -137,13 +183,26 @@ class MyQuizControl extends React.Component {
               SHOW ANSWERS
             </button>
           </div>
-          <div className="question-lists">
-            <QuizControlQuestionDetail />
-          </div>
+          <div className="question-lists">{element}</div>
         </div>
       </div>
     );
   }
 }
-
-export default withRouter(MyQuizControl);
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    showListQuestionTable: () => {
+      dispatch(actions.showListQuestionTable());
+    }
+  };
+};
+const mapStateToProps = state => {
+  return {
+    questionTable: state.questionTable,
+    user: state.user
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(MyQuizControl));

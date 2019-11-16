@@ -143,7 +143,7 @@ class QuizCreatorEditor extends React.Component {
     let gradeEndTitle = this.gradeTitlePart(grade_end);
     let gradeTitle = "";
     if (grade_begin === null) gradeTitle = "Add grade";
-    if (grade_begin === grade_end) {
+    else if (grade_begin === grade_end) {
       if (grade_begin < 13) gradeTitle = `${gradeBeginTitle} grade`;
       else gradeTitle = gradeBeginTitle;
     } else {

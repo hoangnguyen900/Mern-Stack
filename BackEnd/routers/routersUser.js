@@ -4,6 +4,8 @@ const router = express.Router();
 const User = require("../models/User");
 const QuestionChoices = require("../models/QuestionChoices");
 const QuestionTable = require("../models/QuestionTable");
+const Subject = require("../models/Subject");
+
 const Question = require("../models/Question");
 const AnswerRecord = require("../models/AnswerRecord");
 const jwt = require("jsonwebtoken");
@@ -205,7 +207,13 @@ router.post("/api/get_user_question_table", verifyToken, (req, res) =>
         include: [
           {
             model: QuestionTable,
-            include: Question
+            include: [
+              {
+                model: Question,
+                include: QuestionChoices
+              },
+              Subject
+            ]
           }
         ]
       })
