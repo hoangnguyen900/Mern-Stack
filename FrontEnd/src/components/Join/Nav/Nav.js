@@ -10,8 +10,8 @@ import {
   faHome,
   faHistory
 } from "@fortawesome/free-solid-svg-icons";
-
-import { Menu, Dropdown, Button, Icon } from 'antd';
+import Swal from "sweetalert2";
+import { Menu, Dropdown, Button, Icon } from "antd";
 import history from "../../../history";
 class JoinNav extends React.Component {
   constructor(props) {
@@ -29,29 +29,58 @@ class JoinNav extends React.Component {
   userActionsHandleClick = () => {
     this.setState({
       isOpenUserActions: !this.state.isOpenUserActions
-    })
-
-  }
+    });
+  };
+  onLogoutHandler = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!"
+    }).then(result => {
+      if (result.value) {
+        localStorage.clear();
+        history.push("/");
+      }
+    });
+  };
   render() {
     let token = localStorage.getItem("token");
     const userActions = (
-      <Menu style={{ padding: '5px 0px', width: 'fit-content' }}>
-        <Menu.Item style={{ borderBottom: '1px solid #e6e6e6' }}>
-          <div target="_blank" rel="noopener noreferrer" >
+      <Menu style={{ padding: "5px 0px", width: "fit-content" }}>
+        <Menu.Item style={{ borderBottom: "1px solid #e6e6e6" }}>
+          <div target="_blank" rel="noopener noreferrer">
             Tri
           </div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={()=>{
-            history.push("/admin")
-          }} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            <Icon type="setting" style={{ marginRight: '10px' }}></Icon>Settings
+          <div
+            onClick={() => {
+              history.push("/admin");
+            }}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center"
+            }}
+          >
+            <Icon type="setting" style={{ marginRight: "10px" }}></Icon>Settings
           </div>
         </Menu.Item>
         <Menu.Item>
-          <NavLink target="_blank" rel="noopener noreferrer" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            <Icon type="logout" style={{ marginRight: '10px' }}></Icon>Log out
-          </NavLink>
+          <div
+            onClick={this.onLogoutHandler}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center"
+            }}
+          >
+            <Icon type="logout" style={{ marginRight: "10px" }}></Icon>Log out
+          </div>
         </Menu.Item>
       </Menu>
     );
@@ -97,9 +126,17 @@ class JoinNav extends React.Component {
           >
             <FontAwesomeIcon icon={faPlusCircle} /> Create new Quiz
           </button>
-          <Dropdown overlay={userActions} placement="bottomRight" trigger={['click']}>
-            <Button style={{ top: 0 }} onClick={this.userActionsHandleClick}><Icon
-              style={{ fontSize: '14px' }} type={this.state.isOpenUserActions ? "close" : "menu"}></Icon></Button>
+          <Dropdown
+            overlay={userActions}
+            placement="bottomRight"
+            trigger={["click"]}
+          >
+            <Button style={{ top: 0 }} onClick={this.userActionsHandleClick}>
+              <Icon
+                style={{ fontSize: "14px" }}
+                type={this.state.isOpenUserActions ? "close" : "menu"}
+              ></Icon>
+            </Button>
           </Dropdown>
         </div>
         <br />
