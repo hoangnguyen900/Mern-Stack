@@ -114,5 +114,23 @@
             box-shadow: none !important;
             top: 3px;
         }
+
+        .ant-btn.ant-dropdown-trigger{
+            margin: 0 5px;
+            border-radius: 50%;
+            padding: 5px 10px;
+            padding-bottom: 7px;
+            border: 1px solid #FD7E14;
+            color:#FD7E14;
+            height: fit-content;
+            align-self: center;
+        }
+        .ant-btn.ant-dropdown-trigger:hover{
+            color:#FD7E14;
+        }
+
+        .ant-btn.ant-dropdown-trigger.ant-dropdown-open{
+            color:#FD7E14;
+        }
     }
 }

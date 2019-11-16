@@ -47,12 +47,12 @@ class AdminPage extends React.Component {
                         </button>
                         </div>
                         <div className="admin-find-quiz">
-                            <button className="btn-admin-find-quiz">
+                            <NavLink className="btn-admin-find-quiz">
                                 <span>
                                     <FontAwesomeIcon icon={faSearch} size="lg" />
                                 </span>
                                 Find a quiz
-                        </button>
+                        </NavLink>
                         </div>
                         <div className="admin-my-quizzes">
                             <NavLink className="btn-admin-find-quiz" style={{ borderLeft: '4px solid #FD7E14' }} to="/admin/private">
@@ -63,45 +63,45 @@ class AdminPage extends React.Component {
                         </NavLink>
                         </div>
                         <div className="admin-reports">
-                            <button className="btn-admin-find-quiz" >
+                            <NavLink className="btn-admin-find-quiz" >
                                 <span>
                                     <FontAwesomeIcon icon={faChartBar} size="lg" />
                                 </span>
                                 Reports
-                        </button>
+                        </NavLink>
                         </div>
                         <div className="admin-collections">
-                            <button className="btn-admin-find-quiz">
+                            <NavLink className="btn-admin-find-quiz">
                                 <span>
                                     <FontAwesomeIcon icon={faFolder} size="lg" />
                                 </span>
                                 Collections
-                        </button>
+                        </NavLink>
                         </div>
                         <hr />
                         <div className="admin-profile">
-                            <button className="btn-admin-find-quiz">
+                            <NavLink className="btn-admin-find-quiz">
                                 <span>
                                     <FontAwesomeIcon icon={faUserAlt} size="lg" />
                                 </span>
                                 Profile
-                        </button>
+                        </NavLink>
                         </div>
                         <div className="admin-settings">
-                            <button className="btn-admin-find-quiz">
+                            <NavLink className="btn-admin-find-quiz">
                                 <span>
                                     <FontAwesomeIcon icon={faCogs} size="lg" />
                                 </span>
                                 Settings
-                        </button>
+                        </NavLink>
                         </div>
                         <div className="admin-log-out">
-                            <button className="btn-admin-find-quiz">
+                            <NavLink className="btn-admin-find-quiz">
                                 <span>
                                     <FontAwesomeIcon icon={faSignOutAlt} size="lg" />
                                 </span>
                                 Log out
-                        </button>
+                        </NavLink>
                         </div>
                     </div>
 
