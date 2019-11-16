@@ -54,10 +54,10 @@ class AdminPage extends React.Component {
                                 Find a quiz
                         </NavLink>
                         </div>
-                        <div className="admin-my-quizzes">
-                            <NavLink className="btn-admin-find-quiz" style={{ borderLeft: '4px solid #FD7E14' }} to="/admin/private">
+                        <div className="admin-my-quizzes" >
+                            <NavLink className="btn-admin-find-quiz" to="/admin" activeStyle={{borderLeft: '4px solid #fd7e14', fontWeight:'bold'}} activeClassName="admin-active-tab">
                                 <span>
-                                    <FontAwesomeIcon icon={faFileAlt} size="lg" color="#FD7E14" />
+                                    <FontAwesomeIcon icon={faFileAlt} size="lg" />
                                 </span>
                                 My quizzes
                         </NavLink>
@@ -107,9 +107,9 @@ class AdminPage extends React.Component {
 
                     <div className="admin-tab-select-container">
                         <Switch>
-                            <Route exact path="/admin/private" render={({ match }) => <MyQuizzes match={match} />} />
+                            <Route exact path="/admin/" render={({ match }) => <MyQuizzes match={match} />} />
                             <Route
-                                path="/admin/private/:question_table_id"
+                                path="/admin/:question_table_id"
                                 component={MyQuizControl}
                             />
 
