@@ -10,7 +10,9 @@ class ShowPreviewPopUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      image: null
+      image: null,
+      grade_begin: null,
+      grade_end: null
     };
   }
   componentDidMount() {
@@ -35,13 +37,37 @@ class ShowPreviewPopUp extends React.Component {
     this.props.updateTable(this.state);
     this.props.closePopup();
   };
-  handleChangeSelected = value => {
-    console.log(`Selected: ${value}`);
+  handleChangeSelected = (value, type) => {
+    let { grade_begin, grade_end } = this.state;
+    let state = this.state;
+    if (type === "begin") {
+      state.grade_begin = parseInt(value);
+      this.setState({
+        grade_begin: parseInt(value)
+      });
+      if (grade_end === null || parseInt(value) > grade_end) {
+        state.grade_end = parseInt(value);
+        this.setState({
+          grade_end: parseInt(value)
+        });
+      }
+    }
+    if (type === "end") {
+      state.grade_end = parseInt(value);
+      this.setState({
+        grade_end: parseInt(value)
+      });
+      if (grade_begin === null || parseInt(value) < grade_begin) {
+        state.grade_begin = parseInt(value);
+        this.setState({
+          grade_begin: parseInt(value)
+        });
+      }
+    }
   };
-  render() {
-    let { image } = this.state;
-    const { Option } = Select;
-    const menu = [
+  menu = () => {
+    let { Option } = Select;
+    return [
       <Option key="1">1st</Option>,
       <Option key="2">2nd</Option>,
       <Option key="3">3rd</Option>,
@@ -57,6 +83,32 @@ class ShowPreviewPopUp extends React.Component {
       <Option key="13">University</Option>,
       <Option key="14">Professional Development</Option>
     ];
+  };
+  suffix = value => {
+    switch (value) {
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
+    }
+  };
+  gradeTitle = grade => {
+    let suffix = this.suffix(grade);
+    if (grade === null) return null;
+    if (grade === 13) return "University";
+    if (grade === 14) return "Professional Development";
+    return `${grade}${suffix}`;
+  };
+  render() {
+    let { image, grade_begin, grade_end } = this.state;
+    let menu = this.menu();
+    let beginSuffix = this.gradeTitle(grade_begin);
+    let endSuffix = this.gradeTitle(grade_end);
+
     return (
       <div className="grade-popup-container">
         <div className="popup">
@@ -80,12 +132,12 @@ class ShowPreviewPopUp extends React.Component {
                       ref={fileInput => (this.fileInput = fileInput)}
                     />
                     <div className="crop-quiz-title-img">
-                      <img className="default-title-image"
+                      <img
+                        className="default-title-image"
                         src={
                           image !== null ? image : require("./images/none.png")
                         }
                         alt="defaul title "
-                        
                         onClick={() => this.fileInput.click()}
                       />
                     </div>
@@ -103,16 +155,22 @@ class ShowPreviewPopUp extends React.Component {
                   <div className="section-name">2. Select grades</div>
                   <div className="grade-start-end">
                     <Select
-                      defaultValue="0"
-                      onChange={this.handleChangeSelected}
+                      value={
+                        beginSuffix !== null ? `${beginSuffix}` : "--From--"
+                      }
+                      onChange={value =>
+                        this.handleChangeSelected(value, "begin")
+                      }
                       style={{ width: 200 }}
                     >
                       {menu}
                     </Select>
 
                     <Select
-                      defaultValue="0"
-                      onChange={this.handleChangeSelected}
+                      value={endSuffix !== null ? `${endSuffix}` : "--To--"}
+                      onChange={value =>
+                        this.handleChangeSelected(value, "end")
+                      }
                       style={{ width: 200 }}
                     >
                       {menu}

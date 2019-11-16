@@ -20,10 +20,13 @@ let myReducer = (state = initialState, action) => {
     case types.CREATE_QUESTION_TABLE:
       return { ...action.data };
     case types.UPDATE_QUESTION_TABLE_QUESTION:
+      console.log("redux", action.question);
+
       state[0].questions[action.index] = {
         ...state[0].questions[action.index],
         question: action.question.question,
         time: action.question.time,
+        is_one_right_ans: action.question.is_one_right_ans,
         question_choices: [...action.question_choices]
       };
       return { ...state };
@@ -32,6 +35,8 @@ let myReducer = (state = initialState, action) => {
         ...state[0],
         ...action.data
       };
+      console.log("redux", state[0]);
+
       return { ...state };
     }
 

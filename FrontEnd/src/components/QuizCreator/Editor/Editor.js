@@ -33,9 +33,16 @@ class QuizCreatorEditor extends React.Component {
       question_table_id: 1,
       //questions: [],
       table: {
+        title: "",
         questions: [],
         isFinish: false,
-        image: null
+        image: null,
+        subject: {
+          id: 0,
+          title: ""
+        },
+        grade_begin: null,
+        grade_end: null
       }
     };
   }
@@ -109,8 +116,48 @@ class QuizCreatorEditor extends React.Component {
     let { question_table_id } = this.props.match.params;
     this.props.finishQuestionTable(question_table_id);
   };
+  suffix = value => {
+    switch (value) {
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
+    }
+  };
+  gradeTitlePart = grade => {
+    let title = "";
+    let suffix = this.suffix(grade);
+    if (grade === null) title = null;
+    if (grade < 13) title = `${grade}${suffix}`;
+    else if (grade === 13) return "University";
+    if (grade === 14) return "Professional Development";
+    return title;
+  };
+  gradeTitle = () => {
+    let { grade_begin, grade_end } = this.state.table;
+    let gradeBeginTitle = this.gradeTitlePart(grade_begin);
+    let gradeEndTitle = this.gradeTitlePart(grade_end);
+    let gradeTitle = "";
+    if (grade_begin === null) gradeTitle = "Add grade";
+    if (grade_begin === grade_end) {
+      if (grade_begin < 13) gradeTitle = `${gradeBeginTitle} grade`;
+      else gradeTitle = gradeBeginTitle;
+    } else {
+      if (grade_begin < 13) {
+        gradeTitle = `${gradeBeginTitle} - ${gradeEndTitle} grade`;
+        if (grade_end > 12)
+          gradeTitle = `${gradeBeginTitle} - ${gradeEndTitle}`;
+      } else gradeTitle = `${gradeBeginTitle} - ${gradeEndTitle}`;
+    }
+    return gradeTitle;
+  };
   render() {
-    let { image } = this.state.table;
+    let { image, subject, title } = this.state.table;
+    let gradeTitle = this.gradeTitle();
     let element = this.state.table.questions.map((data, index) => {
       return (
         <QuizCreatorQuestionDetail
@@ -188,13 +235,19 @@ class QuizCreatorEditor extends React.Component {
                 </div>
               </div>
               <div className="quiz-info-edit-quiz-name">
-                <div className="quiz-name">Basic English</div>
+                <div className="quiz-name">{title}</div>
                 <button>
                   <span>
                     <FontAwesomeIcon
                       icon={faPencilAlt}
                       color="#FD7E14"
                       size="lg"
+                      onClick={() => {
+                        this.setState({
+                          showPopupSubject: !this.state.showPopupSubject
+                        });
+                        this.togglePopupSubject();
+                      }}
                     />
                   </span>
                 </button>
@@ -223,7 +276,7 @@ class QuizCreatorEditor extends React.Component {
                     this.togglePopupPreview();
                   }}
                 >
-                  1st Grade
+                  {gradeTitle}
                 </button>
               </div>
               <div className="quiz-subject">
@@ -238,7 +291,7 @@ class QuizCreatorEditor extends React.Component {
                     this.togglePopupSubject();
                   }}
                 >
-                  Physic
+                  {subject.title}
                 </button>
               </div>
 

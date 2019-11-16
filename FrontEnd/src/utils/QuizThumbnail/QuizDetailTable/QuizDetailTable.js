@@ -61,6 +61,7 @@ class QuizDetailTable extends React.Component {
     let grades = "";
     if (data.grade_begin === data.grade_end) grades = `${data.grade_begin}th`;
     else grades = `${data.grade_begin}th to ${data.grade_end}th `;
+    if (data.grade_begin === null) grades = "N/A";
     return grades;
   };
   playQuizOnClickHandler = () => {
@@ -79,7 +80,6 @@ class QuizDetailTable extends React.Component {
       <div className="popup-quiz-detail-table">
         <div className="popup_inner-quiz-detail-table">
           <div className="popup-header-quiz-detail-table">
-
             <div className="crop-table-img">
               <img
                 src={
@@ -90,9 +90,6 @@ class QuizDetailTable extends React.Component {
                 alt="thumbnail"
               />
             </div>
-
-
-
 
             <button onClick={this.props.togglePopup}>
               <FontAwesomeIcon
@@ -131,8 +128,8 @@ class QuizDetailTable extends React.Component {
           </div>
           <div className="popup-footer-quiz-detail-table">
             <button
-              // style={disabled ? { opacity: "0.3", cursor: "no-drop" } : {}}
-              // disabled={disabled}
+              style={disabled ? { opacity: "0.3", cursor: "no-drop" } : {}}
+              disabled={disabled}
               onClick={this.playQuizOnClickHandler}
             >
               Play

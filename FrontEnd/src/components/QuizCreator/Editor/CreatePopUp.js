@@ -299,9 +299,10 @@ class QuestionCreatePopup extends React.Component {
       questionType
     } = this.state;
     const { Option } = Select;
-    let { index } = this.props;
-    let list = typeof this.props.data === "undefined" ? questionsArr : answers;
+    let { index, data } = this.props;
+    console.log("data", this.state.data);
 
+    let list = typeof data === "undefined" ? questionsArr : answers;
     let element = list.map((data, index) => {
       return (
         <QuizCreatorQuestionInput
@@ -333,7 +334,12 @@ class QuestionCreatePopup extends React.Component {
               </p>
               <div className="choose-question-types">
                 <Select
-                  defaultValue="true"
+                  defaultValue={
+                    typeof data !== "undefined"
+                      ? `${data.is_one_right_ans === true ||
+                          data.is_one_right_ans === 1}`
+                      : "true"
+                  }
                   onChange={this.onSelectQuestionTypeHandler}
                   style={{ width: 150 }}
                 >
