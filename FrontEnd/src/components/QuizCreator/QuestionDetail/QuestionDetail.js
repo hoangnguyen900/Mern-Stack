@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
   faPencilAlt,
-  faCopy,
   faTrashAlt,
   faCircle,
   faClock
@@ -64,9 +63,6 @@ class QuizCreatorQuestionDetail extends React.Component {
                 icon={faTrashAlt}
                 onClick={this.onClickDeleteHandler}
               />
-            </button>
-            <button>
-              <FontAwesomeIcon icon={faCopy} />
             </button>
             <button onClick={this.onClickEditHandler}>
               <span>

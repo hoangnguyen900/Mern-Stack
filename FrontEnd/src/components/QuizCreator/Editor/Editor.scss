@@ -621,13 +621,16 @@
                         }
 
                         .subject:hover {
-                            background-color: #5F5F5F;
+                            background-color: #FD7E14;
 
                             button {
                                 color: white;
                             }
                         }
-
+                        .active-subject{
+                            background: #FD7E14;
+                            color: white;
+                        }
                         button:hover {
                             position: relative;
                             top: 0 !important;

@@ -64,7 +64,6 @@ class ShowPreviewPopUp extends React.Component {
         });
       }
     }
-    console.log(type, this.state);
   };
   menu = () => {
     let { Option } = Select;
@@ -133,12 +132,12 @@ class ShowPreviewPopUp extends React.Component {
                       ref={fileInput => (this.fileInput = fileInput)}
                     />
                     <div className="crop-quiz-title-img">
-                      <img className="default-title-image"
+                      <img
+                        className="default-title-image"
                         src={
                           image !== null ? image : require("./images/none.png")
                         }
                         alt="defaul title "
-                        
                         onClick={() => this.fileInput.click()}
                       />
                     </div>

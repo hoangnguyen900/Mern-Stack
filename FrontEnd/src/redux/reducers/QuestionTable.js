@@ -35,6 +35,8 @@ let myReducer = (state = initialState, action) => {
         ...state[0],
         ...action.data
       };
+      console.log("redux", state[0]);
+
       return { ...state };
     }
 
