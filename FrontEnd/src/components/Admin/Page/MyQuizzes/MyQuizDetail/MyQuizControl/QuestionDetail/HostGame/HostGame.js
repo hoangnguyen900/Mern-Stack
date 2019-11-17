@@ -22,7 +22,6 @@ class QuizControlHostGame extends React.Component {
     this.props.generateCode(question_table_id);
   };
   UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log("nextProps", nextProps);
     this.setState({
       code: nextProps.questionTable[0].code
     });
