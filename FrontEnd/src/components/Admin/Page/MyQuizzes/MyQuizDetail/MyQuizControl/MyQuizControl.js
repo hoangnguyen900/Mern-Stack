@@ -55,6 +55,7 @@ class MyQuizControl extends React.Component {
       }
   }
   render() {
+    let question_table_id = parseInt(this.props.match.params.question_table_id);
     console.log("state", this.state);
     let gradeTitle = localStorage.getItem("gradeTitle");
     let { title, image, played, questions, subject } = this.state;
@@ -136,10 +137,10 @@ class MyQuizControl extends React.Component {
               <button
                 className="action-btn b-host"
                 onClick={() => {
-                  history.push("/admin/quiz/homework/1");
+                  history.push(`/admin/quiz/homework/${question_table_id}`);
                 }}
               >
-                Host game
+                Homework
               </button>
             </div>
           </div>
@@ -171,7 +172,7 @@ class MyQuizControl extends React.Component {
               <span>
                 <FontAwesomeIcon icon={faComments} />
               </span>
-              4 Questions
+              {questions.length} Questions
             </div>
             <button className="show-answers">
               <span>

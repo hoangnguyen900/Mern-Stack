@@ -27,16 +27,7 @@ class CreatedQuizzes extends React.Component {
       data: nextProps.user[0]
     });
   }
-  getRandomNumber = () => {
-    let code = "";
-    for (let i = 0; i < 6; i++) {
-      var r = Math.floor(Math.random() * 10);
-      code = `${code}${r}`;
-    }
-    return code;
-  };
   render() {
-    //console.log("ramdom", this.getRandomNumber());
     let { data } = this.state;
     let name = `${data.first_name} ${data.last_name}`;
     let quizthumb = data.question_tables.map((table, index) => {
@@ -58,7 +49,4 @@ const mapStateToProps = state => {
     user: state.user
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CreatedQuizzes);
+export default connect(mapStateToProps, mapDispatchToProps)(CreatedQuizzes);

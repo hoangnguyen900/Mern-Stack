@@ -4,12 +4,31 @@ import { Menu, Dropdown, Button, Icon } from "antd";
 import "antd/dist/antd.css";
 import { withRouter } from "react-router-dom";
 
+import { connect } from "react-redux";
+import * as actions from "../../../../../../../../redux/actions/index";
 class QuizControlHostGame extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      code: null
+    };
+  }
+  componentDidMount() {
+    let question_table_id = parseInt(this.props.match.params.question_table_id);
+    this.props.showListQuestionAnswer(question_table_id);
+  }
+  onClickGenerateCodeHandler = () => {
+    let question_table_id = parseInt(this.props.match.params.question_table_id);
+    this.props.generateCode(question_table_id);
+  };
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    console.log("nextProps", nextProps);
+    this.setState({
+      code: nextProps.questionTable[0].code
+    });
   }
   render() {
+    let { code } = this.state;
     const day = (
       <Menu>
         <Menu.Item key="1">1st menu item</Menu.Item>
@@ -70,13 +89,33 @@ class QuizControlHostGame extends React.Component {
         </div>
 
         <div className="quiz-hosting-btn">
-          <button>Host Game</button>
+          <button onClick={this.onClickGenerateCodeHandler}>Host Game</button>
         </div>
 
-        <div className="generated-code-container">------</div>
+        <div className="generated-code-container">
+          {code !== null ? code : "------"}
+        </div>
       </div>
     );
   }
 }
-
-export default withRouter(QuizControlHostGame);
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    generateCode: question_table_id => {
+      dispatch(actions.generateCode(question_table_id));
+    },
+    showListQuestionAnswer: question_table_id => {
+      dispatch(actions.showListQuestionAnswer(question_table_id));
+    }
+  };
+};
+const mapStateToProps = state => {
+  return {
+    questionTable: state.questionTable,
+    user: state.user
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(QuizControlHostGame));

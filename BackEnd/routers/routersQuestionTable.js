@@ -43,6 +43,40 @@ router.get("/api/questiontable/:id", (req, res) => {
     res.send(data);
   });
 });
+getRandomNumber = () => {
+  let code = "";
+  for (let i = 0; i < 6; i++) {
+    var r = Math.floor(Math.random() * 10);
+    code = `${code}${r}`;
+  }
+  return code;
+};
+router.post("/api/genarate_code", async (req, res) => {
+  while (true) {
+    let code = getRandomNumber();
+    let count = async () => {
+      let a = 0;
+      await QuestionTable.count({ where: { code: code } })
+        .then(count => {
+          if (count === 0) {
+            a = 1;
+          }
+        })
+        .catch(err => console.log(err));
+      return a;
+    };
+    let check = 0;
+    await count().then(a => (check = a));
+    if (check) {
+      QuestionTable.update({ code: code }, { where: { id: req.body.id } })
+        .then(() => {
+          res.redirect(`/api/questiontable/${req.body.id}`);
+        })
+        .catch(err => console.log(err));
+      break;
+    }
+  }
+});
 router.put("/api/table_update", (req, res) => {
   QuestionTable.update(req.body, { where: { id: req.body.id } })
     .then(data => res.send(data))

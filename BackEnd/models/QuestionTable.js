@@ -13,7 +13,7 @@ const QuestionTable = db.define("question_table", {
     foreignKey: [Object]
   },
   code: {
-    type: "INT(6)",
+    type: "VARCHAR(6)",
     allowNull: true,
     defaultValue: null,
     primaryKey: false
