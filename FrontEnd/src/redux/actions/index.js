@@ -402,6 +402,29 @@ export const getQuestionTableByCode = code => {
       });
   };
 };
+export const generateCode = id => {
+  return dispatch => {
+    axios({
+      method: "post",
+      url: URLs.GENARATE_CODE_API_URL,
+      headers: {
+        "content-type": "application/json"
+      },
+      data: { id }
+    })
+      .then(res => {
+        console.log("API sho CODE", res.data);
+
+        dispatch({
+          type: types.SHOW_QUESTION_ANSWERS,
+          data: res.data
+        });
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};
 export const isUserDoQuizBefore = question_table_id => {
   return dispatch => {
     let token = localStorage.getItem("token");

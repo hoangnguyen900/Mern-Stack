@@ -108,7 +108,7 @@ class AdminPage extends React.Component {
                     <div className="admin-tab-select-container">
                         <Switch>
                             <Route exact path="/admin/" render={({ match }) => <MyQuizzes match={match} />} />
-                            <Route
+                            <Route exact
                                 path="/admin/:question_table_id"
                                 component={MyQuizControl}
                             />
