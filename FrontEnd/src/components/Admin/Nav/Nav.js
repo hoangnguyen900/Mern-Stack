@@ -18,7 +18,7 @@ class AdminNav extends React.Component {
         <div class="admin-nav-btn">
           <button
             onClick={() => {
-              history.push("/join");
+              history.push("/");
             }}
           >
             Join a game
