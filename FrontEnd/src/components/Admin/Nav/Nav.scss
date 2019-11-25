@@ -24,19 +24,22 @@
             background:#fd7e14;
             border:none;
             outline: none;
-            top: 0;
             color:#ffffff;
-            border-radius: 10px;
+            border-radius: 5px;
             position: absolute;
             top: 50%;
             right: 50%;
             transform: translate(-50%,-50%);
             min-width: 100px;
             padding: 10px 0;
-            transition: 0.4s;
+            transition: 0.3s;
+            font-weight: bold;
+            width: 140px;
+            height: 40px;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15), 0 4px 0 #FD7E14, 0 4px 6px rgba(0, 0, 0, 0.45);
         }
         button:hover{
-            background: #fd5e14;
+            margin-top: 3px;
         }
     }
 }

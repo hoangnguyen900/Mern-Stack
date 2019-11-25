@@ -30,7 +30,7 @@ class MyQuizzes extends React.Component {
     return (
       <div className="my-quizzes-container">
         <div className="my-quizzes-header">
-          <div className="quizzes-count">All quizzes (2)</div>
+          <div className="quizzes-count">All quizzes ({question_tables.length})</div>
         </div>
         <div className="all-my-quizzes-and-collections">
           <div className="all-my-quizzes-container">{element}</div>

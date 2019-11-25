@@ -6,7 +6,8 @@
     justify-content: flex-start;
     background-color: #ffffff;
     align-items: center;
-    box-shadow: 0px 3px 5px 0px rgba(214,203,214,1);
+    box-shadow: 0px 3px 5px 0px rgba(214, 203, 214, 1);
+
     .logo {
         img {
             height: 110px;
@@ -18,24 +19,31 @@
 
     .input-field {
         height: 35px;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-basis: 0%;
 
         input {
             position: relative;
-            width: 300px;
+            
             min-width: 100px;
             border: 1px solid #EBEBEC;
+            display: flex;
             border-radius: 25px;
             font-size: 16px;
             text-indent: 15px;
             color: gray;
             height: 35px;
-            left: -40px;
+            flex-grow: 1;
+            flex-shrink: 1;
         }
 
         .search-icon {
-            position: relative;
-            left: 228px;
-            top: -28px;
+            position: absolute;
+            right: 8px;
+            top: 8px;
             width: 25px;
         }
     }
@@ -115,22 +123,23 @@
             top: 3px;
         }
 
-        .ant-btn.ant-dropdown-trigger{
+        .ant-btn.ant-dropdown-trigger {
             margin: 0 5px;
             border-radius: 50%;
             padding: 5px 10px;
             padding-bottom: 7px;
             border: 1px solid #FD7E14;
-            color:#FD7E14;
+            color: #FD7E14;
             height: fit-content;
             align-self: center;
         }
-        .ant-btn.ant-dropdown-trigger:hover{
-            color:#FD7E14;
+
+        .ant-btn.ant-dropdown-trigger:hover {
+            color: #FD7E14;
         }
 
-        .ant-btn.ant-dropdown-trigger.ant-dropdown-open{
-            color:#FD7E14;
+        .ant-btn.ant-dropdown-trigger.ant-dropdown-open {
+            color: #FD7E14;
         }
     }
 }

@@ -1,5 +1,5 @@
 .activity-container {
-    height: 100%;
+    height: fit-content;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -54,6 +54,7 @@
         .quiz-type-navbar {
             padding-left: 10px !important;
         }
+                
     }
 
 }

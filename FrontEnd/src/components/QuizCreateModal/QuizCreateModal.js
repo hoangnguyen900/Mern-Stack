@@ -104,6 +104,7 @@ class QuizCreate extends React.Component {
                 </div>
               </div>
               <div className="init-quiz-create-footer">
+                <button style={{background:'black'}} onClick={()=>history.push("/")}>Cancel</button>
                 <button type="submit">Create</button>
               </div>
             </div>

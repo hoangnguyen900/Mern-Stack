@@ -99,10 +99,11 @@ class QuizThumbnail extends React.Component {
   render() {
     let { data, isCompleted, isRunning, accuracy } = this.state;
     let color = this.accuracyColor(accuracy);
+   
     //console.log("props", this.props.data);
     return (
       <div>
-        <div className="quiz-thumbnail-container" onClick={this.onClickHandler}>
+        <div className="quiz-thumbnail-container" style={isCompleted?{height:'280px'}:{height:'240px'}}  onClick={this.onClickHandler}>
           <div className="crop-thumbnail-img">
             <img
               src={

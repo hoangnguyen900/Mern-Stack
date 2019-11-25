@@ -90,8 +90,13 @@ class QuizDetailTable extends React.Component {
                 alt="thumbnail"
               />
             </div>
-
-            <button onClick={this.props.togglePopup}>
+            <button class="quiz-table-edit-btn"
+              style={!disabled ? { display: 'none'} : {}}
+              onClick={()=>{
+                history.push(`/quiz/${data.id}`)
+              }}
+            >Finish Edit</button>
+            <button className="quiz-table-close-btn" onClick={this.props.togglePopup}>
               <FontAwesomeIcon
                 icon={faTimesCircle}
                 size="2x"
