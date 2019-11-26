@@ -3,28 +3,37 @@ import "./Join.scss";
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions/index";
 import QuizDetailTable from "../../utils/QuizThumbnail/QuizDetailTable/QuizDetailTable";
+import QuizThumbnail from "../../utils/QuizThumbnail/QuizThumbnail";
+
 class Join extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       code: 0,
       questionTable: {},
-      showQuizCode: false
+      showQuizCode: false,
+      completedQuiz: [],
+      subjects: [
+        {
+          title: "",
+          question_tables: []
+        }
+      ]
     };
   }
   componentDidMount() {
-    //get data API from backend
-    //this.props.getListQuestionTable();
+    this.props.showListUserDoQuestionTable();
+    this.props.showListTableBySubject();
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log(nextProps.user);
-    localStorage.setItem(
-      "username",
-      `${nextProps.user[0].first_name} ${nextProps.user[0].last_name}`
-    );
+    console.log("subject", nextProps.subject);
+    let { completed, user, subject } = nextProps;
+
     this.setState({
-      showQuizCode: nextProps.user.showQuizCode,
-      questionTable: nextProps.user.questionTable
+      showQuizCode: user.showQuizCode,
+      questionTable: user.questionTable,
+      completedQuiz: completed.completedQuiz,
+      subjects: subject.tablesBySubject
     });
   }
   onChangeHandler = event => {
@@ -38,8 +47,36 @@ class Join extends React.Component {
       showQuizCode: !this.state.showQuizCode
     });
   };
+  showLimitTableBySubject = question_tables => {
+    let arr = [];
+    for (let i = 0; i < 5; i++)
+      if (typeof question_tables[i] !== "undefined")
+        arr.push(<QuizThumbnail key={i} data={question_tables[i]} />);
+    return arr;
+  };
+  showLimitSubject = () => {
+    let { subjects } = this.state;
+    let arr = [];
+    for (let i = 0; i < 5; i++)
+      if (typeof subjects[i] !== "undefined") {
+        let listTable = this.showLimitTableBySubject(
+          subjects[i].question_tables
+        );
+        arr.push(
+          <div className="VietCSSDumTao" key={i}>
+            <h2>{subjects[i].title}</h2>
+            <div className="quiz-list">{listTable}</div>
+          </div>
+        );
+      }
+    return arr;
+  };
   render() {
-    let { questionTable } = this.state;
+    let { questionTable, completedQuiz } = this.state;
+    let quizthumbComplete = completedQuiz.map((table, index) => {
+      return <QuizThumbnail key={index} data={table} isCompleted={true} />;
+    });
+    let quizthumbSubject = this.showLimitSubject();
 
     return (
       <div className="join-container">
@@ -56,6 +93,11 @@ class Join extends React.Component {
           </div>
           <div className="profile-field"></div>
         </div>
+        <div className="VietCSSDumTao">
+          <h2>Recent Activity</h2>
+          <div className="quiz-list">{quizthumbComplete}</div>
+        </div>
+        {quizthumbSubject}
         {this.state.showQuizCode ? (
           <QuizDetailTable
             togglePopup={this.togglePopup}
@@ -69,21 +111,23 @@ class Join extends React.Component {
 }
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    getListQuestionTable: () => {
-      dispatch(actions.getListQuestionTable());
-    },
     getQuestionTableByCode: code => {
       dispatch(actions.getQuestionTableByCode(code));
     },
-    getListUserDoQuestionTable: () => {
-      dispatch(actions.getListUserDoQuestionTable());
+    showListUserDoQuestionTable: () => {
+      dispatch(actions.showListUserDoQuestionTable());
+    },
+    showListTableBySubject: () => {
+      dispatch(actions.showListTableBySubject());
     }
   };
 };
 const mapStateToProps = state => {
   return {
     questionTable: state.questionTable,
-    user: state.user
+    user: state.user,
+    completed: state.completed,
+    subject: state.subject
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Join);

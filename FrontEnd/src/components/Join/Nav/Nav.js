@@ -20,11 +20,10 @@ class JoinNav extends React.Component {
       isOpenUserActions: false
     };
   }
-  componentDidMount() {
-    //get data API from backend
-    this.props.getListQuestionTable();
-    this.props.getListUserDoQuestionTable();
-  }
+  // componentDidMount() {
+  //   //get data API from backend
+
+  // }
 
   userActionsHandleClick = () => {
     this.setState({
@@ -49,11 +48,13 @@ class JoinNav extends React.Component {
   };
   render() {
     let token = localStorage.getItem("token");
+    let username = localStorage.getItem("username");
+
     const userActions = (
       <Menu style={{ padding: "5px 0px", width: "fit-content" }}>
         <Menu.Item style={{ borderBottom: "1px solid #e6e6e6" }}>
           <div target="_blank" rel="noopener noreferrer">
-            Tri
+            {username}
           </div>
         </Menu.Item>
         <Menu.Item>

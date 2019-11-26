@@ -23,7 +23,7 @@ class ShowSubjectPopUp extends React.Component {
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({
-      subjects: nextProps.subject
+      subjects: nextProps.subject.subjects
     });
   }
   onChangeHandler = event => {

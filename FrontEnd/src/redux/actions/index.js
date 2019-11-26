@@ -268,6 +268,32 @@ export const showListSubject = () => {
       });
   };
 };
+export const getListTableBySubject = () => {
+  return dispatch => {
+    axios({
+      method: "post",
+      url: URLs.QUESTION_TABLE_BY_SUBJECT_API_URL,
+      headers: {
+        "content-type": "application/json"
+      }
+    })
+      .then(res => {
+        console.log("API get QUESTION TABLE by SUBJECT ", res.data);
+        dispatch({
+          type: types.GET_QUESTION_TABLE_BY_SUBJECT,
+          data: res.data
+        });
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};
+export const showListTableBySubject = () => {
+  return {
+    type: types.SHOW_QUESTION_TABLE_BY_SUBJECT
+  };
+};
 export const createQuestionTable = data => {
   return dispatch => {
     let token = localStorage.getItem("token");

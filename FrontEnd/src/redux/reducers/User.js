@@ -1,10 +1,13 @@
 import * as types from "../actions/actionTypes";
 
-let initialState = {};
+let initialState = {
+  isDoneLoading: false
+};
 let myReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.SHOW_QUESTION_TABLE:
-      if (typeof action.data !== "undefined") state = { ...action.data };
+      if (typeof action.data !== "undefined")
+        state = { ...state, ...action.data, isDoneLoading: true };
 
       return {
         ...state
