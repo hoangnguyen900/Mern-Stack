@@ -2,7 +2,7 @@ import React from "react";
 import "./QuestionShow.scss";
 import TimeBar from "../Timebar/TimeBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleRight, faCircle } from "@fortawesome/free-solid-svg-icons";
+import { faAngleRight, faPause } from "@fortawesome/free-solid-svg-icons";
 class QuestionShow extends React.Component {
   constructor(props) {
     super(props);
@@ -64,53 +64,64 @@ class QuestionShow extends React.Component {
   }
 
   render() {
-    const { id, time, question, question_choices, disableButton } = this.state;
+    const { time, question, question_choices, disableButton } = this.state;
+    let { questionsLength, index } = this.props;
+    console.log("question_choices here");
+    console.log(question_choices);
+    let colorButtons = ["#2F6DAE", "#2C9CA6", "#ECA82C", "#D4546A", "#5cd65c"];
     const element = question_choices.map((answer, index) => {
       let color = () => {
         if (answer.check === false) return "#F14D76";
         if (answer.check === true) return "#00c985";
-        return "#d9d9d9";
+        return colorButtons[index];
       };
       return (
         //<div className="question-answer" >
-          <button className="question-answer" key={index}
+        <div className="question-answer-wrapper" key={index}>
+          <button className="question-answer"
             onClick={() => {
               this.onClickCheckAnswer(index);
               localStorage.setItem("choiceIndex", index);
             }}
-            disabled={disableButton}
+            disabled={disableButton} style={{ background: color() }}
           >
-            <span className="dot-answer">
-              <FontAwesomeIcon icon={faCircle} size="lg" color={color()} />
-              <span className="answer-beside-dot">{answer.answer}</span>
-            </span>
+            {answer.answer}
+
           </button>
-       // </div>
+        </div>
+        // </div>
       );
     });
+
+
     return (
       <div className="question-show-container">
         <TimeBar TimeOut={time} />
-        <div className="question-detail-container">
-          <div className="question-detail-header">
-            <p>Question {id}</p>
+        <div className="question-show-actions">
+          <button className="action-pause">
+            <span><FontAwesomeIcon icon={faPause} /></span>
+          </button>
+          <div className="question-process-num">
+            <span>{index + 1}</span>/{questionsLength}
           </div>
+        </div>
+        <div className="question-detail-container">
           <div className="question-detail-body">
             <div className="question-content">
               <h5> {question}</h5>
             </div>
-            <div className="answers-divider">
+            {/* <div className="answers-divider">
               <div className="divider-name">
                 <p>answer choices</p>
               </div>
               <hr />
-            </div>
+            </div> */}
             <div className="question-answers-container">{element}</div>
           </div>
           <div className="question-detail-footer">
             <div className="change-question-group">
               <button>
-                Next
+                Submit
                 <span>
                   <FontAwesomeIcon icon={faAngleRight} />
                 </span>
