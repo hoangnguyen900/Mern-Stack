@@ -18,11 +18,11 @@ class CreatedQuizzes extends React.Component {
   }
   componentDidMount() {
     //get data from redux
-    console.log("match", this.props.match);
+    //console.log("match", this.props.match);
     this.props.showListQuestionTable();
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log("created", nextProps.user);
+    //console.log("created", nextProps.user);
     this.setState({
       data: nextProps.user[0]
     });

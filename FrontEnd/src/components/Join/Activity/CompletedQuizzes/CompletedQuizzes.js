@@ -15,7 +15,7 @@ class CompletedQuizzes extends React.Component {
     this.props.showListUserDoQuestionTable();
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log("completed", nextProps);
+    console.log("completed", nextProps.completed);
     let { completedQuiz } = nextProps.completed;
     this.setState({
       data: completedQuiz
@@ -25,15 +25,7 @@ class CompletedQuizzes extends React.Component {
   render() {
     let { data } = this.state;
     let quizthumb = data.map((table, index) => {
-      let name = `${table.user.first_name} ${table.user.last_name}`;
-      return (
-        <QuizThumbnail
-          key={index}
-          data={table}
-          userName={name}
-          isCompleted={true}
-        />
-      );
+      return <QuizThumbnail key={index} data={table} isCompleted={true} />;
     });
     return <div className="quiz-list">{quizthumb}</div>;
   }
@@ -52,7 +44,4 @@ const mapStateToProps = state => {
     completed: state.completed
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CompletedQuizzes);
+export default connect(mapStateToProps, mapDispatchToProps)(CompletedQuizzes);

@@ -99,11 +99,15 @@ class QuizThumbnail extends React.Component {
   render() {
     let { data, isCompleted, isRunning, accuracy } = this.state;
     let color = this.accuracyColor(accuracy);
-   
+    let userName = localStorage.getItem("username");
     //console.log("props", this.props.data);
     return (
       <div>
-        <div className="quiz-thumbnail-container" style={isCompleted?{height:'280px'}:{height:'240px'}}  onClick={this.onClickHandler}>
+        <div
+          className="quiz-thumbnail-container"
+          style={isCompleted ? { height: "280px" } : { height: "240px" }}
+          onClick={this.onClickHandler}
+        >
           <div className="crop-thumbnail-img">
             <img
               src={
@@ -126,7 +130,7 @@ class QuizThumbnail extends React.Component {
           </div>
           <div className="author-name">
             <span>
-              <span>By:</span> {this.props.userName}
+              <span>By:</span> {userName}
             </span>
           </div>
           {isRunning ? (
@@ -151,7 +155,7 @@ class QuizThumbnail extends React.Component {
           <QuizDetailTable
             togglePopup={this.togglePopup}
             data={data}
-            userName={this.props.userName}
+            userName={userName}
           />
         ) : null}
       </div>

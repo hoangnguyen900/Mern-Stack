@@ -13,6 +13,7 @@ import {
   faPlusCircle,
   faPencilAlt,
   faEye,
+  faEyeSlash,
   faGraduationCap,
   faBook,
   faUpload
@@ -35,8 +36,9 @@ class QuizCreatorEditor extends React.Component {
       table: {
         title: "",
         questions: [],
-        isFinish: false,
+        is_finish: false,
         image: null,
+        is_public: true,
         subject: {
           id: 0,
           title: ""
@@ -155,8 +157,19 @@ class QuizCreatorEditor extends React.Component {
     }
     return gradeTitle;
   };
+  onClickChangePublic = () => {
+    let { id, is_public } = this.state.table;
+    let check = !is_public;
+    this.setState({
+      table: {
+        ...this.state.table,
+        is_public: check
+      }
+    });
+    this.props.updateTable({ id, is_public: check });
+  };
   render() {
-    let { image, subject, title } = this.state.table;
+    let { image, subject, title, is_public } = this.state.table;
     let gradeTitle = this.gradeTitle();
     let element = this.state.table.questions.map((data, index) => {
       return (
@@ -254,12 +267,13 @@ class QuizCreatorEditor extends React.Component {
               </div>
               <div className="quiz-scope-data">
                 <div className="scope-public">
-                  <button>
+                  <button onClick={this.onClickChangePublic}>
                     <span>
-                      <FontAwesomeIcon icon={faEye} />
+                      <FontAwesomeIcon icon={is_public ? faEye : faEyeSlash} />
                       {/*change to faEyeSlash if private */}
                     </span>
-                    Public {/** change to "private" if private */}
+                    {is_public ? "Public" : "private"}{" "}
+                    {/** change to "private" if private */}
                   </button>
                 </div>
               </div>
@@ -347,6 +361,9 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     finishQuestionTable: id => {
       dispatch(actions.finishQuestionTable(id));
+    },
+    updateTable: data => {
+      dispatch(actions.updateTable(data));
     }
   };
 };

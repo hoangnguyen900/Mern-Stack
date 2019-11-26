@@ -2,9 +2,7 @@ import React from "react";
 import "./Nav.scss";
 import history from "../../../history";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlusCircle
-} from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 class AdminNav extends React.Component {
   constructor(props) {
     super(props);
@@ -22,9 +20,10 @@ class AdminNav extends React.Component {
         <div class="admin-nav-btn">
           <button
             onClick={() => {
-              history.push("/");
+              history.push("/join");
             }}
-          ><FontAwesomeIcon icon={faPlusCircle}/>
+          >
+            <FontAwesomeIcon icon={faPlusCircle} />
             Join a game
           </button>
         </div>

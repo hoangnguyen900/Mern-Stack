@@ -33,7 +33,7 @@ class PreGame extends React.Component {
     return (
       <div className="pre-game-container">
         <div className="pre-game-nav">
-          <button onClick={() => history.push(`/`)}>
+          <button onClick={() => history.push(`/join`)}>
             <span>
               <FontAwesomeIcon icon={faTimes} />
             </span>

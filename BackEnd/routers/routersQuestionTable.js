@@ -93,6 +93,21 @@ router.post("/api/questiontable", verifyToken, (req, res) => {
     }
   });
 });
+router.post("/api/get_question_table_by_subject", (req, res) => {
+  Subject.findAll({
+    include: [
+      {
+        model: QuestionTable,
+        include: [Question],
+        where: { is_public: 1 || true }
+      }
+    ]
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => console.log(err));
+});
 router.post("/api/get_question_table_code", (req, res) => {
   QuestionTable.findOne({
     where: {

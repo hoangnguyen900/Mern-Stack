@@ -5,32 +5,42 @@ import JoinNav from "../../components/Join/Nav/Nav";
 import Activity from "../../components/Join/Activity/Activity";
 import Join from "../../components/Join/Join";
 import history from "../../history";
+import LoadingPage from "../../utils/LoadingPage/LoadingPage";
 class JoinLayout extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isLoadDataDone: false
+    };
   }
+  doneLoading = () => {
+    this.setState({
+      isLoadDataDone: true
+    });
+  };
   render() {
     let { match } = this.props;
-    console.log(match);
+    let { isLoadDataDone } = this.state;
     if (!localStorage.getItem("token")) history.push("/");
-    return (
-      <BrowserRouter>
-        <div className="join-layout-container">
-          <JoinNav />
-          <br></br>
-          <Switch>
-            <Route exact path={`${match.url}`}>
-              <Join match={match} />
-            </Route>
-            <Route
-              path={`${match.url}/activity`}
-              render={({ match }) => <Activity match={match} />}
-            />
-          </Switch>
-        </div>
-      </BrowserRouter>
-    );
+    if (!isLoadDataDone) return <LoadingPage doneLoading={this.doneLoading} />;
+    else
+      return (
+        <BrowserRouter>
+          <div className="join-layout-container">
+            <JoinNav />
+            <br></br>
+            <Switch>
+              <Route exact path={`${match.url}`}>
+                <Join match={match} />
+              </Route>
+              <Route
+                path={`${match.url}/activity`}
+                render={({ match }) => <Activity match={match} />}
+              />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      );
   }
 }
 
