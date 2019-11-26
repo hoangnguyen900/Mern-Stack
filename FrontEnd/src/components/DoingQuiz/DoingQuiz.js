@@ -85,6 +85,7 @@ class DoingQuiz extends React.Component {
       } else
         return (
           <QuestionShow
+            questionsLength={questions.length}
             key={count}
             index={count}
             question={questions[count]}

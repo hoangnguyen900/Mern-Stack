@@ -4,7 +4,6 @@
     display: flex;
     flex-direction: column;
     background: #F9F9F9;
-
     .enter-quiz {
         height: fit-content;
         display: flex;
@@ -12,7 +11,7 @@
         justify-content: center;
         background: #f9f9f9;
         flex-wrap: wrap;
-
+       
         .code-field {
             border-radius: 15px;
             background: white;

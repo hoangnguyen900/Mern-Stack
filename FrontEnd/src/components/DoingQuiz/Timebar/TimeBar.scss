@@ -133,6 +133,7 @@ $bar-bg: rgba(0, 0, 0, 0.075);
 
 .htbar {
     background: $bar-bg;
+    height: 7px;
 }
 
 .htprogress {
@@ -147,11 +148,11 @@ $bar-bg: rgba(0, 0, 0, 0.075);
 // Vertical Centering ==============================
 // You don't need this to make it work on your site.
 .htprogress-bar {
-    left: 50%;
+    left: 0%;
     max-width: 100%;
     position: absolute;
     top: 50%;
-    transform: translate3d(-50%, -50%, 0);
+    transform: translate3d(-50%, -50%, -50%);
 }
 
 .time-bar-container {
