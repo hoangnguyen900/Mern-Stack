@@ -3,7 +3,7 @@ import history from "../../../history";
 import { connect } from "react-redux";
 import * as actions from "../../../redux/actions/index";
 import "./Nav.scss";
-import LoginPopup from "../Popup/LoginPopup";
+import LoginPopup from "../LoginPopup/LoginPopup";
 class HomeNav extends React.Component {
   constructor(props) {
     super(props);
@@ -57,7 +57,4 @@ const mapStateToProps = state => {
     login: state.login
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomeNav);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeNav);
