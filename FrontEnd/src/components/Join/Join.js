@@ -22,13 +22,9 @@ class Join extends React.Component {
           question_tables: []
         }
       ],
-      isFocusInput: false,
-     
+      isFocusInput: false
     };
-
-  
   }
-
 
   componentDidMount() {
     this.props.showListUserDoQuestionTable();
@@ -52,7 +48,6 @@ class Join extends React.Component {
     this.props.getQuestionTableByCode(parseInt(this.state.code));
   };
 
-  
   togglePopup = () => {
     this.setState({
       showQuizCode: !this.state.showQuizCode
@@ -61,7 +56,7 @@ class Join extends React.Component {
   showLimitTableBySubject = question_tables => {
     let arr = [];
     let userName = "";
-    for (let i = 0; i < 1; i++)
+    for (let i = 0; i < 5; i++)
       if (typeof question_tables[i] !== "undefined") {
         userName = `${question_tables[i].user.first_name} ${question_tables[i].user.last_name}`;
         arr.push(
@@ -84,7 +79,7 @@ class Join extends React.Component {
           subjects[i].question_tables
         );
         arr.push(
-          <div className="join-quiz-list-review" key={i} >
+          <div className="join-quiz-list-review" key={i}>
             <h3>{subjects[i].title}</h3>
             <div className="quiz-list-show-topic">{listTable}</div>
           </div>
@@ -118,7 +113,7 @@ class Join extends React.Component {
   }
 
   render() {
-    let { questionTable, completedQuiz, isFocusInput } = this.state;
+    let { questionTable, completedQuiz, isFocusInput, user } = this.state;
     let quizthumbComplete = completedQuiz.map((table, index) => {
       let userName = `${table.user.first_name} ${table.user.last_name}`;
 
@@ -131,9 +126,9 @@ class Join extends React.Component {
         />
       );
     });
-   
+
     let quizthumbSubject = this.showLimitSubject();
-    
+
     return (
       <div className="join-container">
         <div className="enter-quiz">
@@ -151,7 +146,18 @@ class Join extends React.Component {
           </div>
           <div className="profile-field">
             <span className="add-profile-icon">
-              <img className="join-default-ava" alt="default-ava" src={require("../../utils/images/defaultava.png")} />
+
+              {/* <FontAwesomeIcon icon={faPlusCircle} size="5x" color="#D8D8D8" /> */}
+              <img
+                className="join-default-ava"
+                src={
+                  user.avatar !== null
+                    ? user.avatar
+                    : require("../../utils/images/defaultava.png")
+                }
+                alt="default-ava"
+              />
+
               <div className="add-profile-overlay">Select avatar</div>
             </span>
             <h5>User Name</h5>
@@ -162,7 +168,9 @@ class Join extends React.Component {
           </div>
         </div>
         {completedQuiz.length ? (
-          <div className="join-quiz-list-review" >
+
+          <div className="join-quiz-list-review">
+
             <h3>Recent Activity</h3>
             <div className="quiz-list-show-activity">{quizthumbComplete}</div>
           </div>
