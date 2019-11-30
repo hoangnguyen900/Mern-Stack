@@ -99,8 +99,7 @@ class QuizThumbnail extends React.Component {
   render() {
     let { data, isCompleted, isRunning, accuracy } = this.state;
     let color = this.accuracyColor(accuracy);
-    let userName = localStorage.getItem("username");
-    //console.log("props", this.props.data);
+    let userName = this.props.userName;
     return (
       <div className="quiz-thumbnail-wrapper">
         <div

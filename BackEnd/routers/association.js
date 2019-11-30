@@ -8,6 +8,8 @@ const Subject = require("../models/Subject");
 const User = require("../models/User");
 const AnswerRecord = require("../models/AnswerRecord");
 const UserRole = require("../models/UserRole");
+const MultiChoices = require("../models/MultiChoices");
+const MultiChoices_Choices = require("../models/MultiChoices_Choices");
 
 //////////////
 UserRole.hasMany(User, { foreignKey: "role_id" });
@@ -28,6 +30,8 @@ AnswerRecord.belongsTo(User, { foreignKey: "user_id" });
 AnswerRecord.belongsTo(QuestionTable, { foreignKey: "question_table_id" });
 AnswerRecord.belongsTo(Question, { foreignKey: "question_id" });
 AnswerRecord.belongsTo(QuestionChoices, { foreignKey: "choice_id" });
+//
+AnswerRecord.belongsTo(MultiChoices, { foreignKey: "multi_choice_id" });
 
 /////////////////////////////////////////////
 QuestionTable.belongsTo(Subject, {
@@ -61,7 +65,24 @@ QuestionChoices.belongsTo(Question, {
 QuestionChoices.hasMany(AnswerRecord, {
   foreignKey: "choice_id"
 });
+//
+QuestionChoices.belongsToMany(MultiChoices, {
+  through: MultiChoices_Choices,
+  foreignKey: "choice_id"
+});
+////////////////////////////////////////////////
+MultiChoices.belongsToMany(QuestionChoices, {
+  through: MultiChoices_Choices,
+  foreignKey: "multi_choice_id"
+});
 ////////////////////////////////////////////////////
+MultiChoices_Choices.belongsTo(MultiChoices, {
+  foreignKey: "multi_choice_id"
+});
+MultiChoices_Choices.belongsTo(QuestionChoices, {
+  foreignKey: "choice_id"
+});
+//////////////////////////////////////////////////
 QuestionTable_Question.belongsTo(QuestionTable, {
   foreignKey: "question_table_id"
 });

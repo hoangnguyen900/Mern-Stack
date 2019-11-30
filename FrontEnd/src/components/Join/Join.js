@@ -53,9 +53,19 @@ class Join extends React.Component {
   };
   showLimitTableBySubject = question_tables => {
     let arr = [];
+    let userName = "";
     for (let i = 0; i < 5; i++)
-      if (typeof question_tables[i] !== "undefined")
-        arr.push(<QuizThumbnail key={i} data={question_tables[i]} />);
+      if (typeof question_tables[i] !== "undefined") {
+        userName = `${question_tables[i].user.first_name} ${question_tables[i].user.last_name}`;
+        arr.push(
+          <QuizThumbnail
+            key={i}
+            data={question_tables[i]}
+            userName={userName}
+          />
+        );
+      }
+
     return arr;
   };
   showLimitSubject = () => {
@@ -103,7 +113,16 @@ class Join extends React.Component {
   render() {
     let { questionTable, completedQuiz, isFocusInput } = this.state;
     let quizthumbComplete = completedQuiz.map((table, index) => {
-      return <QuizThumbnail key={index} data={table} isCompleted={true} />;
+      let userName = `${table.user.first_name} ${table.user.last_name}`;
+
+      return (
+        <QuizThumbnail
+          key={index}
+          data={table}
+          isCompleted={true}
+          userName={userName}
+        />
+      );
     });
     let quizthumbSubject = this.showLimitSubject();
 
@@ -134,10 +153,14 @@ class Join extends React.Component {
             </div>
           </div>
         </div>
-        <div className="join-quiz-list-review">
-          <h3>Recent Activity</h3>
-          <div className="quiz-list-show-activity">{quizthumbComplete}</div>
-        </div>
+        {completedQuiz.length ? (
+          <div className="join-quiz-list-review">
+           <h3>Recent Activity</h3>
+            <div className="quiz-list-show-activity">{quizthumbComplete}</div>
+          </div>
+        ) : null}
+
+
         {quizthumbSubject}
         {this.state.showQuizCode ? (
           <QuizDetailTable

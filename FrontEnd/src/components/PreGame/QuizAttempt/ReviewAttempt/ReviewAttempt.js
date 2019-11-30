@@ -30,7 +30,19 @@ class ReviewAttempt extends React.Component {
     //calculate the accuracy
     let rightAnswer = 0;
     data.forEach(attempt => {
-      if (attempt.question_choice.is_right === 1) rightAnswer++;
+      if (attempt.question.is_one_right_ans) {
+        if (attempt.question_choice.is_right === 1) rightAnswer++;
+      } else {
+        let { question_choices } = attempt.multi_choice;
+        let questionRightTotal = 0;
+        let multiRightTotal = 0;
+        for (let i = 0; i < attempt.question.question_choices.length; i++)
+          if (attempt.question.question_choices[i].is_right)
+            questionRightTotal++;
+        for (let i = 0; i < question_choices.length; i++)
+          if (question_choices[i].is_right) multiRightTotal++;
+        if (multiRightTotal === questionRightTotal) rightAnswer++;
+      }
     });
     let accuracy = (rightAnswer / data.length).toFixed(2) * 100;
     return accuracy;
@@ -40,37 +52,55 @@ class ReviewAttempt extends React.Component {
     //calculate the correct
     let correctAnswer = 0;
     data.forEach(attempt => {
-      if (attempt.question_choice.is_right === 1) correctAnswer++;
+      if (attempt.question.is_one_right_ans) {
+        if (attempt.question_choice.is_right === 1) correctAnswer++;
+      } else {
+        let { question_choices } = attempt.multi_choice;
+        let questionRightTotal = 0;
+        let multiRightTotal = 0;
+        for (let i = 0; i < attempt.question.question_choices.length; i++)
+          if (attempt.question.question_choices[i].is_right === 1)
+            questionRightTotal++;
+        for (let i = 0; i < question_choices.length; i++)
+          if (question_choices[i].is_right === 1) multiRightTotal++;
+        if (multiRightTotal === questionRightTotal) correctAnswer++;
+      }
     });
+
     return correctAnswer;
   };
   inCorrectAnswer = () => {
     let { data } = this.state;
-    //calculate the correct
-    let inCorrectAnswer = 0;
-    data.forEach(attempt => {
-      if (attempt.question_choice.is_right === 0) inCorrectAnswer++;
-    });
+    let inCorrectAnswer =
+      data.length - (this.correctAnswer() + this.unAttemptAnswer());
+
     return inCorrectAnswer;
   };
   unAttemptAnswer = () => {
     let { data } = this.state;
-    //calculate the correct
     let unAttemptAnswer = 0;
+    //   data.length - (this.correctAnswer() + this.inCorrectAnswer());
     data.forEach(attempt => {
-      if (attempt.question_choice.is_right === 2) unAttemptAnswer++;
+      if (attempt.question.is_one_right_ans) {
+        if (attempt.question_choice.is_right === 2) unAttemptAnswer++;
+      } else {
+        let { multi_choice_id } = attempt;
+        if (multi_choice_id === 0) unAttemptAnswer++;
+      }
     });
     return unAttemptAnswer;
   };
+
   render() {
     let { data } = this.state;
     let question_table_id = parseInt(this.props.match.params.question_table_id);
-    let accuracy = this.calculateAccuracy();
+    let accuracy = 0;
+    accuracy = this.calculateAccuracy();
     let progressBar = `${accuracy}%`;
     let userName = localStorage.getItem("username");
     let correctAnswer = this.correctAnswer();
-    let inCorrectAnswer = this.inCorrectAnswer();
     let unAttemptAnswer = this.unAttemptAnswer();
+    let inCorrectAnswer = this.inCorrectAnswer();
     let questionAttempt = data.map((attempt, index) => {
       return <ReviewQuestion key={index} data={attempt} index={index} />;
     });
@@ -83,7 +113,7 @@ class ReviewAttempt extends React.Component {
         width: ${accuracy}%;
         background-color: #00C985;
       }
-    }`
+    }`;
     return (
       <div className="review-attempt-container">
         <div className="review-attempt-nav">
@@ -117,7 +147,7 @@ class ReviewAttempt extends React.Component {
                 <div className="review-name-and-point">
                   <div className="review-name">{userName}</div>
                   <div className="review-point">
-                    <span>Point:</span> 3333
+                    <span>Point:</span> {accuracy}/100
                   </div>
                 </div>
               </div>
@@ -126,7 +156,10 @@ class ReviewAttempt extends React.Component {
             <h4 className="review-section-title">Accuracy</h4>
 
             <div className="review-accuracy-container">
-              <div className="review-progress-container" style={{ accuracyStyle }}>
+              <div
+                className="review-progress-container"
+                style={{ accuracyStyle }}
+              >
                 <div className="review-progress review-progress-moved">
                   <div
                     className="review-progress-bar"
@@ -181,7 +214,7 @@ class ReviewAttempt extends React.Component {
             <div className="review-questions-container">{questionAttempt}</div>
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 }
@@ -197,7 +230,4 @@ const mapStateToProps = state => {
     attempt: state.attempt
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ReviewAttempt);
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewAttempt);

@@ -31,7 +31,14 @@ const AnswerRecord = db.define("answer_record", {
   },
   choice_id: {
     type: "INT(11)",
-    allowNull: false,
+    allowNull: true,
+    defaultValue: null,
+    primaryKey: false,
+    foreignKey: [Object]
+  },
+  multi_choice_id: {
+    type: "INT(11)",
+    allowNull: true,
     defaultValue: null,
     primaryKey: false,
     foreignKey: [Object]

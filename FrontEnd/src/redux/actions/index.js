@@ -209,7 +209,7 @@ export const finishQuestionTable = id => {
     })
       .then(res => {
         console.log("res Update success", res);
-        history.push("/join/");
+        history.push("/join");
       })
       .catch(er => {
         console.log("er", er);
@@ -331,8 +331,9 @@ export const addAnswerRecord = data => {
       data: data
     })
       .then(res => {
-        localStorage.setItem("attempt_id", res.data[0].id);
-        history.push(`/join/pre-game/${data[0].question_table_id}/review`);
+        console.log(res);
+        localStorage.setItem("attempt_id", res.data.id);
+        history.push(`/join/pre-game/${res.data.question_table_id}/review`);
       })
       .catch(er => {
         console.log("er", er);

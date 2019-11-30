@@ -98,7 +98,13 @@ router.post("/api/get_question_table_by_subject", (req, res) => {
     include: [
       {
         model: QuestionTable,
-        include: [Question],
+        include: [
+          Question,
+          {
+            model: User,
+            attributes: ["first_name", "last_name"]
+          }
+        ],
         where: { is_public: 1 || true }
       }
     ]
