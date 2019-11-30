@@ -119,7 +119,7 @@ class Join extends React.Component {
         let url = fileReader.result;
         //console.log("url", url);
         // Something like: data:image/png;base64,iVBORw...Ym57Ad6m6uHj96js
-        this.setState({ image: url });
+        this.setState({ user: { avatar: url } });
       };
     }
   };
@@ -170,7 +170,18 @@ class Join extends React.Component {
                 }
                 alt="default-ava"
               />
-              <div className="add-profile-overlay">Select avatar</div>
+              <input
+                style={{ display: "none" }}
+                type="file"
+                onChange={this.fileChangedHandler}
+                ref={fileInput => (this.fileInput = fileInput)}
+              />
+              <div
+                className="add-profile-overlay"
+                onClick={() => this.fileInput.click()}
+              >
+                Select avatar
+              </div>
             </span>
             <h5>{localStorage.getItem("username")}</h5>
             <div className="join-profile-actions">
