@@ -13,6 +13,9 @@ class Join extends React.Component {
 
     this.state = {
       code: 0,
+      user:{
+        avatar:null
+      },
       questionTable: {},
       showQuizCode: false,
       completedQuiz: [],
@@ -101,6 +104,18 @@ class Join extends React.Component {
         isFocusInput: false,
       })
     }
+  };
+  fileChangedHandler = event => {
+    let fileReader = new FileReader();
+    if (event.target.files[0]) {
+      fileReader.readAsDataURL(event.target.files[0]); // fileReader.result -> URL.
+      fileReader.onload = progressEvent => {
+        let url = fileReader.result;
+        //console.log("url", url);
+        // Something like: data:image/png;base64,iVBORw...Ym57Ad6m6uHj96js
+        this.setState({ user: { avatar: url } });
+      };
+    }
   }
 
 
@@ -158,7 +173,18 @@ class Join extends React.Component {
                 alt="default-ava"
               />
 
-              <div className="add-profile-overlay">Select avatar</div>
+              <input
+                style={{ display: "none" }}
+                type="file"
+                onChange={this.fileChangedHandler}
+                ref={fileInput => (this.fileInput = fileInput)}
+              />
+              <div
+                className="add-profile-overlay"
+                onClick={() => this.fileInput.click()}
+              >
+                Select avatar
+              </div>
             </span>
             <h5>User Name</h5>
             <div className="join-profile-actions">
