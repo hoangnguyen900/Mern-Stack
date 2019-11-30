@@ -18,9 +18,9 @@ class PreGame extends React.Component {
     this.props.getListUserAttempt(question_table_id);
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
+    //console.log(nextProps);
     this.setState({
-      data: nextProps.user
+      data: nextProps.attempt
     });
   }
   render() {
@@ -80,7 +80,7 @@ const mapDispatchToProps = (dispatch, props) => {
 };
 const mapStateToProps = state => {
   return {
-    user: state.user
+    attempt: state.attempt
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(PreGame);

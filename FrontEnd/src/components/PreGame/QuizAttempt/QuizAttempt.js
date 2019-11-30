@@ -21,7 +21,19 @@ class QuizAttempt extends React.Component {
     //calculate the accuracy
     let rightAnswer = 0;
     data.forEach(attempt => {
-      if (attempt.question_choice.is_right === 1) rightAnswer++;
+      if (attempt.question.is_one_right_ans) {
+        if (attempt.question_choice.is_right === 1) rightAnswer++;
+      } else {
+        let { question_choices } = attempt.multi_choice;
+        let questionRightTotal = 0;
+        let multiRightTotal = 0;
+        for (let i = 0; i < attempt.question.question_choices.length; i++)
+          if (attempt.question.question_choices[i].is_right)
+            questionRightTotal++;
+        for (let i = 0; i < question_choices.length; i++)
+          if (question_choices[i].is_right) multiRightTotal++;
+        if (multiRightTotal === questionRightTotal) rightAnswer++;
+      }
     });
     let accuracy = (rightAnswer / data.length).toFixed(2) * 100;
     return accuracy;

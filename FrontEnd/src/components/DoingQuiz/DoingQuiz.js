@@ -22,22 +22,24 @@ class DoingQuiz extends React.Component {
       isDone: false
     };
   }
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this.setState({
-      questions: nextProps.questionTable[0].questions
-    });
-  }
   componentDidMount() {
     let question_table_id = this.props.match.params.question_table_id;
     this.props.showListQuestionAnswer(question_table_id);
   }
-  recordAnswer = (question_id, question_choice) => {
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    console.log("question and answer", nextProps.questionTable[0].questions);
+    this.setState({
+      questions: nextProps.questionTable[0].questions
+    });
+  }
+  recordAnswer = (question_id, question_choice, multi_choice) => {
     ///create data to send API
     let question_table_id = parseInt(this.props.match.params.question_table_id);
     let data = {
       question_table_id: question_table_id,
       question_id,
-      choice_id: question_choice.id
+      choice_id: question_choice.id,
+      multi_choice: multi_choice
     };
     let dataPush = this.state.data;
     dataPush.push({ ...data });
@@ -49,7 +51,7 @@ class DoingQuiz extends React.Component {
       this.setState({
         changeQuestion: true
       });
-    }, 500);
+    }, 2000);
   };
   createQuestion = () => {
     let { questions, count, isDone, changeQuestion, data } = this.state;
@@ -121,7 +123,4 @@ const mapStateToProps = state => {
     question: state.question
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DoingQuiz);
+export default connect(mapStateToProps, mapDispatchToProps)(DoingQuiz);

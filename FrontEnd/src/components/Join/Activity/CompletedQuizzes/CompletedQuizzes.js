@@ -25,7 +25,16 @@ class CompletedQuizzes extends React.Component {
   render() {
     let { data } = this.state;
     let quizthumb = data.map((table, index) => {
-      return <QuizThumbnail key={index} data={table} isCompleted={true} />;
+      let userName = `${table.user.first_name} ${table.user.last_name}`;
+
+      return (
+        <QuizThumbnail
+          key={index}
+          data={table}
+          isCompleted={true}
+          userName={userName}
+        />
+      );
     });
     return <div className="quiz-list">{quizthumb}</div>;
   }

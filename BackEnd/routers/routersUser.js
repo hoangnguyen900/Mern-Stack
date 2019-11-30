@@ -5,6 +5,8 @@ const User = require("../models/User");
 const QuestionChoices = require("../models/QuestionChoices");
 const QuestionTable = require("../models/QuestionTable");
 const Subject = require("../models/Subject");
+const MultiChoices = require("../models/MultiChoices");
+const MultiChoices_Choices = require("../models/MultiChoices_Choices");
 
 const Question = require("../models/Question");
 const AnswerRecord = require("../models/AnswerRecord");
@@ -32,7 +34,11 @@ router.post("/api/quiz_attempt", verifyToken, (req, res) => {
                 model: Question,
                 include: QuestionChoices
               },
-              QuestionChoices
+              QuestionChoices,
+              {
+                model: MultiChoices,
+                include: QuestionChoices
+              }
             ]
           }).then(data => {
             dataArr.push(data);
@@ -76,19 +82,27 @@ router.post("/api/user_answer", verifyToken, (req, res) => {
           for (let i = 0; i < req.body.length; i++) {
             req.body[i].user_id = authData.user_id.id;
             req.body[i].id = id + 1;
+            if (
+              typeof req.body[i].multi_choice.question_choices !== "undefined"
+            ) {
+              MultiChoices.create(req.body[i].multi_choice).then(multiData => {
+                req.body[i].multi_choice_id = multiData.id;
+                let data = [];
+                let { question_choices } = req.body[i].multi_choice;
+                for (let j = 0; j < question_choices.length; j++)
+                  data.push({
+                    multi_choice_id: multiData.id,
+                    choice_id: question_choices[j].id
+                  });
+                MultiChoices_Choices.bulkCreate(data).then(() =>
+                  AnswerRecord.create(req.body[i])
+                );
+              });
+            } else AnswerRecord.create(req.body[i]);
           }
-          AnswerRecord.bulkCreate(req.body).then(data => {
-            res.send(data);
-            // AnswerRecord.findAll({
-            //   include: {
-            //     model: QuestionChoices,
-            //     attributes: ["is_right"]
-            //   },
-            //   where: {
-            //     user_id: data[0].user_id,
-            //     question_table_id: data[0].question_table_id
-            //   }
-            // }).then(data => res.send(data));
+          res.send({
+            id: id + 1,
+            question_table_id: req.body[0].question_table_id
           });
         })
 
@@ -109,6 +123,10 @@ router.post("/api/attempt_record", verifyToken, (req, res) => {
           {
             model: Question,
             include: [QuestionChoices]
+          },
+          {
+            model: MultiChoices,
+            include: QuestionChoices
           }
         ],
         where: {
@@ -157,39 +175,41 @@ router.post("/api/get_completed_table", verifyToken, (req, res) =>
       })
         .then(idArr => {
           let data = [];
-          for (let i = 0; i < idArr.length; i++) {
-            QuestionTable.findOne({
-              where: { id: idArr[i].question_table_id },
-              include: [
-                {
-                  model: Question,
-                  attributes: ["id"]
-                },
-                {
-                  model: AnswerRecord,
-                  include: [
-                    {
-                      model: QuestionChoices,
-                      attributes: ["is_right"]
-                    }
-                  ],
-                  where: {
-                    user_id: authData.user_id.id
+          if (idArr.length === 0) res.send(data);
+          else
+            for (let i = 0; i < idArr.length; i++) {
+              QuestionTable.findOne({
+                where: { id: idArr[i].question_table_id },
+                include: [
+                  {
+                    model: Question,
+                    attributes: ["id"]
                   },
-                  attributes: ["id"]
-                },
-                {
-                  model: User,
+                  {
+                    model: AnswerRecord,
+                    include: [
+                      {
+                        model: QuestionChoices,
+                        attributes: ["is_right"]
+                      }
+                    ],
+                    where: {
+                      user_id: authData.user_id.id
+                    },
+                    attributes: ["id"]
+                  },
+                  {
+                    model: User,
 
-                  attributes: ["first_name", "last_name"]
-                }
-              ],
-              attributes: ["id", "title", "image", "played", "admin"]
-            }).then(questionTable => {
-              data.push(questionTable);
-              if (i == idArr.length - 1) res.send(data);
-            });
-          }
+                    attributes: ["first_name", "last_name"]
+                  }
+                ],
+                attributes: ["id", "title", "image", "played", "admin"]
+              }).then(questionTable => {
+                data.push(questionTable);
+                if (i == idArr.length - 1) res.send(data);
+              });
+            }
         })
         .catch(err => console.log(err));
     }

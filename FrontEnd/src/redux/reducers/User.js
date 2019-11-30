@@ -19,8 +19,6 @@ let myReducer = (state = initialState, action) => {
         questionTable: { ...action.data },
         showQuizCode: true
       };
-    case types.SHOW_USER_ATTEMPT:
-      return [...action.data];
     case types.CHECK_USER_DO_QUIZ:
       state.isPlayedBefore = action.data;
       return { ...state };

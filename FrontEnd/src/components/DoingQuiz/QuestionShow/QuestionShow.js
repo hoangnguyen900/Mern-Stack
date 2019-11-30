@@ -11,63 +11,154 @@ class QuestionShow extends React.Component {
       question: "",
       question_choices: [],
       time: 0,
-      disableButton: false
+      is_one_right_ans: true,
+      disableButton: false,
+      clicked: false,
+      mutiCheckArr: []
     };
   }
+  componentDidMount() {
+    let { question } = this.props;
+    this.setState({
+      ...question,
+      clicked: false
+    });
+  }
   componentWillUnmount() {
-    let { question_choices } = this.state;
-    let index = localStorage.getItem("choiceIndex");
-    console.log("stop", index);
-
-    if (index === null) {
-      let questionChoice = {
-        id: 0
-      };
-      this.props.recordAnswer(this.state.id, questionChoice);
-    } else this.props.recordAnswer(this.state.id, question_choices[index]);
-    localStorage.removeItem("choiceIndex");
+    let { question_choices, is_one_right_ans, mutiCheckArr } = this.state;
+    if (is_one_right_ans) {
+      let index = localStorage.getItem("choiceIndex");
+      if (index === null) {
+        let questionChoice = {
+          id: 0
+        };
+        this.props.recordAnswer(this.state.id, questionChoice, {});
+      } else
+        this.props.recordAnswer(this.state.id, question_choices[index], {});
+      localStorage.removeItem("choiceIndex");
+    } else {
+      let multiArr = { question_choices: [] };
+      for (let i = 0; i < mutiCheckArr.length; i++)
+        multiArr.question_choices[i] = {
+          id: question_choices[mutiCheckArr[i]].id
+        };
+      console.log("multiArr", multiArr);
+      this.props.recordAnswer(this.state.id, { id: 0 }, multiArr);
+    }
   }
   onClickCheckAnswer = index => {
     //let { index, question } = this.props;
-    let { question_choices, disableButton } = this.state;
-    if (disableButton === false) {
-      if (question_choices[index].is_right) {
-        //   let list = this.state.question;
-        //   list.question_choices[index].check = true;
+    let {
+      question_choices,
+      disableButton,
+      is_one_right_ans,
+      mutiCheckArr
+    } = this.state;
+    if (is_one_right_ans) {
+      if (disableButton === false) {
+        this.setState({
+          clicked: true
+        });
+        if (question_choices[index].is_right) {
+          this.setState(preState => ({
+            question_choices: preState.question_choices.map((qChoice, i) => {
+              return i === index ? { ...qChoice, check: true } : qChoice;
+            })
+          }));
+        } else {
+          this.setState(preState => ({
+            question_choices: preState.question_choices.map((qChoice, i) => {
+              return i === index ? { ...qChoice, check: false } : qChoice;
+            })
+          }));
+          this.setState(preState => ({
+            question_choices: preState.question_choices.map(qChoice => {
+              return qChoice.is_right ? { ...qChoice, check: true } : qChoice;
+            })
+          }));
+        }
+        this.props.doneQuestionHandler();
+        this.setState({
+          disableButton: true
+        });
+      }
+    } else {
+      let unCheck = false;
+      let Arr = mutiCheckArr;
+      for (let i = 0; i < mutiCheckArr.length; i++)
+        if (mutiCheckArr[i] === index) {
+          Arr.splice(i, 1);
+          this.setState({
+            mutiCheckArr: [...Arr]
+          });
+          unCheck = true;
+          break;
+        }
+      if (!unCheck) {
+        Arr.push(index);
+        this.setState({
+          mutiCheckArr: [...Arr]
+        });
+      }
+    }
+  };
+  onSubmitMutiSelect = () => {
+    let { question_choices, mutiCheckArr } = this.state;
+    let rightNumber = 0;
+    for (let i = 0; i < question_choices.length; i++)
+      if (question_choices[i].is_right) rightNumber++;
+    //if (mutiCheckArr.length === rightNumber)
+    this.setState({
+      clicked: true
+    });
+    for (let index = 0; index < mutiCheckArr.length; index++)
+      if (question_choices[mutiCheckArr[index]].is_right) {
         this.setState(preState => ({
           question_choices: preState.question_choices.map((qChoice, i) => {
-            return i === index ? { ...qChoice, check: true } : qChoice;
+            return i === mutiCheckArr[index]
+              ? { ...qChoice, check: true }
+              : { ...qChoice };
           })
         }));
       } else {
         this.setState(preState => ({
           question_choices: preState.question_choices.map((qChoice, i) => {
-            return i === index ? { ...qChoice, check: false } : qChoice;
+            return i === mutiCheckArr[index]
+              ? { ...qChoice, check: false }
+              : { ...qChoice };
+          })
+        }));
+        this.setState(preState => ({
+          question_choices: preState.question_choices.map(qChoice => {
+            return qChoice.is_right
+              ? { ...qChoice, check: true }
+              : { ...qChoice };
           })
         }));
       }
-      this.props.doneQuestionHandler();
-      this.setState({
-        disableButton: true
-      });
-    }
+    if (mutiCheckArr.length !== rightNumber)
+      this.setState(preState => ({
+        question_choices: preState.question_choices.map(qChoice => {
+          return qChoice.is_right
+            ? { ...qChoice, check: true }
+            : { ...qChoice };
+        })
+      }));
+
+    this.props.doneQuestionHandler();
   };
-  componentDidMount() {
-    let { question } = this.props;
-
-    this.setState({
-      id: question.id,
-      question: question.question,
-      time: question.time,
-      question_choices: question.question_choices
-    });
-  }
-
   render() {
-    const { time, question, question_choices, disableButton } = this.state;
+    const {
+      time,
+      question,
+      question_choices,
+      disableButton,
+      clicked,
+      is_one_right_ans,
+      mutiCheckArr
+    } = this.state;
     let { questionsLength, index } = this.props;
-    console.log("question_choices here");
-    console.log(question_choices);
+    console.log("questonchoices", question_choices);
     let colorButtons = ["#2F6DAE", "#2C9CA6", "#ECA82C", "#D4546A", "#5cd65c"];
     const element = question_choices.map((answer, index) => {
       let color = () => {
@@ -75,31 +166,47 @@ class QuestionShow extends React.Component {
         if (answer.check === true) return "#00c985";
         return colorButtons[index];
       };
+      let opacity = () => {
+        if (clicked && typeof answer.check === "undefined") return "0.2";
+        return "1";
+      };
+      let mutiCheck = () => {
+        for (let i = 0; i < mutiCheckArr.length; i++)
+          if (mutiCheckArr[i] === index) return "CHECK";
+        return "UNCHECK";
+      };
       return (
-        //<div className="question-answer" >
-        <div className="question-answer-wrapper" key={index}>
-          <button className="question-answer"
+        <div
+          className="question-answer-wrapper"
+          key={index}
+          style={{ opacity: opacity() }}
+        >
+          <button
+            className="question-answer"
             onClick={() => {
               this.onClickCheckAnswer(index);
               localStorage.setItem("choiceIndex", index);
             }}
-            disabled={disableButton} style={{ background: color() }}
+            disabled={disableButton}
+            style={{ background: color() }}
           >
+            {!is_one_right_ans ? (
+              <p style={{ background: "black" }}>{mutiCheck()}</p>
+            ) : null}
             {answer.answer}
-
           </button>
         </div>
-        // </div>
       );
     });
-
 
     return (
       <div className="question-show-container">
         <TimeBar TimeOut={time} />
         <div className="question-show-actions">
           <button className="action-pause">
-            <span><FontAwesomeIcon icon={faPause} /></span>
+            <span>
+              <FontAwesomeIcon icon={faPause} />
+            </span>
           </button>
           <div className="question-process-num">
             <span>{index + 1}</span>/{questionsLength}
@@ -110,17 +217,14 @@ class QuestionShow extends React.Component {
             <div className="question-content">
               <h5> {question}</h5>
             </div>
-            {/* <div className="answers-divider">
-              <div className="divider-name">
-                <p>answer choices</p>
-              </div>
-              <hr />
-            </div> */}
             <div className="question-answers-container">{element}</div>
           </div>
-          <div className="question-detail-footer">
+          <div
+            className="question-detail-footer"
+            style={is_one_right_ans ? { display: "none" } : null}
+          >
             <div className="change-question-group">
-              <button>
+              <button onClick={this.onSubmitMutiSelect}>
                 Submit
                 <span>
                   <FontAwesomeIcon icon={faAngleRight} />
