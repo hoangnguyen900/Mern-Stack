@@ -102,6 +102,12 @@
                 justify-content: center;
                 position: relative;
 
+                .join-default-ava{
+                    height: 80px;
+                    width: 80px;
+                    border-radius: 50%;
+                }
+
                 .add-profile-overlay {
                     position: absolute;
                     width: 80px;
@@ -150,8 +156,8 @@
 
     .join-quiz-list-review {
         max-width: 1450px;
-        align-self: center;
-
+        min-width: 425px;
+        
         h3 {
             padding-top: 35px;
             font-family: QuickSand;
@@ -163,7 +169,6 @@
             flex-direction: row;
             overflow: scroll;
             overflow-y: hidden;
-
         }
 
         .quiz-list-show-topic {
@@ -180,10 +185,9 @@
         }
     }
 
-    @media screen and (min-width: 1450px) {
+    @media screen and (min-width: 1450px) { //style affect wrongly if has only one table generated
         .join-quiz-list-review {
-            align-self: center;
-
+           margin: 0 15%;
         }
     }
 
