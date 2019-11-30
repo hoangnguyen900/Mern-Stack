@@ -17,7 +17,7 @@ class AdminNav extends React.Component {
             alt="quiz-icon"
           />
         </div>
-        <div class="admin-nav-btn">
+        <div className="admin-nav-btn">
           <button
             onClick={() => {
               history.push("/join");

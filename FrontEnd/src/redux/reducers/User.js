@@ -1,7 +1,8 @@
 import * as types from "../actions/actionTypes";
 
 let initialState = {
-  isDoneLoading: false
+  isDoneLoading: false,
+  showQuizCode: false
 };
 let myReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -18,6 +19,11 @@ let myReducer = (state = initialState, action) => {
         ...state,
         questionTable: { ...action.data },
         showQuizCode: true
+      };
+    case types.CLOSE_CODE_QUESTION_TABLE:
+      return {
+        ...state,
+        showQuizCode: false
       };
     case types.CHECK_USER_DO_QUIZ:
       state.isPlayedBefore = action.data;

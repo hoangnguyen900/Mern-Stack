@@ -67,8 +67,6 @@ class MyQuizDetail extends React.Component {
   };
   render() {
     let { title, image, played, id, questions, is_finish } = this.state;
-    let draft = [];
-    if (!is_finish) draft.push(<div className="is-drafting">Draft</div>);
     let { history } = this.props;
     let gradeTitle = this.gradeTitle();
     return (
@@ -96,7 +94,7 @@ class MyQuizDetail extends React.Component {
               {title}
               <span>({questions.length} Qs)</span>
             </div>
-            {draft}
+            {!is_finish ? <div className="is-drafting">Draft</div> : null}
           </div>
           <div className="play-detail">
             <div className="play">

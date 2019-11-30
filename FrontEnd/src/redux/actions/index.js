@@ -429,6 +429,9 @@ export const getQuestionTableByCode = code => {
       });
   };
 };
+export const closeQuestionTableByCode = () => {
+  return { type: types.CLOSE_CODE_QUESTION_TABLE };
+};
 export const generateCode = id => {
   return dispatch => {
     axios({
