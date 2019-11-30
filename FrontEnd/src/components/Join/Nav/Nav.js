@@ -13,23 +13,32 @@ import {
 import Swal from "sweetalert2";
 import { Menu, Dropdown, Button, Icon } from "antd";
 import history from "../../../history";
+
 class JoinNav extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpenUserActions: false
+      isOpenUserActions: false,
+      myWidth: 0,
     };
+
+    window.addEventListener("resize", this.updateWidth);
   }
   // componentDidMount() {
   //   //get data API from backend
 
   // }
 
+  componentDidMount() {
+    this.updateWidth();
+  }
+
+
   userActionsHandleClick = () => {
     this.setState({
-      isOpenUserActions: !this.state.isOpenUserActions
+      isOpenUserActions: true
     });
-  };
+  }
   onLogoutHandler = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -46,10 +55,19 @@ class JoinNav extends React.Component {
       }
     });
   };
+
+  updateWidth = () => {
+    this.setState({
+      myWidth: window.innerWidth,
+    });
+  };
   render() {
     let token = localStorage.getItem("token");
     let username = localStorage.getItem("username");
 
+
+
+    let { myWidth } = this.state;
     const userActions = (
       <Menu style={{ padding: "5px 0px", width: "fit-content" }}>
         <Menu.Item style={{ borderBottom: "1px solid #e6e6e6" }}>
@@ -85,17 +103,28 @@ class JoinNav extends React.Component {
         </Menu.Item>
       </Menu>
     );
+
+
+    // console.log(myWidth);
     return (
       <div className="join-nav-container">
         <div className="logo">
-          <img
+          <img className="big-logo"
             src={require("../../../utils/images/logo.png")}
             alt="quiz-icon"
+
+            style={myWidth <= 600 ? { display: 'none' } : { display: 'block' }}
+          />
+
+          <img className="small-logo"
+            src={require("../../../utils/images/icon.png")}
+            alt="sm-icon"
+            style={myWidth <= 600 ? { display: 'block', marginLeft: '3px' } : { display: 'none' }}
           />
         </div>
 
         <div className="input-field">
-          <input placeholder="Search for a quiz                                     " />
+          <input placeholder="Search for a quiz" />
           <div className="search-icon">
             <FontAwesomeIcon icon={faSearch} size="lg" color="gray" />
           </div>
@@ -107,7 +136,7 @@ class JoinNav extends React.Component {
               <span>
                 <FontAwesomeIcon icon={faHome} />
               </span>
-              Home
+              <span className="tab-name"> Home</span>
             </NavLink>
           </div>
           <div className="tab-link">
@@ -115,7 +144,8 @@ class JoinNav extends React.Component {
               <span>
                 <FontAwesomeIcon icon={faHistory} />
               </span>
-              Activity
+
+              <span className="tab-name"> Activity</span>
             </NavLink>
           </div>
         </div>
@@ -132,7 +162,7 @@ class JoinNav extends React.Component {
             placement="bottomRight"
             trigger={["click"]}
           >
-            <Button style={{ top: 0 }} onClick={this.userActionsHandleClick}>
+            <Button style={{ top: 0 }}>
               <Icon
                 style={{ fontSize: "14px" }}
                 type={this.state.isOpenUserActions ? "close" : "menu"}

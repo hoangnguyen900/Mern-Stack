@@ -96,6 +96,7 @@ router.post("/api/user_answer", verifyToken, (req, res) => {
     }
   });
 });
+//get
 router.post("/api/attempt_record", verifyToken, (req, res) => {
   jwt.verify(req.token, "hoangtri", (err, authData) => {
     if (err) res.sendStatus(403);

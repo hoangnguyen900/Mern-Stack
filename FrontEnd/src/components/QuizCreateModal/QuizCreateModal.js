@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import * as actions from "./../../redux/actions/index";
 import "./QuizCreateModal.scss";
 import history from "../../history";
+
 class QuizCreate extends React.Component {
   constructor(props) {
     super(props);
@@ -105,7 +106,7 @@ class QuizCreate extends React.Component {
               </div>
               <div className="init-quiz-create-footer">
                 <button
-                  style={{ background: "black" }}
+                  style={{ background: '#d9d9d9', color: 'black', boxShadow: 'none', top: 0}}
                   onClick={() => history.push("/")}
                 >
                   Cancel

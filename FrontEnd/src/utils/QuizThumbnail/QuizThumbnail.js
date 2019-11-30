@@ -102,7 +102,7 @@ class QuizThumbnail extends React.Component {
     let userName = localStorage.getItem("username");
     //console.log("props", this.props.data);
     return (
-      <div>
+      <div className="quiz-thumbnail-wrapper">
         <div
           className="quiz-thumbnail-container"
           style={isCompleted ? { height: "280px" } : { height: "240px" }}

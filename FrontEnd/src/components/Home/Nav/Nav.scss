@@ -4,7 +4,8 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    background-color: #5F5F5F;
+    background-color: rgba(0, 0, 0, 0.7);
+    
 
     .button-group {
         padding: 8px 0;
@@ -17,25 +18,29 @@
             margin: 0 10px;
             border: none;
             border-radius: 5px;
+            
         }
 
         .b-log-in {
             background-color: #595959;
             color: white;
+            top: 0!important;
         }
 
         .b-sign-up {
-            font-family:  sans-serif;
+            font-family: sans-serif;
             color: white;
             font-weight: bold;
             background-color: #00C985;
-            box-shadow:0 4px 0 rgba(0,0,0,0.15), 0 4px 0 #00C985, 0 4px 6px rgba(0,0,0,0.45);
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15), 0 4px 0 #00C985, 0 4px 6px rgba(0, 0, 0, 0.45);
+            top: 0;
         }
 
-        button:hover{
+        button:hover {
             position: relative;
-            box-shadow: none!important;
-            top:3px;
+            box-shadow: none !important;
+            top: 3px;
         }
     }
 }
+
