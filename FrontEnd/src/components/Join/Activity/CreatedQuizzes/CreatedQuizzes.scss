@@ -5,6 +5,7 @@
     flex-wrap: wrap;
     overflow: auto;
     padding: 0 5%;
+    min-height: 100%;
 
     @media only screen and (max-width: 500px) {
         margin-left: 0;

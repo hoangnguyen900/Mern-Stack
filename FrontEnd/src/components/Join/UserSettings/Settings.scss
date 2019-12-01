@@ -1,0 +1,113 @@
+.settings-wrapper {
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f2f2f2;
+
+    .settings-container {
+        padding-top: 70px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 1300px;
+        width: 80%;
+        min-height: 100%;
+
+        .page-title {
+            color: #292A3A;
+            font-family: QuickSand;
+        }
+
+        .profile-settings {
+            max-width: 480px;
+            background: white;
+            margin: 0 auto;
+            width: 50%;
+            border-radius: 10px;
+            padding: 10px;
+            padding-bottom: 0;
+
+            .set-section-name {
+                font-family: "PT Sans Caption";
+                color: #B69DB8;
+                margin-bottom: 10px;
+            }
+
+            .set-ava {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                cursor: pointer;
+                margin-bottom: 15px;
+                .settings-section {
+                    flex-basis: 90%;
+                    flex-grow: 1;
+
+                    .set-section-title {
+                        font-family: QuickSand;
+                        font-weight: 900;
+                        font-size: 16px;
+                    }
+
+                    .set-section-content {
+                        color: #AAA9C4;
+                        font-size: 15px;
+                    }
+                }
+
+                .set-icon {
+                    align-self: center;
+                }
+            }
+
+            .set-user-name{
+                @extend .set-ava;
+            }
+
+            .set-name{
+                @extend .set-ava;
+            }
+
+            .set-grade{
+                @extend .set-ava;
+            }
+        }
+
+        .account-settings{
+            max-width: 480px;
+            background: white;
+            margin: 0 auto;
+            width: 50%;
+            border-radius: 10px;
+            padding: 10px;
+            padding-bottom: 0;
+            .set-section-name {
+                font-family: "PT Sans Caption";
+                color: #B69DB8;
+                margin-bottom: 10px;
+            }
+
+            .set-update-pass-section{
+                display: flex;
+                flex-direction: row;
+                margin-bottom: 15px;
+                .sec-title{
+                    flex-grow: 1;
+                    font-weight: 600;
+                    font-family: QuickSand;
+                }
+            }
+
+            .set-delete-section{
+                @extend .set-update-pass-section;
+            }
+
+            .set-logout-section{
+                @extend .set-update-pass-section;
+            }
+        }
+    }
+}

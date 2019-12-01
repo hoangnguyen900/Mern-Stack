@@ -14,6 +14,7 @@ import PreGame from "./components/PreGame/PreGame";
 import ReviewAttempt from "./components/PreGame/QuizAttempt/ReviewAttempt/ReviewAttempt";
 import AdminLayout from "./layouts/Admin/Admin";
 import QuizStart from "./components/Join/QuizStart/QuizStart";
+import UserSettings from './components/Join/UserSettings/Settings'
 class App extends React.Component {
   render() {
     return (
@@ -62,6 +63,12 @@ class App extends React.Component {
               path="/join/pre-game/:question_table_id/review"
               render={({ match }) => <ReviewAttempt match={match} />}
             />
+
+            <Route
+              path="/join/settings"
+              render={({match}) =>  <UserSettings match={match}/>}
+            />
+
             {/* <Route
               path="/signup"
               component = {SignUp}
