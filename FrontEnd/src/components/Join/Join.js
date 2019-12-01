@@ -6,15 +6,16 @@ import QuizDetailTable from "../../utils/QuizThumbnail/QuizDetailTable/QuizDetai
 import QuizThumbnail from "../../utils/QuizThumbnail/QuizThumbnail";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 class Join extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       code: 0,
-      user:{
-        avatar:null
+      user: {
+        id: 0,
+        avatar: null
       },
       questionTable: {},
       showQuizCode: false,
@@ -34,10 +35,11 @@ class Join extends React.Component {
     this.props.showListTableBySubject();
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log("subject", nextProps.subject);
+    // console.log("subject", nextProps.user);
     let { completed, user, subject } = nextProps;
 
     this.setState({
+      user: user.user,
       showQuizCode: user.showQuizCode,
       questionTable: user.questionTable,
       completedQuiz: completed.completedQuiz,
@@ -91,40 +93,41 @@ class Join extends React.Component {
     return arr;
   };
 
-  focusInputQuizCode = (e) => {
-
+  focusInputQuizCode = e => {
     if (this.node.contains(e.target)) {
       this.setState({
-        isFocusInput: true,
-      })
+        isFocusInput: true
+      });
       return;
-    }
-    else {
+    } else {
       this.setState({
-        isFocusInput: false,
-      })
+        isFocusInput: false
+      });
     }
   };
   fileChangedHandler = event => {
     let fileReader = new FileReader();
+    let { user } = this.state;
     if (event.target.files[0]) {
       fileReader.readAsDataURL(event.target.files[0]); // fileReader.result -> URL.
       fileReader.onload = progressEvent => {
         let url = fileReader.result;
         //console.log("url", url);
         // Something like: data:image/png;base64,iVBORw...Ym57Ad6m6uHj96js
-        this.setState({ user: { avatar: url } });
+        let avtUser = user;
+        avtUser.avatar = url;
+        this.setState({ user: { ...user, avatar: url } });
+        this.props.updateUser(user);
       };
     }
-  }
+  };
 
-
-  componentWillMount() {
-    document.addEventListener('click', this.focusInputQuizCode, false);
+  UNSAFE_componentWillMount() {
+    document.addEventListener("click", this.focusInputQuizCode, false);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this.focusInputQuizCode, false);
+    document.removeEventListener("click", this.focusInputQuizCode, false);
   }
 
   render() {
@@ -147,13 +150,16 @@ class Join extends React.Component {
     return (
       <div className="join-container">
         <div className="enter-quiz">
-          <div className="code-field" style={isFocusInput ? { zIndex: '12' } : null}>
-            <div className="input-code" >
+          <div
+            className="code-field"
+            style={isFocusInput ? { zIndex: "12" } : null}
+          >
+            <div className="input-code">
               <input
                 name="code"
                 onChange={this.onChangeHandler}
                 placeholder="Enter some quiz code "
-                ref={(node) => this.node = node}
+                ref={node => (this.node = node)}
                 autoComplete="off"
               />
               <button onClick={this.enterCodeOnClickHandler}>Join</button>
@@ -161,7 +167,6 @@ class Join extends React.Component {
           </div>
           <div className="profile-field">
             <span className="add-profile-icon">
-
               {/* <FontAwesomeIcon icon={faPlusCircle} size="5x" color="#D8D8D8" /> */}
               <img
                 className="join-default-ava"
@@ -186,7 +191,7 @@ class Join extends React.Component {
                 Select avatar
               </div>
             </span>
-            <h5>User Name</h5>
+            <h5>{localStorage.getItem("username")}</h5>
             <div className="join-profile-actions">
               <NavLink to="_blank">Edit profile</NavLink>
               <NavLink to="_blank">Activity</NavLink>
@@ -194,14 +199,11 @@ class Join extends React.Component {
           </div>
         </div>
         {completedQuiz.length ? (
-
           <div className="join-quiz-list-review">
-
             <h3>Recent Activity</h3>
             <div className="quiz-list-show-activity">{quizthumbComplete}</div>
           </div>
         ) : null}
-
 
         {quizthumbSubject}
         {this.state.showQuizCode ? (
@@ -213,7 +215,13 @@ class Join extends React.Component {
         ) : null}
 
         <div
-          className="join-input-code-overlay" style={isFocusInput ? { display: 'block', overflow: 'hidden' } : { display: 'none' }}></div>
+          className="join-input-code-overlay"
+          style={
+            isFocusInput
+              ? { display: "block", overflow: "hidden" }
+              : { display: "none" }
+          }
+        ></div>
       </div>
     );
   }
@@ -228,6 +236,9 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     showListTableBySubject: () => {
       dispatch(actions.showListTableBySubject());
+    },
+    updateUser: user => {
+      dispatch(actions.updateUser(user));
     }
   };
 };

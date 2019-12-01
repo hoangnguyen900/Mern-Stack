@@ -87,7 +87,7 @@ class QuizCreatorEditor extends React.Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.question == null)
       this.setState({
-        table: nextProps.questionTable[0]
+        table: nextProps.questionTable
       });
     else {
       let newTable = { ...this.state.table };

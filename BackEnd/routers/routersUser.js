@@ -263,6 +263,15 @@ router.post("/api/getuser", verifyToken, (req, res) => {
     }
   });
 });
+router.put("/api/update_user", (req, res) =>
+  User.update(req.body, {
+    where: {
+      id: req.body.id
+    }
+  })
+    .then(data => res.send(req.body))
+    .catch(err => sendStatus(404))
+);
 function verifyToken(req, res, next) {
   const header = req.headers["user-token"];
   if (typeof header !== "undefined") {
@@ -272,15 +281,7 @@ function verifyToken(req, res, next) {
     res.sendStatus(403);
   }
 }
-router.put("/api/user", (req, res) =>
-  User.update(req.body, {
-    where: {
-      id: req.body.id
-    }
-  })
-    .then(res.send("success " + JSON.stringify(req.body)))
-    .catch(err => console.log(err))
-);
+
 router.delete("/api/user/:id", (req, res) => {});
 
 module.exports = router;

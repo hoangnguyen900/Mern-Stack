@@ -22,19 +22,9 @@ class QuizCreate extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (typeof nextProps.questionTable.id === "undefined")
-      this.setState({
-        subject: nextProps.subject.subjects
-      });
-    else {
-      //after submit
-      console.log(this.props.questionTable);
-      this.setState({
-        id: nextProps.questionTable.id
-      });
-      history.push(`/quiz/${nextProps.questionTable.id}`);
-      // history.push(`/quiz/1`);
-    }
+    this.setState({
+      subject: nextProps.subject.subjects
+    });
   }
   onSubmitHandler = event => {
     event.preventDefault();
@@ -106,7 +96,12 @@ class QuizCreate extends React.Component {
               </div>
               <div className="init-quiz-create-footer">
                 <button
-                  style={{ background: '#d9d9d9', color: 'black', boxShadow: 'none', top: 0}}
+                  style={{
+                    background: "#d9d9d9",
+                    color: "black",
+                    boxShadow: "none",
+                    top: 0
+                  }}
                   onClick={() => history.push("/")}
                 >
                   Cancel
