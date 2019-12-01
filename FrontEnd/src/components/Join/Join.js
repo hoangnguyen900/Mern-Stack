@@ -4,8 +4,6 @@ import { connect } from "react-redux";
 import * as actions from "../../redux/actions/index";
 import QuizDetailTable from "../../utils/QuizThumbnail/QuizDetailTable/QuizDetailTable";
 import QuizThumbnail from "../../utils/QuizThumbnail/QuizThumbnail";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from 'react-router-dom';
 class Join extends React.Component {
   constructor(props) {

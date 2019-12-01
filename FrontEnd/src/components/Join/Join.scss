@@ -182,12 +182,13 @@
     @media screen and (max-width: 1480px) {
         .join-quiz-list-review {
             max-width: 1200px;
+            align-self: center;
         }
     }
 
     @media screen and (min-width: 1450px) { //style affect wrongly if has only one table generated
         .join-quiz-list-review {
-           margin: 0 15%;
+           margin: 0 auto;
         }
     }
 
