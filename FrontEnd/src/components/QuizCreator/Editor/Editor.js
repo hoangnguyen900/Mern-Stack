@@ -30,6 +30,7 @@ class QuizCreatorEditor extends React.Component {
       showPopupEdit: false,
       showPopupPreview: false,
       showPopupSubject: false,
+      disabledIfFinished: false,
       dataEdit: {},
       question_table_id: 1,
       //questions: [],
@@ -85,11 +86,13 @@ class QuizCreatorEditor extends React.Component {
   };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.question == null)
+    if (nextProps.question === null) {
+      if (nextProps.questionTable.is_finish)
+        this.setState({ disabledIfFinished: true });
       this.setState({
         table: nextProps.questionTable
       });
-    else {
+    } else {
       let newTable = { ...this.state.table };
       newTable.questions.push({ ...nextProps.question });
     }
@@ -170,6 +173,7 @@ class QuizCreatorEditor extends React.Component {
   };
   render() {
     let { image, subject, title, is_public } = this.state.table;
+    let { disabledIfFinished } = this.state;
     let gradeTitle = this.gradeTitle();
     let element = this.state.table.questions.map((data, index) => {
       return (
@@ -179,6 +183,7 @@ class QuizCreatorEditor extends React.Component {
           index={index}
           onClickDeleteHandler={this.onClickDeleteHandler}
           onClickEditHandler={this.onClickEditHandler}
+          disabledIfFinished={this.state.disabledIfFinished}
         />
       );
     });
@@ -199,6 +204,8 @@ class QuizCreatorEditor extends React.Component {
             <button
               className="b-finish button"
               onClick={this.onClickFinishQuizHandler}
+              disabled={disabledIfFinished}
+              style={disabledIfFinished ? { opacity: "0.6" } : null}
             >
               FINISH
             </button>
@@ -214,13 +221,21 @@ class QuizCreatorEditor extends React.Component {
                   });
                   this.togglePopup();
                 }}
+                disabled={disabledIfFinished}
+                style={disabledIfFinished ? { opacity: "0.6" } : null}
                 className="button b-create"
               >
                 <FontAwesomeIcon icon={faPlusCircle} />
                 Create a new question
               </button>
               <p>Or</p>
-              <button className="button b-teleport">Teleport</button>
+              <button
+                className="button b-teleport"
+                disabled={disabledIfFinished}
+                style={disabledIfFinished ? { opacity: "0.6" } : null}
+              >
+                Teleport
+              </button>
             </div>
             {element}
           </div>
