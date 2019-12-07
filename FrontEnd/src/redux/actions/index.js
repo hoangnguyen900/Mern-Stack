@@ -186,7 +186,7 @@ export const showListQuestionAnswer = question_table_id => {
       }
     })
       .then(res => {
-        console.log("res question", res.data);
+        console.log("res list question", res.data);
         dispatch({
           type: types.SHOW_QUESTION_ANSWERS,
           data: res.data
@@ -216,7 +216,22 @@ export const finishQuestionTable = id => {
       });
   };
 };
-
+export const updateTableWithPlayed = id => {
+  return dispatch => {
+    axios({
+      method: "put",
+      url: URLs.UPDATE_TABLE_PLAYED_API_URL,
+      headers: {
+        "content-type": "application/json"
+      },
+      data: { id: id }
+    })
+      .then(res => {})
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};
 export const updateTable = data => {
   return dispatch => {
     axios({
@@ -312,6 +327,7 @@ export const createQuestionTable = data => {
           type: types.CREATE_QUESTION_TABLE,
           data: res.data
         });
+        history.push(`/quiz/${res.data.id}`);
       })
       .catch(er => {
         console.log("er", er);
@@ -357,6 +373,30 @@ export const getListQuestionTable = () => {
         console.log("API show QUESTION TABLE", res.data);
         dispatch({
           type: types.SHOW_QUESTION_TABLE,
+          data: res.data
+        });
+      })
+      .catch(er => {
+        console.log("er", er);
+      });
+  };
+};
+export const updateUser = data => {
+  return dispatch => {
+    let token = localStorage.getItem("token");
+    axios({
+      method: "put",
+      url: URLs.UPDATE_USER_API,
+      headers: {
+        "content-type": "application/json",
+        "user-token": token
+      },
+      data: data
+    })
+      .then(res => {
+        console.log("API UPDATE_USER ", res.data);
+        dispatch({
+          type: types.UPDATE_USER,
           data: res.data
         });
       })

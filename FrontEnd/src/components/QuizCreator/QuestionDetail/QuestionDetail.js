@@ -49,7 +49,7 @@ class QuizCreatorQuestionDetail extends React.Component {
   render() {
     let { time } = this.state;
     const { Option } = Select;
-
+    let { disabledIfFinished } = this.props;
     return (
       <div className="question-detail-container">
         <div className="question-detail-header">
@@ -58,13 +58,18 @@ class QuizCreatorQuestionDetail extends React.Component {
           </span>
           <p>Question {this.props.index + 1}</p>
           <div className="question-button-group">
-            <button>
-              <FontAwesomeIcon
-                icon={faTrashAlt}
-                onClick={this.onClickDeleteHandler}
-              />
+            <button
+              disabled={disabledIfFinished}
+              style={disabledIfFinished ? { opacity: "0.6" } : null}
+              onClick={this.onClickDeleteHandler}
+            >
+              <FontAwesomeIcon icon={faTrashAlt} />
             </button>
-            <button onClick={this.onClickEditHandler}>
+            <button
+              disabled={disabledIfFinished}
+              style={disabledIfFinished ? { opacity: "0.6" } : null}
+              onClick={this.onClickEditHandler}
+            >
               <span>
                 <FontAwesomeIcon icon={faPencilAlt} />
               </span>

@@ -28,7 +28,7 @@ router.get("/api/questiontable", (req, res) =>
     .catch(err => console.log(err))
 );
 router.get("/api/questiontable/:id", (req, res) => {
-  QuestionTable.findAll({
+  QuestionTable.findOne({
     where: {
       id: req.params.id
     },
@@ -81,6 +81,19 @@ router.put("/api/table_update", (req, res) => {
   QuestionTable.update(req.body, { where: { id: req.body.id } })
     .then(data => res.send(data))
     .catch(err => console.log(err));
+});
+router.put("/api/table_update_played", (req, res) => {
+  QuestionTable.findOne({
+    where: {
+      id: req.body.id
+    },
+    attributes: ["played"]
+  }).then(table => {
+    let newPlayed = table.played + 1;
+    QuestionTable.update({ played: newPlayed }, { where: { id: req.body.id } })
+      .then(data => res.send(data))
+      .catch(err => console.log(err));
+  });
 });
 router.post("/api/questiontable", verifyToken, (req, res) => {
   jwt.verify(req.token, "hoangtri", (err, authData) => {

@@ -3,19 +3,37 @@ import "./HostGame.scss";
 import { Menu, Dropdown, Button, Icon } from "antd";
 import "antd/dist/antd.css";
 import { withRouter } from "react-router-dom";
-
 import { connect } from "react-redux";
 import * as actions from "../../../../../../../../redux/actions/index";
 class QuizControlHostGame extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: null
+      code: null,
+      title: "",
+      questions: [],
+      listDay: [
+        {
+          key: "",
+          name: ""
+        }
+      ],
+      selectDay: {
+        key: "",
+        name: ""
+      },
+      selectHour: "12",
+      selectMinute: "00"
     };
   }
   componentDidMount() {
     let question_table_id = parseInt(this.props.match.params.question_table_id);
     this.props.showListQuestionAnswer(question_table_id);
+    let listDay = this.getDay();
+    this.setState({
+      listDay: listDay,
+      selectDay: listDay[1]
+    });
   }
   onClickGenerateCodeHandler = () => {
     let question_table_id = parseInt(this.props.match.params.question_table_id);
@@ -23,94 +41,150 @@ class QuizControlHostGame extends React.Component {
   };
   UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({
-      code: nextProps.questionTable[0].code
+      ...nextProps.questionTable
     });
   }
-
-  createHour = () =>{
-    let hourtest = [];
-    for(let i = 1; i< 25; i++){
-      hourtest.push(<Menu.Item key={i}>{i}</Menu.Item>);
+  orderNumber = number => {
+    switch (number) {
+      case 1:
+        return `${number}st`;
+      case 2:
+        return `${number}nd`;
+      case 3:
+        return `${number}rd`;
+      default:
+        return `${number}th`;
     }
-
-    return <Menu>{hourtest}</Menu>
-  }
-
+  };
+  getHour = () => {
+    let listHour = [];
+    for (let i = 1; i <= 24; i++) listHour.push(`${i}`);
+    return listHour;
+  };
+  getDay = () => {
+    const monthNames = [
+      0,
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
+    let select = [];
+    let d = new Date();
+    let begin = d.getDate();
+    for (let i = begin; i < begin + 10; i++) {
+      let year = d.getFullYear();
+      let month = d.getMonth() + 1;
+      let daysInMonth = new Date(year, month, 0).getDate();
+      if (i <= daysInMonth)
+        select.push({
+          key: `${monthNames[month]}-${this.orderNumber(i)}`,
+          name: `${monthNames[month]} ${this.orderNumber(i)}`
+        });
+      else {
+        let j = i - daysInMonth;
+        if (month === 12) {
+          year++;
+          month = 1;
+        } else month++;
+        select.push({
+          key: `${monthNames[month]}-${this.orderNumber(j)}`,
+          name: `${monthNames[month]} ${this.orderNumber(j)}`
+        });
+      }
+    }
+    return select;
+  };
+  handleMenuDayClick = event => {
+    let { listDay, selectDay } = this.state;
+    let selectName = listDay.find(item => item.key === event.key).name;
+    this.setState({
+      selectDay: {
+        ...selectDay,
+        name: selectName
+      }
+    });
+  };
+  handleMenuHourClick = (event, listHour) => {
+    let selectName = listHour.find(item => item === event.key);
+    this.setState({
+      selectHour: selectName
+    });
+  };
+  handleMenuMinuteClick = (event, listMinute) => {
+    let selectName = listMinute.find(item => item === event.key);
+    this.setState({
+      selectMinute: selectName
+    });
+  };
   render() {
-    let { code } = this.state;
-    const day = (
-      <Menu>
-        <Menu.Item key="1">1st menu item</Menu.Item>
-        <Menu.Item key="2">2nd menu item</Menu.Item>
-        <Menu.Item key="3">3 </Menu.Item>
+    let {
+      code,
+      selectDay,
+      listDay,
+      selectHour,
+      selectMinute,
+      title,
+      questions
+    } = this.state;
+    let listHour = this.getHour();
+    let listMinute = ["00", "15", "30", "45"];
+    let day = (
+      <Menu onClick={this.handleMenuDayClick}>
+        {listDay.map(item => {
+          return <Menu.Item key={item.key}>{item.name}</Menu.Item>;
+        })}
       </Menu>
     );
-
-    // const hour = (
-    //   <Menu>
-    //     <Menu.Item key="1">1</Menu.Item>
-    //     <Menu.Item key="2">2</Menu.Item>
-    //     <Menu.Item key="3">3</Menu.Item>
-    //     <Menu.Item key="4">4</Menu.Item>
-    //     <Menu.Item key="5">5</Menu.Item>
-    //     <Menu.Item key="6">6</Menu.Item>
-    //     <Menu.Item key="7">7</Menu.Item>
-    //     <Menu.Item key="8">8</Menu.Item>
-    //     <Menu.Item key="9">9</Menu.Item>
-    //     <Menu.Item key="10">10 </Menu.Item>
-    //     <Menu.Item key="11">11 </Menu.Item>
-    //     <Menu.Item key="12">12</Menu.Item>
-    //     <Menu.Item key="13">13</Menu.Item>
-    //     <Menu.Item key="14">14</Menu.Item>
-    //     <Menu.Item key="15">15</Menu.Item>
-    //     <Menu.Item key="16">16</Menu.Item>
-    //     <Menu.Item key="17">17</Menu.Item>
-    //     <Menu.Item key="18">18</Menu.Item>
-    //     <Menu.Item key="19">19</Menu.Item>
-    //     <Menu.Item key="20">20</Menu.Item>
-    //     <Menu.Item key="21">21</Menu.Item>
-    //     <Menu.Item key="22">22</Menu.Item>
-    //     <Menu.Item key="23">23</Menu.Item>
-    //     <Menu.Item key="24">24</Menu.Item>
-    //   </Menu>
-    // );
-    const hour = this.createHour;
-
+    const hour = (
+      <Menu onClick={event => this.handleMenuHourClick(event, listHour)}>
+        {listHour.map(hour => {
+          return <Menu.Item key={hour}>{hour}</Menu.Item>;
+        })}
+      </Menu>
+    );
     const minute = (
-      <Menu>
-        <Menu.Item key="1">0</Menu.Item>
-        <Menu.Item key="2">15</Menu.Item>
-        <Menu.Item key="3">30</Menu.Item>
-        <Menu.Item key="4">45</Menu.Item>
+      <Menu onClick={event => this.handleMenuMinuteClick(event, listMinute)}>
+        {listMinute.map(minute => {
+          return <Menu.Item key={minute}>{minute}</Menu.Item>;
+        })}
       </Menu>
     );
     return (
-      <div className="quiz-control-host-game-container" >
-        <div className="quiz-name">basic english</div>
-        <div className="quiz-num">4 questions</div>
+      <div className="quiz-control-host-game-container">
+        <div className="quiz-name">{title}</div>
+        <div className="quiz-num">{questions.length} questions</div>
         <div className="quiz-step-text">
           Students should complete the quiz by:
         </div>
         <div className="quiz-end-day">
           <Dropdown overlay={day} trigger={["click"]}>
             <Button>
-              <Icon type="calendar" /> Nov 13th <Icon type="down" />
+              <Icon type="calendar" /> {selectDay.name} <Icon type="down" />
             </Button>
           </Dropdown>
         </div>
 
         <div className="quiz-end-hour-minute">
           <div className="hour">
-            <Dropdown overlay={hour} trigger={["click"]} > 
-              <Button style={{width:'100px'}}>
-                1<Icon type="down" />
+            <Dropdown overlay={hour} trigger={["click"]}>
+              <Button style={{ width: '100px' }}>
+                {selectHour} <Icon type="down" />
               </Button>
             </Dropdown>
           </div>
           <div className="minute">
             <Dropdown overlay={minute} trigger={["click"]}>
-              <Button style={{width:'100px'}}>
-                1<Icon type="down" />
+              <Button style={{ width: '100px' }}>
+                {selectMinute} <Icon type="down" />
               </Button>
             </Dropdown>
           </div>

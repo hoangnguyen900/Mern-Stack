@@ -48,7 +48,7 @@ const User = db.define("user", {
     primaryKey: false
   },
   avatar: {
-    type: "VARCHAR(200)",
+    type: "LONGTEXT",
     allowNull: true,
     defaultValue: null,
     primaryKey: false

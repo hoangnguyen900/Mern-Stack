@@ -27,9 +27,9 @@ class DoingQuiz extends React.Component {
     this.props.showListQuestionAnswer(question_table_id);
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log("question and answer", nextProps.questionTable[0].questions);
+    console.log("question and answer", nextProps.questionTable.questions);
     this.setState({
-      questions: nextProps.questionTable[0].questions
+      questions: nextProps.questionTable.questions
     });
   }
   recordAnswer = (question_id, question_choice, multi_choice) => {
@@ -83,6 +83,8 @@ class DoingQuiz extends React.Component {
       }
       if (isDone === true) {
         this.props.addAnswerRecord(data);
+        let question_table_id = this.props.match.params.question_table_id;
+        this.props.updateTableWithPlayed(question_table_id);
         clearTimeout(showQuestion);
       } else
         return (
@@ -114,6 +116,9 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     addAnswerRecord: data => {
       dispatch(actions.addAnswerRecord(data));
+    },
+    updateTableWithPlayed: id => {
+      dispatch(actions.updateTableWithPlayed(id));
     }
   };
 };

@@ -2,13 +2,19 @@ import * as types from "../actions/actionTypes";
 
 let initialState = {
   isDoneLoading: false,
-  showQuizCode: false
+  showQuizCode: false,
+  user: {}
 };
 let myReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.SHOW_QUESTION_TABLE:
       if (typeof action.data !== "undefined")
-        state = { ...state, ...action.data, isDoneLoading: true };
+        state = {
+          ...state,
+          ...action.data,
+          isDoneLoading: true,
+          user: action.data[0]
+        };
 
       return {
         ...state
@@ -19,6 +25,11 @@ let myReducer = (state = initialState, action) => {
         ...state,
         questionTable: { ...action.data },
         showQuizCode: true
+      };
+    case types.UPDATE_USER:
+      return {
+        ...state,
+        user: action.data
       };
     case types.CLOSE_CODE_QUESTION_TABLE:
       return {
