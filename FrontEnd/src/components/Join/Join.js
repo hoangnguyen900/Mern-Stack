@@ -199,7 +199,7 @@ class Join extends React.Component {
         {completedQuiz.length ? (
           <div className="join-quiz-list-review">
             <h3>Recent Activity</h3>
-            <div className="quiz-list-show-activity">{quizthumbComplete}</div>
+            <div className="quiz-list-show-activity" style={completedQuiz.length < 6 ? { overflow: 'hidden' } : {}}>{quizthumbComplete}</div>
           </div>
         ) : null}
 
