@@ -4,18 +4,26 @@ import { connect } from "react-redux";
 import * as actions from "../../../redux/actions/index";
 import "./Nav.scss";
 import LoginPopup from "../LoginPopup/LoginPopup";
+import SignupPopup from '../SignupPopup/SignupPopup'
 class HomeNav extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showPopup: false,
-      checkLogin: false
+      checkLogin: false,
+      showSignup: false,
     };
   }
 
   togglePopup = () => {
     this.setState({
       showPopup: !this.state.showPopup
+    });
+  };
+
+  toggleSignupPopup = () => {
+    this.setState({
+      showSignup: !this.state.showSignup
     });
   };
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -31,15 +39,25 @@ class HomeNav extends React.Component {
     }
     return (
       <div className="home-nav-container">
+        <div className="logo">
+          <img className="big-logo"
+            src={require("../../../utils/images/logo.png")}
+            alt="quiz-icon"
+          />
+        </div>
         <div className="button-group">
           <button className="b-log-in" onClick={this.togglePopup}>
             Login
           </button>
-          <button className="b-sign-up">Sign up</button>
+          <button className="b-sign-up" onClick={this.toggleSignupPopup}>Sign up</button>
         </div>
 
         {this.state.showPopup ? (
           <LoginPopup togglePopup={this.togglePopup} />
+        ) : null}
+
+        {this.state.showSignup ? (
+          <SignupPopup togglePopup={this.toggleSignupPopup} />
         ) : null}
       </div>
     );

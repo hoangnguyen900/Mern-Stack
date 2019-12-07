@@ -14,22 +14,34 @@
     z-index: 15;
 
     .popup_inner-quiz-detail-table {
-        position: absolute;
-        left: 50%;
-        top: 50%;
+        position: relative!important;
+        
         background: white;
         border-radius: 15px;
         display: flex;
         flex-direction: column;
         margin: 10px 0;
         width: 50%;
+        left:50%;
         height: fit-content;
         min-width: 300px;
         max-width: 500px;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, 30%);
         padding: 0;
         z-index: 15;
+        animation: animatebottomTable 0.4s ease;
 
+        @keyframes animatebottomTable {
+            from {
+                bottom: -300px;
+                opacity: 0;
+            }
+        
+            to {
+                bottom: 0;
+                opacity: 1;
+            }
+        }
         .popup-header-quiz-detail-table {
 
             display: flex;

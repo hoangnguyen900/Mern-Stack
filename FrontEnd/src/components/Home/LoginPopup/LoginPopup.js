@@ -38,13 +38,13 @@ class LoginPopup extends React.Component {
     let { email, password, isLoading } = this.state;
 
     return (
-      <div className="popup">
-        <div className="popup_inner">
+      <div className="login-popup">
+        <div className="login-popup_inner">
           <form onSubmit={this.onSubmitHandler} className="form-info">
-            <div className="popup-header">
+            <div className="login-popup-header">
               <p>LOGIN</p>
             </div>
-            <div className="popup-body">
+            <div className="login-popup-body">
               <div className="form-field">
                 <label htmlFor="email">Email</label>
                 <input
@@ -70,7 +70,7 @@ class LoginPopup extends React.Component {
                 />
               </div>
             </div>
-            <div className="popup-footer">
+            <div className="login-popup-footer">
               <div className="form-field">
                 <div className="button-group">
                   <button type="submit" className="btn-login">
@@ -89,11 +89,12 @@ class LoginPopup extends React.Component {
                     Close
                 </button>
                 </div>
-
               </div>
-              <Link to="/signup" className="link">
-                Create an account
+              <div className="create-new-acc">
+                <Link to="/signup" className="link">
+                  Create an account
                 </Link>
+              </div>
             </div>
           </form>
         </div>

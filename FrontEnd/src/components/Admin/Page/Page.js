@@ -15,6 +15,7 @@ import {
 import MyQuizzes from './MyQuizzes/MyQuizzes';
 import MyQuizControl from './MyQuizzes/MyQuizDetail/MyQuizControl/MyQuizControl';
 import QuizControlHostGame from './MyQuizzes/MyQuizDetail/MyQuizControl/QuestionDetail/HostGame/HostGame'
+import AdminFind from '../Page/Find/Find';
 //import history from "../../../history";
 class AdminPage extends React.Component {
     constructor(props) {
@@ -47,7 +48,7 @@ class AdminPage extends React.Component {
                         </button>
                         </div>
                         <div className="admin-find-quiz">
-                            <NavLink className="btn-admin-find-quiz">
+                            <NavLink className="btn-admin-find-quiz"  exact to="/admin" activeStyle={{ borderLeft: '4px solid #fd7e14', fontWeight: 'bold' }} activeClassName="admin-active-tab">
                                 <span>
                                     <FontAwesomeIcon icon={faSearch} size="lg" />
                                 </span>
@@ -55,7 +56,7 @@ class AdminPage extends React.Component {
                         </NavLink>
                         </div>
                         <div className="admin-my-quizzes" >
-                            <NavLink className="btn-admin-find-quiz" to="/admin" activeStyle={{borderLeft: '4px solid #fd7e14', fontWeight:'bold'}} activeClassName="admin-active-tab">
+                            <NavLink className="btn-admin-find-quiz" to="/admin/myquizzes" activeStyle={{ borderLeft: '4px solid #fd7e14', fontWeight: 'bold' }} activeClassName="admin-active-tab">
                                 <span>
                                     <FontAwesomeIcon icon={faFileAlt} size="lg" />
                                 </span>
@@ -63,7 +64,7 @@ class AdminPage extends React.Component {
                         </NavLink>
                         </div>
                         <div className="admin-reports">
-                            <NavLink className="btn-admin-find-quiz" >
+                            <NavLink className="btn-admin-find-quiz" to="_blank" >
                                 <span>
                                     <FontAwesomeIcon icon={faChartBar} size="lg" />
                                 </span>
@@ -71,7 +72,7 @@ class AdminPage extends React.Component {
                         </NavLink>
                         </div>
                         <div className="admin-collections">
-                            <NavLink className="btn-admin-find-quiz">
+                            <NavLink className="btn-admin-find-quiz" to="_blank">
                                 <span>
                                     <FontAwesomeIcon icon={faFolder} size="lg" />
                                 </span>
@@ -80,7 +81,7 @@ class AdminPage extends React.Component {
                         </div>
                         <hr />
                         <div className="admin-profile">
-                            <NavLink className="btn-admin-find-quiz">
+                            <NavLink className="btn-admin-find-quiz" to="_blank">
                                 <span>
                                     <FontAwesomeIcon icon={faUserAlt} size="lg" />
                                 </span>
@@ -88,7 +89,7 @@ class AdminPage extends React.Component {
                         </NavLink>
                         </div>
                         <div className="admin-settings">
-                            <NavLink className="btn-admin-find-quiz">
+                            <NavLink className="btn-admin-find-quiz" to="_blank">
                                 <span>
                                     <FontAwesomeIcon icon={faCogs} size="lg" />
                                 </span>
@@ -96,7 +97,7 @@ class AdminPage extends React.Component {
                         </NavLink>
                         </div>
                         <div className="admin-log-out">
-                            <NavLink className="btn-admin-find-quiz">
+                            <NavLink className="btn-admin-find-quiz" to="_blank">
                                 <span>
                                     <FontAwesomeIcon icon={faSignOutAlt} size="lg" />
                                 </span>
@@ -107,7 +108,7 @@ class AdminPage extends React.Component {
 
                     <div className="admin-tab-select-container">
                         <Switch>
-                            <Route exact path="/admin/" render={({ match }) => <MyQuizzes match={match} />} />
+                            <Route exact path="/admin/myquizzes" render={({ match }) => <MyQuizzes match={match} />} />
                             <Route exact
                                 path="/admin/:question_table_id"
                                 component={MyQuizControl}
@@ -117,6 +118,8 @@ class AdminPage extends React.Component {
                                 path="/admin/quiz/homework/:question_table_id"
                                 component={QuizControlHostGame}
                             />
+                            <Route exact path="/admin/" render={({ match }) => <AdminFind match={match} />} />
+
                         </Switch>
                     </div>
                 </BrowserRouter>

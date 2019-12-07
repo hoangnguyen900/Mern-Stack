@@ -8,7 +8,7 @@ class HomeBody extends React.Component {
   }
   render() {
     return (
-      <div >
+      <div className="home-container">
         <video className="video-intro" src={require("../images/outlanders_header.webm")} autoPlay={true} loop={true}></video>
       </div>
     );

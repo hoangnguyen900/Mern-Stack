@@ -273,21 +273,36 @@
     overflow: scroll;
     overflow-x: hidden;
     z-index: 3;
-
+   
     .popup_inner {
-        position: absolute;
+        position: relative!important;
         left: calc((80%-500px)/2) !important;
-        top: 50% !important;
+        
         background: white;
         border-radius: 5px;
         display: flex;
         flex-direction: column;
         padding: 10px 10px;
         margin: 10px 0;
-        width: 50%;
         min-width: 300px;
         max-width: 500px;
+        max-height: fit-content;
         z-index: 3;
+        transform: translate(-50%,30%)!important;
+        animation: animatebottom 0.5s ease;
+        
+
+        @keyframes animatebottom {
+            from {
+                bottom: -300px;
+                opacity: 0;
+            }
+        
+            to {
+                bottom: 0;
+                opacity: 1
+            }
+        }
 
         .popup-header {
             p {

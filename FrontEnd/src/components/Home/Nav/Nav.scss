@@ -1,11 +1,22 @@
 .home-nav-container {
-    height: 70px;
+    height: 56px;
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    background-color: rgba(0, 0, 0, 0.7);
-    
+    justify-content: space-between;
+    // background-color: rgba(0, 0, 0, 0.7);
+    background-color: #fff;
+    position: fixed;
+    z-index: 10;
+
+    .logo{
+        .big-logo{
+            height: 56px;
+            position: relative;
+
+            top: 3px;
+        }
+    }
 
     .button-group {
         padding: 8px 0;
@@ -18,13 +29,13 @@
             margin: 0 10px;
             border: none;
             border-radius: 5px;
-            
+
         }
 
         .b-log-in {
             background-color: #595959;
             color: white;
-            top: 0!important;
+            top: 0 !important;
         }
 
         .b-sign-up {
@@ -43,4 +54,3 @@
         }
     }
 }
-

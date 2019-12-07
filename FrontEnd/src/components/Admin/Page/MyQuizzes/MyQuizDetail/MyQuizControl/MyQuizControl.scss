@@ -5,6 +5,9 @@
     max-width: 750px;
     margin-top: 30px;
     overflow: hidden;
+    position: relative;
+    left: -15%;
+
     .quiz-control-header {
         background-color: #fff;
         padding: 10px;
@@ -21,7 +24,7 @@
             position: relative;
             border-radius: 5px;
             overflow: hidden;
-            
+
             .header-img {
                 width: 100%;
                 position: absolute;
@@ -130,6 +133,7 @@
                 flex-direction: row;
                 justify-content: space-between;
                 min-width: 150px;
+
                 .action-name {
                     color: #868790;
 

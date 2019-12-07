@@ -5,7 +5,7 @@
     display: flex;
     flex-direction: row;
     background-color: #F2F2F2;
-    
+    margin-top: 56px;
 
     .admin-control-container {
         width: 200px;
@@ -144,10 +144,9 @@
     .admin-tab-select-container {
         height: fit-content;
         flex-grow: 1;
-        padding: 0 calc((5%-400px)/2);
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding-right: 250px;
+        flex-grow: 1;
     }
 }

@@ -11,8 +11,8 @@ class Join extends React.Component {
 
     this.state = {
       code: 0,
-      user:{
-        avatar:null
+      user: {
+        avatar: null
       },
       questionTable: {},
       showQuizCode: false,
@@ -117,7 +117,7 @@ class Join extends React.Component {
   }
 
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     document.addEventListener('click', this.focusInputQuizCode, false);
   }
 
@@ -211,7 +211,10 @@ class Join extends React.Component {
         ) : null}
 
         <div
-          className="join-input-code-overlay" style={isFocusInput ? { display: 'block', overflow: 'hidden' } : { display: 'none' }}></div>
+          className="join-input-code-overlay" style={isFocusInput ? { display: 'block', overflow: 'hidden' } : { display: 'none' }}
+        >
+
+        </div>
       </div>
     );
   }
