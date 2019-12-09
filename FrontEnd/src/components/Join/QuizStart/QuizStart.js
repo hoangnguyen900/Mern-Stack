@@ -28,12 +28,9 @@ class QuizStart extends React.Component {
     return (
       <div className="quiz-start-container">
         <div className="quiz-start-nav">
-          <button>
+          <button onClick={() => history.push(`/join`)}>
             <span>
-              <FontAwesomeIcon
-                icon={faTimes}
-                onClick={() => history.push(`/join/`)}
-              />
+              <FontAwesomeIcon icon={faTimes} />
             </span>
           </button>
         </div>

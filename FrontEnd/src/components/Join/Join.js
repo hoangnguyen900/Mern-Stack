@@ -213,10 +213,13 @@ class Join extends React.Component {
         ) : null}
 
         <div
-          className="join-input-code-overlay" style={isFocusInput ? { display: 'block', overflow: 'hidden' } : { display: 'none' }}
-        >
-        </div>
-
+          className="join-input-code-overlay"
+          style={
+            isFocusInput
+              ? { display: "block", overflow: "hidden" }
+              : { display: "none" }
+          }
+        ></div>
       </div>
     );
   }
