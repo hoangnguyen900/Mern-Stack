@@ -102,7 +102,7 @@
                 justify-content: center;
                 position: relative;
 
-                .join-default-ava{
+                .join-default-ava {
                     height: 80px;
                     width: 80px;
                     border-radius: 50%;
@@ -157,7 +157,7 @@
     .join-quiz-list-review {
         max-width: 1450px;
         min-width: 425px;
-        
+
         h3 {
             padding-top: 35px;
             font-family: QuickSand;
@@ -182,13 +182,17 @@
     @media screen and (max-width: 1480px) {
         .join-quiz-list-review {
             max-width: 1200px;
+            width: 1200px;
             align-self: center;
         }
     }
 
-    @media screen and (min-width: 1450px) { //style affect wrongly if has only one table generated
+    @media screen and (min-width: 1450px) {
+
+        //style affect wrongly if has only one table generated
         .join-quiz-list-review {
-           margin: 0 auto;
+            width: 1450px;
+            margin: 0 auto;
         }
     }
 
