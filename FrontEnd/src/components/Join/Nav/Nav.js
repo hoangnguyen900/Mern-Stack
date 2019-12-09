@@ -86,7 +86,7 @@ class JoinNav extends React.Component {
               alignItems: "center"
             }}
           >
-            <Icon type="setting" style={{ marginRight: "10px" }}></Icon>Settings
+            <Icon type="setting" style={{ marginRight: "10px" }}></Icon>Manage
           </div>
         </Menu.Item>
         <Menu.Item>

@@ -2,7 +2,8 @@ import React from "react";
 import "./QuestionShow.scss";
 import TimeBar from "../Timebar/TimeBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleRight, faPause } from "@fortawesome/free-solid-svg-icons";
+import { faCheckSquare, faAngleRight, faPause, faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faSquare } from '@fortawesome/free-regular-svg-icons';
 class QuestionShow extends React.Component {
   constructor(props) {
     super(props);
@@ -170,10 +171,21 @@ class QuestionShow extends React.Component {
         if (clicked && typeof answer.check === "undefined") return "0.2";
         return "1";
       };
+
+      let tick = () => {
+        if (answer.check && clicked) return <div className="doing-quiz-show-result-check" ><FontAwesomeIcon icon={faCheck} size="4x" /></div>;
+        else {
+          if (!answer.check && clicked) {
+            return <div className="doing-quiz-show-result-check">< FontAwesomeIcon icon={faTimes} size="4x" /></div >;
+          }
+        }
+
+
+      }
       let mutiCheck = () => {
         for (let i = 0; i < mutiCheckArr.length; i++)
-          if (mutiCheckArr[i] === index) return "CHECK";
-        return "UNCHECK";
+          if (mutiCheckArr[i] === index) return <FontAwesomeIcon size="lg" color="#008000" icon={faCheckSquare} />;
+        return <FontAwesomeIcon size="lg" color="#008000" icon={faSquare} />;
       };
       return (
         <div
@@ -182,17 +194,19 @@ class QuestionShow extends React.Component {
           style={{ opacity: opacity() }}
         >
           <button
-            className="question-answer"
+
             onClick={() => {
               this.onClickCheckAnswer(index);
               localStorage.setItem("choiceIndex", index);
             }}
             disabled={disableButton}
             style={{ background: color() }}
+            className="question-answer"
           >
             {!is_one_right_ans ? (
-              <p style={{ background: "black" }}>{mutiCheck()}</p>
+              <div className="doing-quiz-check-ans-multi">{mutiCheck()}</div>
             ) : null}
+            {tick()}
             {answer.answer}
           </button>
         </div>
@@ -200,7 +214,7 @@ class QuestionShow extends React.Component {
     });
 
     return (
-      <div className="question-show-container">
+      <div className="question-show-container" >
         <TimeBar TimeOut={time} />
         <div className="question-show-actions">
           <button className="action-pause">

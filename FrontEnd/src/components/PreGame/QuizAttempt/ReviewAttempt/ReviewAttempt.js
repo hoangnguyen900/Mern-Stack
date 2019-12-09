@@ -163,7 +163,7 @@ class ReviewAttempt extends React.Component {
                 <div className="review-progress review-progress-moved">
                   <div
                     className="review-progress-bar"
-                    style={{ width: progressBar }}
+                    style={accuracy >= 95 ? { borderTopRightRadius: '30px', borderBottomRightRadius: '30px', width: progressBar } : { width: progressBar }}
                   >
                     <span>{accuracy}%</span>
                   </div>
