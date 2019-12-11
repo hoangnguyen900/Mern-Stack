@@ -28,64 +28,22 @@ class ReviewQuestion extends React.Component {
     };
   }
   componentDidMount() {
-    let { data } = this.props;
+    let { data, answerColor } = this.props;
     this.setState({
-      data: data
+      data: data,
+      rightQuestionColor: answerColor
     });
-    this.getQuestionBorderColor(data);
   }
-  getQuestionBorderColor = data => {
-    let answerColor = [];
-    let multiRightCount = 0;
-    let questionRightTotal = 0;
-    for (let i = 0; i < data.question.question_choices.length; i++)
-      if (data.question.question_choices[i].is_right === 1)
-        questionRightTotal++;
-
-    answerColor = data.question.question_choices.map(answerList => {
-      let choiceColor = "";
-      if (data.question.is_one_right_ans) {
-        if (data.question_choice.id === answerList.id)
-          if (
-            data.question_choice.is_right === 1 &&
-            answerList.is_right === 1
-          ) {
-            //question right border
-            choiceColor = " #00995c ";
-          } else if (data.question_choice.is_right !== 1) {
-            //question wrong border
-            choiceColor = " #ec0b43 ";
-          }
-      } else {
-        for (let i = 0; i < data.multi_choice.question_choices.length; i++) {
-          if (data.multi_choice.question_choices[i].id === answerList.id)
-            if (
-              data.multi_choice.question_choices[i].is_right === 1 &&
-              answerList.is_right === 1
-            )
-              multiRightCount++;
-            else multiRightCount--;
-        }
-        if (multiRightCount === questionRightTotal) choiceColor = " #00995c ";
-        else choiceColor = " #ec0b43 ";
-        if (data.multi_choice_id === 0) choiceColor = "";
-      }
-
-      return choiceColor;
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    let { answerColor } = nextProps;
+    // console.log("answerColor", answerColor);
+    this.setState({
+      rightQuestionColor: answerColor
     });
-
-    for (let i = 0; i < answerColor.length; i++) {
-      if (answerColor[i] !== "") {
-        this.setState({
-          rightQuestionColor: answerColor[i]
-        });
-      }
-    }
-  };
+  }
   render() {
     //console.log(this.state.rightQuestionColor);
-    let { index } = this.props;
-    let { data } = this.state;
+    let { index, data } = this.props;
     let answerElm = data.question.question_choices.map(answerList => {
       let choiceColor = "";
       //question unattempt
@@ -99,11 +57,12 @@ class ReviewQuestion extends React.Component {
             //question wrong
             choiceColor = "#F14D76";
       } else {
-        for (let i = 0; i < data.multi_choice.question_choices.length; i++) {
-          if (data.multi_choice.question_choices[i].id === answerList.id)
-            if (data.multi_choice.question_choices[i].is_right !== 1)
-              choiceColor = "#F14D76";
-        }
+        if (data.multi_choice_id !== null)
+          for (let i = 0; i < data.multi_choice.question_choices.length; i++) {
+            if (data.multi_choice.question_choices[i].id === answerList.id)
+              if (data.multi_choice.question_choices[i].is_right !== 1)
+                choiceColor = "#F14D76";
+          }
       }
       return (
         <div className="review-option-content" key={answerList.id}>

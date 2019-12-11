@@ -18,6 +18,7 @@ class QuizThumbnail extends React.Component {
 
         questions: []
       },
+      attemptList: [],
       isCompleted: false,
       isRunning: false,
       isShowPopup: false,
@@ -27,12 +28,30 @@ class QuizThumbnail extends React.Component {
   componentDidMount() {
     let { data, isCompleted } = this.props;
     if (typeof isCompleted !== "undefined") {
-      this.calculate();
       this.setState({
         isCompleted: isCompleted
       });
+      //get array of attempt
+      let temptARR = [];
+      let count = 1;
+      let maxAttempt = data.answer_records[data.answer_records.length - 1].id;
+      while (count <= maxAttempt) {
+        let plus = 0;
+        let tempt = [];
+        for (let i = plus; i < data.answer_records.length; i++) {
+          if (data.answer_records[i].id === count) {
+            tempt.push(data.answer_records[i]);
+            plus++;
+          }
+        }
+        count++;
+        temptARR.push(tempt);
+      }
+      this.setState({
+        attemptList: temptARR
+      });
+      this.calculate(temptARR);
     }
-
     this.setState({
       data: data
     });
@@ -48,24 +67,10 @@ class QuizThumbnail extends React.Component {
       isShowPopup: !this.state.isShowPopup
     });
   };
-  calculate = () => {
-    let { data } = this.props;
-    let Arr = [];
-    let i = 1;
-    let attemptArr = [];
-    data.answer_records.forEach((answerRecord, index) => {
-      if (answerRecord.id !== i) {
-        i++;
-        Arr.push(attemptArr);
-        attemptArr = [];
-      }
-      attemptArr.push(answerRecord);
-      if (index === data.answer_records.length - 1) Arr.push(attemptArr);
-    });
-    // console.log("mark", this.calculateAccuracy(Arr));
+  calculate = attemptList => {
     let accuracyArr = [];
-    Arr.forEach(attempt => {
-      accuracyArr.push(this.calculateAccuracy(attempt));
+    attemptList.forEach(answerRecord => {
+      accuracyArr.push(this.calculateAccuracy(answerRecord));
     });
     let accuracy = Math.max(...accuracyArr);
     this.setState({
@@ -73,13 +78,27 @@ class QuizThumbnail extends React.Component {
     });
   };
 
-  calculateAccuracy = dataArr => {
+  calculateAccuracy = data => {
     //calculate the accuracy
     let rightAnswer = 0;
-    dataArr.forEach(attempt => {
-      if (attempt.question_choice.is_right === 1) rightAnswer++;
+    data.forEach(attempt => {
+      if (attempt.question.is_one_right_ans) {
+        if (attempt.question_choice.is_right === 1) rightAnswer++;
+      } else {
+        let questionRightTotal = 0;
+        let multiRightTotal = 0;
+        for (let i = 0; i < attempt.question.question_choices.length; i++)
+          if (attempt.question.question_choices[i].is_right)
+            questionRightTotal++;
+        if (attempt.multi_choice_id !== null) {
+          let { question_choices } = attempt.multi_choice;
+          for (let i = 0; i < question_choices.length; i++)
+            if (question_choices[i].is_right) multiRightTotal++;
+        }
+        if (multiRightTotal === questionRightTotal) rightAnswer++;
+      }
     });
-    let accuracy = (rightAnswer / dataArr.length).toFixed(2) * 100;
+    let accuracy = (rightAnswer / data.length).toFixed(2) * 100;
     return accuracy;
   };
   accuracyColor = accuracy => {
