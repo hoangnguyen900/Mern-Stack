@@ -32,14 +32,20 @@ class DoingQuiz extends React.Component {
       questions: nextProps.questionTable.questions
     });
   }
-  recordAnswer = (question_id, question_choice, multi_choice) => {
+  recordAnswer = (
+    question_id,
+    question_choice,
+    multi_choice,
+    is_one_right_ans
+  ) => {
     ///create data to send API
     let question_table_id = parseInt(this.props.match.params.question_table_id);
     let data = {
       question_table_id: question_table_id,
       question_id,
       choice_id: question_choice.id,
-      multi_choice: multi_choice
+      multi_choice: multi_choice,
+      is_one_right_ans
     };
     let dataPush = this.state.data;
     dataPush.push({ ...data });

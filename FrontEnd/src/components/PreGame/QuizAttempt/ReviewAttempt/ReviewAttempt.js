@@ -10,7 +10,24 @@ class ReviewAttempt extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [
+        {
+          id: 0,
+          question_id: 0,
+          choice_id: 0,
+          multi_choice_id: 0,
+          multi_choice: {
+            question_choices: []
+          },
+          question: {
+            is_one_right_ans: 1,
+            question_choices: []
+          },
+          question_choice: {
+            is_right: false
+          }
+        }
+      ]
     };
   }
 
@@ -27,47 +44,33 @@ class ReviewAttempt extends React.Component {
   }
   calculateAccuracy = () => {
     let { data } = this.state;
+    let rightAnswer = this.correctAnswer();
+    let accuracy = (rightAnswer / data.length).toFixed(2) * 100;
+    return accuracy;
+  };
+  correctAnswer = () => {
+    let { data } = this.state;
     //calculate the accuracy
     let rightAnswer = 0;
     data.forEach(attempt => {
       if (attempt.question.is_one_right_ans) {
         if (attempt.question_choice.is_right === 1) rightAnswer++;
       } else {
-        let { question_choices } = attempt.multi_choice;
         let questionRightTotal = 0;
         let multiRightTotal = 0;
         for (let i = 0; i < attempt.question.question_choices.length; i++)
           if (attempt.question.question_choices[i].is_right)
             questionRightTotal++;
-        for (let i = 0; i < question_choices.length; i++)
-          if (question_choices[i].is_right) multiRightTotal++;
+        if (attempt.multi_choice_id !== null) {
+          let { question_choices } = attempt.multi_choice;
+          for (let i = 0; i < question_choices.length; i++)
+            if (question_choices[i].is_right) multiRightTotal++;
+        }
         if (multiRightTotal === questionRightTotal) rightAnswer++;
       }
     });
-    let accuracy = (rightAnswer / data.length).toFixed(2) * 100;
-    return accuracy;
-  };
-  correctAnswer = () => {
-    let { data } = this.state;
-    //calculate the correct
-    let correctAnswer = 0;
-    data.forEach(attempt => {
-      if (attempt.question.is_one_right_ans) {
-        if (attempt.question_choice.is_right === 1) correctAnswer++;
-      } else {
-        let { question_choices } = attempt.multi_choice;
-        let questionRightTotal = 0;
-        let multiRightTotal = 0;
-        for (let i = 0; i < attempt.question.question_choices.length; i++)
-          if (attempt.question.question_choices[i].is_right === 1)
-            questionRightTotal++;
-        for (let i = 0; i < question_choices.length; i++)
-          if (question_choices[i].is_right === 1) multiRightTotal++;
-        if (multiRightTotal === questionRightTotal) correctAnswer++;
-      }
-    });
 
-    return correctAnswer;
+    return rightAnswer;
   };
   inCorrectAnswer = () => {
     let { data } = this.state;
@@ -85,12 +88,58 @@ class ReviewAttempt extends React.Component {
         if (attempt.question_choice.is_right === 2) unAttemptAnswer++;
       } else {
         let { multi_choice_id } = attempt;
-        if (multi_choice_id === 0) unAttemptAnswer++;
+        if (multi_choice_id === null) unAttemptAnswer++;
       }
     });
     return unAttemptAnswer;
   };
+  getQuestionBorderColor = data => {
+    let answerColor = [];
+    let multiRightCount = 0;
+    let questionRightTotal = 0;
+    let choiceColor = "";
+    let { question_choices, is_one_right_ans } = data.question;
 
+    for (let i = 0; i < question_choices.length; i++)
+      if (data.question.question_choices[i].is_right === 1)
+        questionRightTotal++;
+    for (let i = 0; i < question_choices.length; i++) {
+      if (is_one_right_ans) {
+        if (
+          data.question_choice.id === question_choices[i].id &&
+          data.question_choice.is_right === 1 &&
+          question_choices[i].is_right === 1
+        ) {
+          //question right border
+          choiceColor = " #00995c ";
+        } else if (data.question_choice.is_right === 0) {
+          //question wrong border
+          choiceColor = " #ec0b43 ";
+        }
+      } else {
+        if (data.multi_choice_id !== null) {
+          for (let j = 0; j < data.multi_choice.question_choices.length; j++) {
+            if (
+              data.multi_choice.question_choices[j].id ===
+              question_choices[i].id
+            )
+              if (
+                data.multi_choice.question_choices[j].is_right === 1 &&
+                question_choices[i].is_right === 1
+              )
+                multiRightCount++;
+              else multiRightCount--;
+          }
+          if (multiRightCount === questionRightTotal) choiceColor = " #00995c ";
+          else choiceColor = " #ec0b43 ";
+        }
+      }
+    }
+
+    answerColor.push(choiceColor);
+    console.log("answerColor", answerColor);
+    return answerColor;
+  };
   render() {
     let { data } = this.state;
     let question_table_id = parseInt(this.props.match.params.question_table_id);
@@ -101,8 +150,17 @@ class ReviewAttempt extends React.Component {
     let correctAnswer = this.correctAnswer();
     let unAttemptAnswer = this.unAttemptAnswer();
     let inCorrectAnswer = this.inCorrectAnswer();
-    let questionAttempt = data.map((attempt, index) => {
-      return <ReviewQuestion key={index} data={attempt} index={index} />;
+    let questionAttempt = data.map((question, index) => {
+      let answerColor = this.getQuestionBorderColor(question);
+      console.log("question", question);
+      return (
+        <ReviewQuestion
+          key={index}
+          data={question}
+          index={index}
+          answerColor={answerColor}
+        />
+      );
     });
 
     let accuracyStyle = `@keyframes progressAnimation{
@@ -163,7 +221,15 @@ class ReviewAttempt extends React.Component {
                 <div className="review-progress review-progress-moved">
                   <div
                     className="review-progress-bar"
-                    style={accuracy >= 95 ? { borderTopRightRadius: '30px', borderBottomRightRadius: '30px', width: progressBar } : { width: progressBar }}
+                    style={
+                      accuracy >= 95
+                        ? {
+                            borderTopRightRadius: "30px",
+                            borderBottomRightRadius: "30px",
+                            width: progressBar
+                          }
+                        : { width: progressBar }
+                    }
                   >
                     <span>{accuracy}%</span>
                   </div>

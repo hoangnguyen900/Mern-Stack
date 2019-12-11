@@ -33,9 +33,9 @@ class QuestionShow extends React.Component {
         let questionChoice = {
           id: 0
         };
-        this.props.recordAnswer(this.state.id, questionChoice, {});
+        this.props.recordAnswer(this.state.id, questionChoice, {},is_one_right_ans);
       } else
-        this.props.recordAnswer(this.state.id, question_choices[index], {});
+        this.props.recordAnswer(this.state.id, question_choices[index], {},is_one_right_ans);
       localStorage.removeItem("choiceIndex");
     } else {
       let multiArr = { question_choices: [] };
@@ -44,7 +44,7 @@ class QuestionShow extends React.Component {
           id: question_choices[mutiCheckArr[i]].id
         };
       console.log("multiArr", multiArr);
-      this.props.recordAnswer(this.state.id, { id: 0 }, multiArr);
+      this.props.recordAnswer(this.state.id, { id: 0 }, multiArr,is_one_right_ans);
     }
   }
   onClickCheckAnswer = index => {

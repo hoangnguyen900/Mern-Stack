@@ -11,9 +11,8 @@ const MultiChoices_Choices = require("../models/MultiChoices_Choices");
 const Question = require("../models/Question");
 const AnswerRecord = require("../models/AnswerRecord");
 const jwt = require("jsonwebtoken");
-// find all the number of attempt that user do quiz
+// find all the number of attempt that user do quiz in page PreGame
 router.post("/api/quiz_attempt", verifyToken, (req, res) => {
-  let dataArr = [];
   jwt.verify(req.token, "hoangtri", (err, authData) => {
     AnswerRecord.max("id", {
       where: {
@@ -21,9 +20,9 @@ router.post("/api/quiz_attempt", verifyToken, (req, res) => {
         question_table_id: req.body.question_table_id
       }
     })
-      .then(length => {
-        for (let i = 1; i <= length; i++) {
-          AnswerRecord.findAll({
+      .then(async length => {
+        let attemptArr = async i => {
+          let attempt = await AnswerRecord.findAll({
             where: {
               id: i,
               user_id: authData.user_id.id,
@@ -40,11 +39,19 @@ router.post("/api/quiz_attempt", verifyToken, (req, res) => {
                 include: QuestionChoices
               }
             ]
-          }).then(data => {
-            dataArr.push(data);
-            if (i == length) res.send(dataArr);
           });
-        }
+          return attempt;
+        };
+        let getArr = async () => {
+          let dataArr = [];
+          for (let i = 1; i <= length; i++) {
+            await attemptArr(i).then(attempt => {
+              dataArr.push(attempt);
+            });
+          }
+          return dataArr;
+        };
+        getArr().then(data => res.send(data));
       })
       .catch(err => console.log(err));
   });
@@ -67,7 +74,7 @@ router.post("/api/get_user", (req, res) =>
     }
   })
 );
-// record all answer that user do quiz, and then send the correct answer to client
+// record all answer that user do quiz, and then send the correct answer to client(DoQuiz page)
 router.post("/api/user_answer", verifyToken, (req, res) => {
   jwt.verify(req.token, "hoangtri", (err, authData) => {
     if (err) res.sendStatus(403);
@@ -78,31 +85,42 @@ router.post("/api/user_answer", verifyToken, (req, res) => {
           question_table_id: req.body[0].question_table_id
         }
       })
-        .then(id => {
-          for (let i = 0; i < req.body.length; i++) {
-            req.body[i].user_id = authData.user_id.id;
-            req.body[i].id = id + 1;
-            if (
-              typeof req.body[i].multi_choice.question_choices !== "undefined"
-            ) {
-              MultiChoices.create(req.body[i].multi_choice).then(multiData => {
-                req.body[i].multi_choice_id = multiData.id;
-                let data = [];
-                let { question_choices } = req.body[i].multi_choice;
-                for (let j = 0; j < question_choices.length; j++)
-                  data.push({
-                    multi_choice_id: multiData.id,
-                    choice_id: question_choices[j].id
-                  });
-                MultiChoices_Choices.bulkCreate(data).then(() =>
-                  AnswerRecord.create(req.body[i])
-                );
-              });
-            } else AnswerRecord.create(req.body[i]);
-          }
-          res.send({
-            id: id + 1,
-            question_table_id: req.body[0].question_table_id
+        .then(async id => {
+          let recordAnswer = async () => {
+            for (let i = 0; i < req.body.length; i++) {
+              req.body[i].user_id = authData.user_id.id;
+              req.body[i].id = id + 1;
+              let { question_choices } = req.body[i].multi_choice;
+              if (req.body[i].is_one_right_ans)
+                await AnswerRecord.create(req.body[i]);
+              else {
+                //unattempt Multi
+                if (!question_choices.length) {
+                  await AnswerRecord.create(req.body[i]);
+                } else
+                  await MultiChoices.create(req.body[i].multi_choice).then(
+                    multiData => {
+                      req.body[i].multi_choice_id = multiData.id;
+                      let data = [];
+                      let { question_choices } = req.body[i].multi_choice;
+                      for (let j = 0; j < question_choices.length; j++)
+                        data.push({
+                          multi_choice_id: multiData.id,
+                          choice_id: question_choices[j].id
+                        });
+                      MultiChoices_Choices.bulkCreate(data).then(() =>
+                        AnswerRecord.create(req.body[i])
+                      );
+                    }
+                  );
+              }
+            }
+          };
+          await recordAnswer().then(() => {
+            res.send({
+              id: id + 1,
+              question_table_id: req.body[0].question_table_id
+            });
           });
         })
 
@@ -161,7 +179,8 @@ router.post("/api/is_user_did_table", verifyToken, (req, res) =>
     }
   })
 );
-router.post("/api/get_completed_table", verifyToken, (req, res) =>
+//get quizz that user do before
+router.post("/api/get_completed_table", verifyToken, async (req, res) =>
   jwt.verify(req.token, "hoangtri", (err, authData) => {
     if (err) res.sendStatus(403);
     else {
@@ -174,13 +193,13 @@ router.post("/api/get_completed_table", verifyToken, (req, res) =>
           "question_table_id"
         ]
       })
-        .then(idArr => {
+        .then(idTableArr => {
           let data = [];
-          if (idArr.length === 0) res.send(data);
-          else
-            for (let i = 0; i < idArr.length; i++) {
-              QuestionTable.findOne({
-                where: { id: idArr[i].question_table_id },
+          if (idTableArr.length === 0) res.send(data);
+          else {
+            let getData = async idTableArr => {
+              let data = await QuestionTable.findOne({
+                where: { id: idTableArr.question_table_id },
                 include: [
                   {
                     model: Question,
@@ -191,13 +210,20 @@ router.post("/api/get_completed_table", verifyToken, (req, res) =>
                     include: [
                       {
                         model: QuestionChoices,
-                        attributes: ["is_right"]
+                        attributes: ["is_right", "id"]
+                      },
+                      {
+                        model: Question,
+                        include: [QuestionChoices]
+                      },
+                      {
+                        model: MultiChoices,
+                        include: QuestionChoices
                       }
                     ],
                     where: {
                       user_id: authData.user_id.id
-                    },
-                    attributes: ["id"]
+                    }
                   },
                   {
                     model: User,
@@ -206,11 +232,21 @@ router.post("/api/get_completed_table", verifyToken, (req, res) =>
                   }
                 ],
                 attributes: ["id", "title", "image", "played", "admin"]
-              }).then(questionTable => {
-                data.push(questionTable);
-                if (i == idArr.length - 1) res.send(data);
               });
-            }
+              return data;
+            };
+            let getDataArr = async () => {
+              let dataArr = [];
+              for (let i = 0; i < idTableArr.length; i++) {
+                await getData(idTableArr[i]).then(dataTable => {
+                  dataArr.push(dataTable);
+                  //if (i === idTableArr.length - 1) res.send(data);
+                });
+              }
+              return dataArr;
+            };
+            getDataArr().then(data => res.send(data));
+          }
         })
         .catch(err => console.log(err));
     }
