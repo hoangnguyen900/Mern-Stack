@@ -36,7 +36,12 @@ class CompletedQuizzes extends React.Component {
         />
       );
     });
-    return <div className="quiz-list">{quizthumb}</div>;
+    return (
+      <div className="quiz-list">
+        {quizthumb}
+        {quizthumb.length === 0 ? <img style={{ width: '30%', margin: '30px auto' }} src={require("../images/no-quiz.png")} alt="no-quiz" /> : null}
+      </div>
+    );
   }
 }
 const mapDispatchToProps = (dispatch, props) => {

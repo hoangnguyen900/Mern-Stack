@@ -56,6 +56,8 @@ class QuizStart extends React.Component {
                 Start Game
               </button>
             </div>
+            <img style={{ width: '550px' }} src={require("../../PreGame/images/no-settings.png")} alt="no-settings" />
+            <h3 style={{ textAlign: 'center', color: 'white' }}>Setting comming soon</h3>
           </div>
         </div>
       </div>

@@ -65,6 +65,8 @@ class PreGame extends React.Component {
                 Play
               </button>
             </div>
+            <img style={{ width: '100%', margin: '30px auto' }} src={require("./images/no-settings.png")} alt="no-settings" />
+            <h3 style={{ textAlign: 'center', color: 'white' }}>Setting comming soon</h3>
           </div>
         </div>
       </div>

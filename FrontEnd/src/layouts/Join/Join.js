@@ -6,12 +6,16 @@ import Activity from "../../components/Join/Activity/Activity";
 import Join from "../../components/Join/Join";
 import history from "../../history";
 import LoadingPage from "../../utils/LoadingPage/LoadingPage";
+
 class JoinLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoadDataDone: false
     };
+  }
+  componentDidMount() {
+    document.title = "Join a quiz"
   }
   doneLoading = () => {
     this.setState({

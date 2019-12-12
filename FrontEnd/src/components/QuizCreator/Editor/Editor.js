@@ -238,6 +238,7 @@ class QuizCreatorEditor extends React.Component {
               </button>
             </div>
             {element}
+            {this.state.table.questions.length === 0 ? <img className="no-question-created" alt="no-questions-created" src={require("./images/no-question-created.png")} /> : null}
           </div>
           <div className="quiz-info-container">
             <div className="quiz-info-edit-container">

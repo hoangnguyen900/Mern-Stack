@@ -14,7 +14,6 @@ class AdminFind extends React.Component {
                 <h1>What will we teach today?</h1>
 
                 <div className="join-quiz-list-review" >
-                    <h3>Subject name</h3>
                     <div className="quiz-list-show-topic">
                     </div>
                 </div>

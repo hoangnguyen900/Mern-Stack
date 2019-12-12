@@ -6,6 +6,10 @@ class DoQuiz extends React.Component {
     super(props);
     this.state = {};
   }
+
+  componentDidMount() {
+    document.title = "Join a quiz"
+  }
   render() {
     return (
       <div className="do-quiz-container">

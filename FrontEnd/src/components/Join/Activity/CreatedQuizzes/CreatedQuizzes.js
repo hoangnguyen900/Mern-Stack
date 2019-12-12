@@ -33,7 +33,12 @@ class CreatedQuizzes extends React.Component {
     let quizthumb = data.question_tables.map((table, index) => {
       return <QuizThumbnail key={index} data={table} userName={name} />;
     });
-    return <div className="quiz-list">{quizthumb}</div>;
+    return (
+      <div className="quiz-list">
+        {quizthumb}
+        {quizthumb.length === 0 ? <img style={{ width: '30%', margin: '30px auto' }} src={require("../images/no-quiz.png")} alt="no-quiz" /> : null}
+      </div>
+    );
   }
 }
 const mapDispatchToProps = (dispatch, props) => {
